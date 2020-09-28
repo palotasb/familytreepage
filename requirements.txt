@@ -1,0 +1,4 @@
+mypy>=0.780
+python-gedcom~=1.0
+networkx~=2.5
+matplotlib~=3.3
