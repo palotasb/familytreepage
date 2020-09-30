@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Test page for displaying family tree</title>
+    <style>
+
+        body {
+            padding: 1em
+        }
+
+        #familytree {
+            position: relative;
+            min-width: {{ graphic_size[0] }}px;
+            min-height: {{ graphic_size[1] }}px;
+            border: 1px solid black;
+            margin: -1px -1px 0 0;
+        }
+
+        svg#graph {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: {{ graphic_size[0] }}px;
+            height: {{ graphic_size[1] }}px;
+            border: 1px solid gray;
+            margin: -1px -1px 0 0;
+        }
+
+        #boxes .box {
+            position: absolute;
+            border: 1px solid violet;
+            margin: -1px -1px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Family tree test page</h1>
+
+    <div id="familytree">
+        <svg id="graph" viewBox="0 0 {{ graphic_size[0] }} {{ graphic_size[1] }}" xmlns="http://www.w3.org/2000/svg" stroke="black" fill="#ffeedd">
+
+        </svg>
+        <div id="boxes">
+        {#
+            <div class="box" style="top: 75px; left: 75px;">John F Kennedy</div>
+            <div class="box" style="top: 75px; left: 325px;">Lady Macbeth</div>
+            <div class="box" style="top: 225px; left: 75px;">Genghis Khan</div>
+            <div class="box" style="top: 225px; left: 325px;">John Travolta</div>
+        #}
+        {% for id, individual in individuals.items() %}
+            <div class="box" style="left: {{ individual_positions[id][0] }}px; top: {{ individual_positions[id][1] }}px;">{{
+                individual.name
+            }}</div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <ul>
+    {% for id, individual in individuals.items() %}
+        <li><code>{{ id }}</code> {{ individual.name }}</li>
+    {% endfor %}
+    <ul>
+
+    <pre>
+    {% debug %}
+    </pre>
+
+</body>
+
+</html>

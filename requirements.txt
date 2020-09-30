@@ -1,4 +1,5 @@
-mypy>=0.780
-python-gedcom~=1.0
-networkx~=2.5
+Jinja2~=2.11
 matplotlib~=3.3
+mypy>=0.780
+networkx~=2.5
+python-gedcom~=1.0

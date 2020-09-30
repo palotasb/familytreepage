@@ -1,0 +1,919 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Test page for displaying family tree</title>
+    <style>
+
+        body {
+            padding: 1em
+        }
+
+        #familytree {
+            position: relative;
+            min-width: 600px;
+            min-height: 400px;
+            border: 1px solid black;
+            margin: -1px -1px 0 0;
+        }
+
+        svg#graph {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 600px;
+            height: 400px;
+            border: 1px solid gray;
+            margin: -1px -1px 0 0;
+        }
+
+        #boxes .box {
+            position: absolute;
+            border: 1px solid violet;
+            margin: -1px -1px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Family tree test page</h1>
+
+    <div id="familytree">
+        <svg id="graph" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" stroke="black" fill="#ffeedd">
+
+        </svg>
+        <div id="boxes">
+            <div class="box" style="left: 86px; top: 57px;">('Joseph Patrick', 'Kennedy')</div>
+            <div class="box" style="left: 2px; top: 21px;">('Rose Elizabeth', 'Fitzgerald')</div>
+            <div class="box" style="left: 242px; top: 191px;">('Joseph Patrick', 'Kennedy')</div>
+            <div class="box" style="left: 495px; top: 368px;">('John Fitzgerald', 'Kennedy')</div>
+            <div class="box" style="left: 71px; top: 195px;">('Rosemary (Rose Marie)', 'Kennedy')</div>
+            <div class="box" style="left: 202px; top: 22px;">('Kathleen "Kick"', 'Kennedy')</div>
+            <div class="box" style="left: 142px; top: 98px;">('Eunice Mary', 'Kennedy')</div>
+            <div class="box" style="left: 137px; top: 56px;">('Robert Sargent', 'Shriver')</div>
+            <div class="box" style="left: 378px; top: 235px;">('Patricia', 'Kennedy')</div>
+            <div class="box" style="left: 103px; top: 328px;">('Peter', 'Lawford')</div>
+            <div class="box" style="left: 418px; top: 246px;">('Robert Francis', 'Kennedy')</div>
+            <div class="box" style="left: 78px; top: 241px;">('Jean Ann', 'Kennedy')</div>
+            <div class="box" style="left: 454px; top: 371px;">('Edward Moore', 'Kennedy')</div>
+            <div class="box" style="left: 459px; top: 318px;">('Virginia Joan', 'Bennett')</div>
+            <div class="box" style="left: 416px; top: 165px;">('Christopher Kennedy', 'Lawford')</div>
+            <div class="box" style="left: 12px; top: 275px;">('Sydney Maleia', 'Lawford')</div>
+            <div class="box" style="left: 244px; top: 361px;">('Victoria Francis', 'Lawford')</div>
+            <div class="box" style="left: 322px; top: 342px;">('Robin Elizabeth', 'Lawford')</div>
+            <div class="box" style="left: 202px; top: 215px;">('Jean Edith', 'Olsson')</div>
+            <div class="box" style="left: 383px; top: 180px;">('James Peter', 'McKelvey')</div>
+            <div class="box" style="left: 141px; top: 93px;">('Robert Sargent', 'Shriver')</div>
+            <div class="box" style="left: 250px; top: 382px;">('Maria Owings', 'Shriver')</div>
+            <div class="box" style="left: 265px; top: 193px;">('Timothy Perry', 'Shriver')</div>
+            <div class="box" style="left: 419px; top: 64px;">('Mark Kennedy', 'Shriver')</div>
+            <div class="box" style="left: 265px; top: 20px;">('Anthony Paul', 'Shriver')</div>
+            <div class="box" style="left: 169px; top: 29px;">('Arnold', 'Shwarzenegger')</div>
+            <div class="box" style="left: 220px; top: 124px;">('Stephen Edward', 'Smith')</div>
+            <div class="box" style="left: 353px; top: 131px;">('Stephen Edward', 'Smith')</div>
+            <div class="box" style="left: 53px; top: 9px;">('William Kennedy', 'Smith')</div>
+            <div class="box" style="left: 471px; top: 297px;">('Amanda Mary', 'Smith')</div>
+            <div class="box" style="left: 80px; top: 256px;">('Kym Marie', 'Smith')</div>
+            <div class="box" style="left: 430px; top: 54px;">('Kara Ann', 'Kennedy')</div>
+            <div class="box" style="left: 162px; top: 14px;">('Edward Moore', 'Kennedy')</div>
+            <div class="box" style="left: 317px; top: 65px;">('Patrick Joseph', 'Kennedy')</div>
+            <div class="box" style="left: 239px; top: 125px;">('Jacqueline Lee', 'Bouvier')</div>
+            <div class="box" style="left: 396px; top: 191px;">('Caroline Bouvier', 'Kennedy')</div>
+            <div class="box" style="left: 351px; top: 13px;">('John Fitzgerald', 'Kennedy')</div>
+            <div class="box" style="left: 7px; top: 6px;">('Patrick Bouvier', 'Kennedy')</div>
+            <div class="box" style="left: 170px; top: 321px;">('Ethel', 'Skakel')</div>
+            <div class="box" style="left: 457px; top: 261px;">('Kathleen Hartington', 'Kennedy')</div>
+            <div class="box" style="left: 267px; top: 303px;">('Joseph Patrick', 'Kennedy')</div>
+            <div class="box" style="left: 83px; top: 260px;">('Robert Francis', 'Kennedy')</div>
+            <div class="box" style="left: 190px; top: 118px;">('David Anthony', 'Kennedy')</div>
+            <div class="box" style="left: 478px; top: 19px;">('Mary Courtney', 'Kennedy')</div>
+            <div class="box" style="left: 379px; top: 294px;">('Michael LeMoyne', 'Kennedy')</div>
+            <div class="box" style="left: 51px; top: 268px;">('Mary Kerry', 'Kennedy')</div>
+            <div class="box" style="left: 241px; top: 37px;">('Christopher George', 'Kennedy')</div>
+            <div class="box" style="left: 90px; top: 3px;">('Matthew Maxwell Taylor', 'Kennedy')</div>
+            <div class="box" style="left: 169px; top: 373px;">('Douglas Harriman', 'Kennedy')</div>
+            <div class="box" style="left: 241px; top: 193px;">('Rory Elizabeth Katherine', 'Kennedy')</div>
+            <div class="box" style="left: 123px; top: 352px;">('David Lee', 'Townsend')</div>
+            <div class="box" style="left: 28px; top: 17px;">('Meaghan Anne Kennedy', 'Townsend')</div>
+            <div class="box" style="left: 155px; top: 249px;">('Maeve Fahey Kennedy', 'Townsend')</div>
+            <div class="box" style="left: 454px; top: 185px;">('Rose Katherine Kennedy', 'Townsend')</div>
+            <div class="box" style="left: 420px; top: 260px;">('Sheila Brewster', 'Rauch')</div>
+            <div class="box" style="left: 275px; top: 46px;">('Matthew Rauch', 'Kennedy')</div>
+            <div class="box" style="left: 244px; top: 361px;">('Joseph Patrick', 'Kennedy')</div>
+            <div class="box" style="left: 451px; top: 274px;">('Emily Ruth', 'Black')</div>
+            <div class="box" style="left: 101px; top: 91px;">('Robert Francis', 'Kennedy')</div>
+            <div class="box" style="left: 82px; top: 20px;">('Jeffrey Robert', 'Ruhe')</div>
+            <div class="box" style="left: 6px; top: 106px;">('Victoria Denise', 'Gifford')</div>
+            <div class="box" style="left: 393px; top: 25px;">('Michael LeMoyne', 'KENNEDY')</div>
+            <div class="box" style="left: 114px; top: 171px;">('Kyle Frances', 'Kennedy')</div>
+            <div class="box" style="left: 401px; top: 160px;">('Patrick', 'Kennedy')</div>
+            <div class="box" style="left: 131px; top: 47px;">('Mary Johanna', '(-----)')</div>
+            <div class="box" style="left: 410px; top: 154px;">('Patrick', 'Kennedy')</div>
+            <div class="box" style="left: 259px; top: 115px;">('Richard', 'Murphy')</div>
+            <div class="box" style="left: 419px; top: 190px;">('Mary', '(-----)')</div>
+            <div class="box" style="left: 241px; top: 106px;">('Bridget', 'Murphy')</div>
+            <div class="box" style="left: 343px; top: 122px;">('Mary L.', 'Kennedy')</div>
+            <div class="box" style="left: 368px; top: 91px;">('Joanna L.', 'Kennedy')</div>
+            <div class="box" style="left: 72px; top: 315px;">('John', 'Kennedy')</div>
+            <div class="box" style="left: 29px; top: 302px;">('Margaret M.', 'Kennedy')</div>
+            <div class="box" style="left: 126px; top: 238px;">('Patrick Joseph', 'Kennedy')</div>
+            <div class="box" style="left: 476px; top: 380px;">('Philip', 'Kane')</div>
+            <div class="box" style="left: 315px; top: 158px;">('Margaret', 'Murphy')</div>
+            <div class="box" style="left: 23px; top: 84px;">('Lawrence M.', 'Kane')</div>
+            <div class="box" style="left: 133px; top: 233px;">('Joseph Lawrence', 'Kane')</div>
+            <div class="box" style="left: 217px; top: 54px;">('Mary Margaret', 'Kane')</div>
+            <div class="box" style="left: 395px; top: 339px;">('George Philip', 'Kane')</div>
+            <div class="box" style="left: 378px; top: 375px;">('Gertrude Margaret', 'Kane')</div>
+            <div class="box" style="left: 62px; top: 173px;">('Charles Everett', 'Metcalf')</div>
+            <div class="box" style="left: 375px; top: 4px;">('Frederick', 'Kane')</div>
+            <div class="box" style="left: 96px; top: 355px;">('Humphrey Charles', 'Mahoney')</div>
+            <div class="box" style="left: 444px; top: 187px;">('Daniel', 'Mahoney')</div>
+            <div class="box" style="left: 385px; top: 131px;">('Mary E.', 'Mahoney')</div>
+            <div class="box" style="left: 233px; top: 57px;">('William Henry', 'Mahoney')</div>
+            <div class="box" style="left: 144px; top: 166px;">('Frances Josephine', 'Mahoney')</div>
+            <div class="box" style="left: 393px; top: 141px;">('Louis Leo', 'Twomey')</div>
+            <div class="box" style="left: 40px; top: 361px;">('Annie', 'Mahoney')</div>
+            <div class="box" style="left: 76px; top: 267px;">('Henry Joseph', 'Mahoney')</div>
+            <div class="box" style="left: 47px; top: 34px;">('Gertrude', 'Mahoney')</div>
+            <div class="box" style="left: 193px; top: 164px;">('Frederick Louis', 'Mahoney')</div>
+            <div class="box" style="left: 26px; top: 172px;">('Mary Elizabeth', 'Farley')</div>
+            <div class="box" style="left: 319px; top: 130px;">('John Thomas', 'Caulfield')</div>
+            <div class="box" style="left: 19px; top: 264px;">('Mary Frances', 'Caulfield')</div>
+            <div class="box" style="left: 323px; top: 286px;">('Frederick', 'Caulfield')</div>
+            <div class="box" style="left: 121px; top: 11px;">('Edith M.', 'Caulfield')</div>
+            <div class="box" style="left: 465px; top: 245px;">('Henry R.', 'Caulfield')</div>
+            <div class="box" style="left: 69px; top: 163px;">('Florence J.', 'Caulfield')</div>
+            <div class="box" style="left: 478px; top: 213px;">('Elsie G.', 'Caulfield')</div>
+            <div class="box" style="left: 351px; top: 213px;">('Jeanette Dorothea', 'Caulfield')</div>
+            <div class="box" style="left: 6px; top: 356px;">('John Theodore', 'Caulfield')</div>
+            <div class="box" style="left: 19px; top: 100px;">('Alexander G.', 'Crawford')</div>
+            <div class="box" style="left: 493px; top: 222px;">('Julius', 'Baker')</div>
+            <div class="box" style="left: 275px; top: 23px;">('Frank William', 'Finkfelt')</div>
+            <div class="box" style="left: 299px; top: 52px;">('Hazel Elizabeth', 'Baker')</div>
+            <div class="box" style="left: 90px; top: 374px;">('Patrick', 'Field')</div>
+            <div class="box" style="left: 201px; top: 68px;">('Mary', 'Sheehy')</div>
+            <div class="box" style="left: 434px; top: 33px;">('Margaret M.', 'Field')</div>
+            <div class="box" style="left: 128px; top: 105px;">('Michael', 'Hickey')</div>
+            <div class="box" style="left: 142px; top: 338px;">('Catherine', 'Hassett')</div>
+            <div class="box" style="left: 22px; top: 349px;">('James', 'Hickey')</div>
+            <div class="box" style="left: 331px; top: 196px;">('Mary Augusta', 'Hickey')</div>
+            <div class="box" style="left: 293px; top: 228px;">('Francis Benedict', 'Kennedy')</div>
+            <div class="box" style="left: 393px; top: 320px;">('Mary Loretta', 'Kennedy')</div>
+            <div class="box" style="left: 382px; top: 76px;">('Margaret Louise', 'Kennedy')</div>
+            <div class="box" style="left: 500px; top: 256px;">('Michael John', 'Connelly')</div>
+            <div class="box" style="left: 94px; top: 373px;">('Margaret Elizabeth', 'Driscoll')</div>
+            <div class="box" style="left: 26px; top: 17px;">('George William', 'Connelly')</div>
+            <div class="box" style="left: 394px; top: 89px;">('Mary Louise', 'Connelly')</div>
+            <div class="box" style="left: 371px; top: 133px;">('Matthew James', 'McCarthy')</div>
+            <div class="box" style="left: 152px; top: 53px;">('Thomas Francis', 'Burke')</div>
+            <div class="box" style="left: 289px; top: 55px;">('Alicia Augusta', 'Mann')</div>
+            <div class="box" style="left: 455px; top: 268px;">('Charles Joseph', 'Burke')</div>
+            <div class="box" style="left: 114px; top: 53px;">('Margaret Louise', 'Burke')</div>
+            <div class="box" style="left: 360px; top: 135px;">('Charles Joseph', 'Burke')</div>
+            <div class="box" style="left: 62px; top: 350px;">('Thomas Francis', 'Burke')</div>
+            <div class="box" style="left: 387px; top: 125px;">('John Bernard', 'DeVine')</div>
+            <div class="box" style="left: 492px; top: 108px;">('Claire', 'Colton')</div>
+            <div class="box" style="left: 214px; top: 350px;">('Gertrude Ann', 'Miller')</div>
+            <div class="box" style="left: 36px; top: 85px;">('Michael', 'Fitzgerald')</div>
+            <div class="box" style="left: 301px; top: 333px;">('Thomas', 'Wilmouth')</div>
+            <div class="box" style="left: 189px; top: 221px;">('Bridget', '(-----)')</div>
+            <div class="box" style="left: 204px; top: 328px;">('Ellen', 'Wilmouth')</div>
+            <div class="box" style="left: 75px; top: 362px;">('Thomas', 'Fitzgerald')</div>
+            <div class="box" style="left: 305px; top: 43px;">('Philip', 'Cox')</div>
+            <div class="box" style="left: 449px; top: 36px;">('Mary', '(-----)')</div>
+            <div class="box" style="left: 139px; top: 102px;">('Rosanna', 'Cox')</div>
+            <div class="box" style="left: 15px; top: 224px;">('John Francis "Honey Fitz"', 'Fitzgerald')</div>
+            <div class="box" style="left: 119px; top: 94px;">('John', 'Hannon')</div>
+            <div class="box" style="left: 265px; top: 320px;">('Ellen', 'Noonan')</div>
+            <div class="box" style="left: 18px; top: 28px;">('Michael', 'Hannon')</div>
+            <div class="box" style="left: 120px; top: 333px;">('Mary Ann', 'Fitzgerald')</div>
+            <div class="box" style="left: 274px; top: 114px;">('Mary Josephine', 'Hannon')</div>
+            <div class="box" style="left: 398px; top: 368px;">('George', 'Bouvier')</div>
+            <div class="box" style="left: 30px; top: 87px;">('Francois', 'Bouvier')</div>
+            <div class="box" style="left: 27px; top: 342px;">('Benoite', 'Repelin')</div>
+            <div class="box" style="left: 148px; top: 261px;">('Eustache', 'Bouvier')</div>
+            <div class="box" style="left: 194px; top: 249px;">('Melkior', 'Mercier')</div>
+            <div class="box" style="left: 449px; top: 223px;">('Joseph', 'Mercier')</div>
+            <div class="box" style="left: 415px; top: 329px;">('Jean', 'Trintignant')</div>
+            <div class="box" style="left: 173px; top: 363px;">('Therese', 'Paulin')</div>
+            <div class="box" style="left: 399px; top: 138px;">('Anne', 'Trintignant')</div>
+            <div class="box" style="left: 12px; top: 96px;">('Therese', 'Mercier')</div>
+            <div class="box" style="left: 160px; top: 363px;">('Michel', 'Bouvier')</div>
+            <div class="box" style="left: 424px; top: 131px;">('William Alexander', 'Lindsay')</div>
+            <div class="box" style="left: 421px; top: 106px;">('Elizabeth', 'Clifford')</div>
+            <div class="box" style="left: 489px; top: 113px;">('Elizabeth Clifford', 'Lindsay')</div>
+            <div class="box" style="left: 194px; top: 42px;">('John', 'Vernou')</div>
+            <div class="box" style="left: 200px; top: 199px;">('Louise C.', 'Vernou')</div>
+            <div class="box" style="left: 421px; top: 0px;">('John Vernou', 'Bouvier')</div>
+            <div class="box" style="left: 439px; top: 86px;">('Caroline Maslin', 'Ewing')</div>
+            <div class="box" style="left: 174px; top: 334px;">('John Vernou', 'Bouvier')</div>
+            <div class="box" style="left: 30px; top: 355px;">('William R.', 'Sergeant')</div>
+            <div class="box" style="left: 79px; top: 189px;">('Edith', 'Leaman')</div>
+            <div class="box" style="left: 401px; top: 22px;">('Maud Frances', 'Sergeant')</div>
+            <div class="box" style="left: 85px; top: 46px;">('John Vernou', 'Bouvier')</div>
+            <div class="box" style="left: 59px; top: 358px;">('William Sergeant (Bud)', 'Bouvier')</div>
+            <div class="box" style="left: 279px; top: 248px;">('Emma Louise', 'Stone')</div>
+            <div class="box" style="left: 9px; top: 164px;">('Michel', 'Bouvier')</div>
+            <div class="box" style="left: 309px; top: 291px;">('Dr. James', 'Lee')</div>
+            <div class="box" style="left: 413px; top: 220px;">('Mary', 'Norton')</div>
+            <div class="box" style="left: 484px; top: 13px;">('James Thomas', 'Lee')</div>
+            <div class="box" style="left: 74px; top: 218px;">('Margaret A.', 'Merritt')</div>
+            <div class="box" style="left: 131px; top: 27px;">('Janet Norton', 'Lee')</div>
+            <div class="box" style="left: 453px; top: 158px;">('Caroline Lee', 'Bouvier')</div>
+            <div class="box" style="left: 433px; top: 72px;">('Stephen', 'Birmingham')</div>
+            <div class="box" style="left: 414px; top: 163px;">('R. Jackson A. Polson S._Jackson', '')</div>
+            <div class="box" style="left: 364px; top: 83px;">('Santa_Clara Public_Library Santa_Clara _CA', '')</div>
+            <div class="box" style="left: 436px; top: 163px;">('Michael', 'Canfield')</div>
+            <div class="box" style="left: 237px; top: 355px;">('Prince Stanislaus', 'Radziwill')</div>
+            <div class="box" style="left: 429px; top: 10px;">('Anna Christina', 'Radziwill')</div>
+            <div class="box" style="left: 300px; top: 279px;">('Hugh D.', 'Auchincloss')</div>
+            <div class="box" style="left: 393px; top: 80px;">('Janet Jennings', 'Auchincloss')</div>
+            <div class="box" style="left: 357px; top: 190px;">('James Lee', 'Auchincloss')</div>
+            <div class="box" style="left: 50px; top: 174px;">('Lester', 'David')</div>
+            <div class="box" style="left: 350px; top: 60px;">('George', 'Skakel')</div>
+            <div class="box" style="left: 13px; top: 219px;">('Ann', 'Brannack')</div>
+            <div class="box" style="left: 447px; top: 277px;">('Georgeanne', 'Skakel')</div>
+            <div class="box" style="left: 128px; top: 143px;">('James', 'Skakel')</div>
+            <div class="box" style="left: 44px; top: 78px;">('George', 'Skakel')</div>
+            <div class="box" style="left: 400px; top: 256px;">('Rushton', 'Skakel')</div>
+            <div class="box" style="left: 311px; top: 303px;">('Patricia', 'Skakel')</div>
+            <div class="box" style="left: 468px; top: 339px;">('Ann', 'Skakel')</div>
+            <div class="box" style="left: 135px; top: 376px;">('Marcia', 'Chellis')</div>
+            <div class="box" style="left: 119px; top: 184px;">('Harry Wiggin', 'Bennett')</div>
+            <div class="box" style="left: 206px; top: 182px;">('Virginia Joan', 'Stead')</div>
+            <div class="box" style="left: 289px; top: 193px;">('Candace', 'Bennett')</div>
+            <div class="box" style="left: 67px; top: 198px;">('Edwin', 'Schlossberg')</div>
+            <div class="box" style="left: 271px; top: 357px;">('William John Robert', 'Cavendish')</div>
+            <div class="box" style="left: 495px; top: 134px;">('Aristotle Socrates', 'Onassis')</div>
+            <div class="box" style="left: 359px; top: 11px;">('Edward L.', 'Galvin')</div>
+            <div class="box" style="left: 50px; top: 223px;">('Linda', 'HOLMES')</div>
+            <div class="box" style="left: 426px; top: 344px;">('COMMSOFT Library Mountain View CA', '')</div>
+            <div class="box" style="left: 362px; top: 151px;">('Doris Kearns', 'Goodwin')</div>
+            <div class="box" style="left: 322px; top: 137px;">('Gary Boyd', 'Roberts')</div>
+            <div class="box" style="left: 444px; top: 310px;">('James', 'Fitzgerald')</div>
+            <div class="box" style="left: 142px; top: 227px;">('Edmond (Edward)', 'Fitzgerald')</div>
+            <div class="box" style="left: 263px; top: 234px;">('Mary', 'Linnehan')</div>
+        </div>
+    </div>
+
+    <ul>
+        <li><code>@R1@</code> ('Joseph Patrick', 'Kennedy')</li>
+        <li><code>@R2@</code> ('Rose Elizabeth', 'Fitzgerald')</li>
+        <li><code>@R3@</code> ('Joseph Patrick', 'Kennedy')</li>
+        <li><code>@R4@</code> ('John Fitzgerald', 'Kennedy')</li>
+        <li><code>@R6@</code> ('Rosemary (Rose Marie)', 'Kennedy')</li>
+        <li><code>@R7@</code> ('Kathleen "Kick"', 'Kennedy')</li>
+        <li><code>@R8@</code> ('Eunice Mary', 'Kennedy')</li>
+        <li><code>@R9@</code> ('Robert Sargent', 'Shriver')</li>
+        <li><code>@R10@</code> ('Patricia', 'Kennedy')</li>
+        <li><code>@R11@</code> ('Peter', 'Lawford')</li>
+        <li><code>@R12@</code> ('Robert Francis', 'Kennedy')</li>
+        <li><code>@R13@</code> ('Jean Ann', 'Kennedy')</li>
+        <li><code>@R14@</code> ('Edward Moore', 'Kennedy')</li>
+        <li><code>@R15@</code> ('Virginia Joan', 'Bennett')</li>
+        <li><code>@R16@</code> ('Christopher Kennedy', 'Lawford')</li>
+        <li><code>@R17@</code> ('Sydney Maleia', 'Lawford')</li>
+        <li><code>@R18@</code> ('Victoria Francis', 'Lawford')</li>
+        <li><code>@R19@</code> ('Robin Elizabeth', 'Lawford')</li>
+        <li><code>@R20@</code> ('Jean Edith', 'Olsson')</li>
+        <li><code>@R21@</code> ('James Peter', 'McKelvey')</li>
+        <li><code>@R22@</code> ('Robert Sargent', 'Shriver')</li>
+        <li><code>@R23@</code> ('Maria Owings', 'Shriver')</li>
+        <li><code>@R24@</code> ('Timothy Perry', 'Shriver')</li>
+        <li><code>@R25@</code> ('Mark Kennedy', 'Shriver')</li>
+        <li><code>@R26@</code> ('Anthony Paul', 'Shriver')</li>
+        <li><code>@R28@</code> ('Arnold', 'Shwarzenegger')</li>
+        <li><code>@R29@</code> ('Stephen Edward', 'Smith')</li>
+        <li><code>@R30@</code> ('Stephen Edward', 'Smith')</li>
+        <li><code>@R31@</code> ('William Kennedy', 'Smith')</li>
+        <li><code>@R32@</code> ('Amanda Mary', 'Smith')</li>
+        <li><code>@R33@</code> ('Kym Marie', 'Smith')</li>
+        <li><code>@R34@</code> ('Kara Ann', 'Kennedy')</li>
+        <li><code>@R35@</code> ('Edward Moore', 'Kennedy')</li>
+        <li><code>@R36@</code> ('Patrick Joseph', 'Kennedy')</li>
+        <li><code>@R37@</code> ('Jacqueline Lee', 'Bouvier')</li>
+        <li><code>@R39@</code> ('Caroline Bouvier', 'Kennedy')</li>
+        <li><code>@R40@</code> ('John Fitzgerald', 'Kennedy')</li>
+        <li><code>@R41@</code> ('Patrick Bouvier', 'Kennedy')</li>
+        <li><code>@R42@</code> ('Ethel', 'Skakel')</li>
+        <li><code>@R43@</code> ('Kathleen Hartington', 'Kennedy')</li>
+        <li><code>@R44@</code> ('Joseph Patrick', 'Kennedy')</li>
+        <li><code>@R45@</code> ('Robert Francis', 'Kennedy')</li>
+        <li><code>@R46@</code> ('David Anthony', 'Kennedy')</li>
+        <li><code>@R47@</code> ('Mary Courtney', 'Kennedy')</li>
+        <li><code>@R48@</code> ('Michael LeMoyne', 'Kennedy')</li>
+        <li><code>@R49@</code> ('Mary Kerry', 'Kennedy')</li>
+        <li><code>@R50@</code> ('Christopher George', 'Kennedy')</li>
+        <li><code>@R51@</code> ('Matthew Maxwell Taylor', 'Kennedy')</li>
+        <li><code>@R52@</code> ('Douglas Harriman', 'Kennedy')</li>
+        <li><code>@R53@</code> ('Rory Elizabeth Katherine', 'Kennedy')</li>
+        <li><code>@R54@</code> ('David Lee', 'Townsend')</li>
+        <li><code>@R55@</code> ('Meaghan Anne Kennedy', 'Townsend')</li>
+        <li><code>@R56@</code> ('Maeve Fahey Kennedy', 'Townsend')</li>
+        <li><code>@R57@</code> ('Rose Katherine Kennedy', 'Townsend')</li>
+        <li><code>@R58@</code> ('Sheila Brewster', 'Rauch')</li>
+        <li><code>@R59@</code> ('Matthew Rauch', 'Kennedy')</li>
+        <li><code>@R60@</code> ('Joseph Patrick', 'Kennedy')</li>
+        <li><code>@R61@</code> ('Emily Ruth', 'Black')</li>
+        <li><code>@R62@</code> ('Robert Francis', 'Kennedy')</li>
+        <li><code>@R63@</code> ('Jeffrey Robert', 'Ruhe')</li>
+        <li><code>@R64@</code> ('Victoria Denise', 'Gifford')</li>
+        <li><code>@R65@</code> ('Michael LeMoyne', 'KENNEDY')</li>
+        <li><code>@R66@</code> ('Kyle Frances', 'Kennedy')</li>
+        <li><code>@R67@</code> ('Patrick', 'Kennedy')</li>
+        <li><code>@R68@</code> ('Mary Johanna', '(-----)')</li>
+        <li><code>@R69@</code> ('Patrick', 'Kennedy')</li>
+        <li><code>@R70@</code> ('Richard', 'Murphy')</li>
+        <li><code>@R71@</code> ('Mary', '(-----)')</li>
+        <li><code>@R72@</code> ('Bridget', 'Murphy')</li>
+        <li><code>@R73@</code> ('Mary L.', 'Kennedy')</li>
+        <li><code>@R74@</code> ('Joanna L.', 'Kennedy')</li>
+        <li><code>@R75@</code> ('John', 'Kennedy')</li>
+        <li><code>@R76@</code> ('Margaret M.', 'Kennedy')</li>
+        <li><code>@R77@</code> ('Patrick Joseph', 'Kennedy')</li>
+        <li><code>@R78@</code> ('Philip', 'Kane')</li>
+        <li><code>@R79@</code> ('Margaret', 'Murphy')</li>
+        <li><code>@R80@</code> ('Lawrence M.', 'Kane')</li>
+        <li><code>@R81@</code> ('Joseph Lawrence', 'Kane')</li>
+        <li><code>@R82@</code> ('Mary Margaret', 'Kane')</li>
+        <li><code>@R83@</code> ('George Philip', 'Kane')</li>
+        <li><code>@R84@</code> ('Gertrude Margaret', 'Kane')</li>
+        <li><code>@R85@</code> ('Charles Everett', 'Metcalf')</li>
+        <li><code>@R86@</code> ('Frederick', 'Kane')</li>
+        <li><code>@R87@</code> ('Humphrey Charles', 'Mahoney')</li>
+        <li><code>@R88@</code> ('Daniel', 'Mahoney')</li>
+        <li><code>@R89@</code> ('Mary E.', 'Mahoney')</li>
+        <li><code>@R90@</code> ('William Henry', 'Mahoney')</li>
+        <li><code>@R91@</code> ('Frances Josephine', 'Mahoney')</li>
+        <li><code>@R92@</code> ('Louis Leo', 'Twomey')</li>
+        <li><code>@R93@</code> ('Annie', 'Mahoney')</li>
+        <li><code>@R94@</code> ('Henry Joseph', 'Mahoney')</li>
+        <li><code>@R95@</code> ('Gertrude', 'Mahoney')</li>
+        <li><code>@R96@</code> ('Frederick Louis', 'Mahoney')</li>
+        <li><code>@R97@</code> ('Mary Elizabeth', 'Farley')</li>
+        <li><code>@R98@</code> ('John Thomas', 'Caulfield')</li>
+        <li><code>@R99@</code> ('Mary Frances', 'Caulfield')</li>
+        <li><code>@R100@</code> ('Frederick', 'Caulfield')</li>
+        <li><code>@R101@</code> ('Edith M.', 'Caulfield')</li>
+        <li><code>@R102@</code> ('Henry R.', 'Caulfield')</li>
+        <li><code>@R103@</code> ('Florence J.', 'Caulfield')</li>
+        <li><code>@R104@</code> ('Elsie G.', 'Caulfield')</li>
+        <li><code>@R105@</code> ('Jeanette Dorothea', 'Caulfield')</li>
+        <li><code>@R106@</code> ('John Theodore', 'Caulfield')</li>
+        <li><code>@R107@</code> ('Alexander G.', 'Crawford')</li>
+        <li><code>@R108@</code> ('Julius', 'Baker')</li>
+        <li><code>@R109@</code> ('Frank William', 'Finkfelt')</li>
+        <li><code>@R110@</code> ('Hazel Elizabeth', 'Baker')</li>
+        <li><code>@R111@</code> ('Patrick', 'Field')</li>
+        <li><code>@R112@</code> ('Mary', 'Sheehy')</li>
+        <li><code>@R113@</code> ('Margaret M.', 'Field')</li>
+        <li><code>@R114@</code> ('Michael', 'Hickey')</li>
+        <li><code>@R115@</code> ('Catherine', 'Hassett')</li>
+        <li><code>@R116@</code> ('James', 'Hickey')</li>
+        <li><code>@R117@</code> ('Mary Augusta', 'Hickey')</li>
+        <li><code>@R118@</code> ('Francis Benedict', 'Kennedy')</li>
+        <li><code>@R119@</code> ('Mary Loretta', 'Kennedy')</li>
+        <li><code>@R120@</code> ('Margaret Louise', 'Kennedy')</li>
+        <li><code>@R121@</code> ('Michael John', 'Connelly')</li>
+        <li><code>@R122@</code> ('Margaret Elizabeth', 'Driscoll')</li>
+        <li><code>@R123@</code> ('George William', 'Connelly')</li>
+        <li><code>@R124@</code> ('Mary Louise', 'Connelly')</li>
+        <li><code>@R125@</code> ('Matthew James', 'McCarthy')</li>
+        <li><code>@R126@</code> ('Thomas Francis', 'Burke')</li>
+        <li><code>@R127@</code> ('Alicia Augusta', 'Mann')</li>
+        <li><code>@R128@</code> ('Charles Joseph', 'Burke')</li>
+        <li><code>@R129@</code> ('Margaret Louise', 'Burke')</li>
+        <li><code>@R130@</code> ('Charles Joseph', 'Burke')</li>
+        <li><code>@R131@</code> ('Thomas Francis', 'Burke')</li>
+        <li><code>@R132@</code> ('John Bernard', 'DeVine')</li>
+        <li><code>@R133@</code> ('Claire', 'Colton')</li>
+        <li><code>@R134@</code> ('Gertrude Ann', 'Miller')</li>
+        <li><code>@R135@</code> ('Michael', 'Fitzgerald')</li>
+        <li><code>@R136@</code> ('Thomas', 'Wilmouth')</li>
+        <li><code>@R137@</code> ('Bridget', '(-----)')</li>
+        <li><code>@R138@</code> ('Ellen', 'Wilmouth')</li>
+        <li><code>@R139@</code> ('Thomas', 'Fitzgerald')</li>
+        <li><code>@R140@</code> ('Philip', 'Cox')</li>
+        <li><code>@R141@</code> ('Mary', '(-----)')</li>
+        <li><code>@R142@</code> ('Rosanna', 'Cox')</li>
+        <li><code>@R143@</code> ('John Francis "Honey Fitz"', 'Fitzgerald')</li>
+        <li><code>@R144@</code> ('John', 'Hannon')</li>
+        <li><code>@R145@</code> ('Ellen', 'Noonan')</li>
+        <li><code>@R146@</code> ('Michael', 'Hannon')</li>
+        <li><code>@R147@</code> ('Mary Ann', 'Fitzgerald')</li>
+        <li><code>@R148@</code> ('Mary Josephine', 'Hannon')</li>
+        <li><code>@R149@</code> ('George', 'Bouvier')</li>
+        <li><code>@R150@</code> ('Francois', 'Bouvier')</li>
+        <li><code>@R151@</code> ('Benoite', 'Repelin')</li>
+        <li><code>@R152@</code> ('Eustache', 'Bouvier')</li>
+        <li><code>@R153@</code> ('Melkior', 'Mercier')</li>
+        <li><code>@R154@</code> ('Joseph', 'Mercier')</li>
+        <li><code>@R155@</code> ('Jean', 'Trintignant')</li>
+        <li><code>@R156@</code> ('Therese', 'Paulin')</li>
+        <li><code>@R157@</code> ('Anne', 'Trintignant')</li>
+        <li><code>@R158@</code> ('Therese', 'Mercier')</li>
+        <li><code>@R159@</code> ('Michel', 'Bouvier')</li>
+        <li><code>@R160@</code> ('William Alexander', 'Lindsay')</li>
+        <li><code>@R161@</code> ('Elizabeth', 'Clifford')</li>
+        <li><code>@R162@</code> ('Elizabeth Clifford', 'Lindsay')</li>
+        <li><code>@R163@</code> ('John', 'Vernou')</li>
+        <li><code>@R164@</code> ('Louise C.', 'Vernou')</li>
+        <li><code>@R165@</code> ('John Vernou', 'Bouvier')</li>
+        <li><code>@R166@</code> ('Caroline Maslin', 'Ewing')</li>
+        <li><code>@R167@</code> ('John Vernou', 'Bouvier')</li>
+        <li><code>@R168@</code> ('William R.', 'Sergeant')</li>
+        <li><code>@R169@</code> ('Edith', 'Leaman')</li>
+        <li><code>@R170@</code> ('Maud Frances', 'Sergeant')</li>
+        <li><code>@R171@</code> ('John Vernou', 'Bouvier')</li>
+        <li><code>@R172@</code> ('William Sergeant (Bud)', 'Bouvier')</li>
+        <li><code>@R173@</code> ('Emma Louise', 'Stone')</li>
+        <li><code>@R174@</code> ('Michel', 'Bouvier')</li>
+        <li><code>@R175@</code> ('Dr. James', 'Lee')</li>
+        <li><code>@R176@</code> ('Mary', 'Norton')</li>
+        <li><code>@R177@</code> ('James Thomas', 'Lee')</li>
+        <li><code>@R178@</code> ('Margaret A.', 'Merritt')</li>
+        <li><code>@R179@</code> ('Janet Norton', 'Lee')</li>
+        <li><code>@R180@</code> ('Caroline Lee', 'Bouvier')</li>
+        <li><code>@R183@</code> ('Stephen', 'Birmingham')</li>
+        <li><code>@R184@</code> ('R. Jackson A. Polson S._Jackson', '')</li>
+        <li><code>@R185@</code> ('Santa_Clara Public_Library Santa_Clara _CA', '')</li>
+        <li><code>@R186@</code> ('Michael', 'Canfield')</li>
+        <li><code>@R187@</code> ('Prince Stanislaus', 'Radziwill')</li>
+        <li><code>@R188@</code> ('Anna Christina', 'Radziwill')</li>
+        <li><code>@R189@</code> ('Hugh D.', 'Auchincloss')</li>
+        <li><code>@R190@</code> ('Janet Jennings', 'Auchincloss')</li>
+        <li><code>@R191@</code> ('James Lee', 'Auchincloss')</li>
+        <li><code>@R192@</code> ('Lester', 'David')</li>
+        <li><code>@R194@</code> ('George', 'Skakel')</li>
+        <li><code>@R195@</code> ('Ann', 'Brannack')</li>
+        <li><code>@R196@</code> ('Georgeanne', 'Skakel')</li>
+        <li><code>@R197@</code> ('James', 'Skakel')</li>
+        <li><code>@R198@</code> ('George', 'Skakel')</li>
+        <li><code>@R199@</code> ('Rushton', 'Skakel')</li>
+        <li><code>@R200@</code> ('Patricia', 'Skakel')</li>
+        <li><code>@R201@</code> ('Ann', 'Skakel')</li>
+        <li><code>@R202@</code> ('Marcia', 'Chellis')</li>
+        <li><code>@R204@</code> ('Harry Wiggin', 'Bennett')</li>
+        <li><code>@R205@</code> ('Virginia Joan', 'Stead')</li>
+        <li><code>@R206@</code> ('Candace', 'Bennett')</li>
+        <li><code>@R207@</code> ('Edwin', 'Schlossberg')</li>
+        <li><code>@R208@</code> ('William John Robert', 'Cavendish')</li>
+        <li><code>@R209@</code> ('Aristotle Socrates', 'Onassis')</li>
+        <li><code>@R210@</code> ('Edward L.', 'Galvin')</li>
+        <li><code>@R211@</code> ('Linda', 'HOLMES')</li>
+        <li><code>@R212@</code> ('COMMSOFT Library Mountain View CA', '')</li>
+        <li><code>@R214@</code> ('Doris Kearns', 'Goodwin')</li>
+        <li><code>@R216@</code> ('Gary Boyd', 'Roberts')</li>
+        <li><code>@R218@</code> ('James', 'Fitzgerald')</li>
+        <li><code>@R219@</code> ('Edmond (Edward)', 'Fitzgerald')</li>
+        <li><code>@R220@</code> ('Mary', 'Linnehan')</li>
+    <ul>
+
+    <pre>
+{'context': {'cycler': <class 'jinja2.utils.Cycler'>,
+             'dict': <class 'dict'>,
+             'family_tree': <familytreepage.family_tree.FamilyTree object at 0x103724e50>,
+             'graphic_size': (600, 400),
+             'individual_positions': {'@R100@': (...),
+                                      '@R101@': (...),
+                                      '@R102@': (...),
+                                      '@R103@': (...),
+                                      '@R104@': (...),
+                                      '@R105@': (...),
+                                      '@R106@': (...),
+                                      '@R107@': (...),
+                                      '@R108@': (...),
+                                      '@R109@': (...),
+                                      '@R10@': (...),
+                                      '@R110@': (...),
+                                      '@R111@': (...),
+                                      '@R112@': (...),
+                                      '@R113@': (...),
+                                      '@R114@': (...),
+                                      '@R115@': (...),
+                                      '@R116@': (...),
+                                      '@R117@': (...),
+                                      '@R118@': (...),
+                                      '@R119@': (...),
+                                      '@R11@': (...),
+                                      '@R120@': (...),
+                                      '@R121@': (...),
+                                      '@R122@': (...),
+                                      '@R123@': (...),
+                                      '@R124@': (...),
+                                      '@R125@': (...),
+                                      '@R126@': (...),
+                                      '@R127@': (...),
+                                      '@R128@': (...),
+                                      '@R129@': (...),
+                                      '@R12@': (...),
+                                      '@R130@': (...),
+                                      '@R131@': (...),
+                                      '@R132@': (...),
+                                      '@R133@': (...),
+                                      '@R134@': (...),
+                                      '@R135@': (...),
+                                      '@R136@': (...),
+                                      '@R137@': (...),
+                                      '@R138@': (...),
+                                      '@R139@': (...),
+                                      '@R13@': (...),
+                                      '@R140@': (...),
+                                      '@R141@': (...),
+                                      '@R142@': (...),
+                                      '@R143@': (...),
+                                      '@R144@': (...),
+                                      '@R145@': (...),
+                                      '@R146@': (...),
+                                      '@R147@': (...),
+                                      '@R148@': (...),
+                                      '@R149@': (...),
+                                      '@R14@': (...),
+                                      '@R150@': (...),
+                                      '@R151@': (...),
+                                      '@R152@': (...),
+                                      '@R153@': (...),
+                                      '@R154@': (...),
+                                      '@R155@': (...),
+                                      '@R156@': (...),
+                                      '@R157@': (...),
+                                      '@R158@': (...),
+                                      '@R159@': (...),
+                                      '@R15@': (...),
+                                      '@R160@': (...),
+                                      '@R161@': (...),
+                                      '@R162@': (...),
+                                      '@R163@': (...),
+                                      '@R164@': (...),
+                                      '@R165@': (...),
+                                      '@R166@': (...),
+                                      '@R167@': (...),
+                                      '@R168@': (...),
+                                      '@R169@': (...),
+                                      '@R16@': (...),
+                                      '@R170@': (...),
+                                      '@R171@': (...),
+                                      '@R172@': (...),
+                                      '@R173@': (...),
+                                      '@R174@': (...),
+                                      '@R175@': (...),
+                                      '@R176@': (...),
+                                      '@R177@': (...),
+                                      '@R178@': (...),
+                                      '@R179@': (...),
+                                      '@R17@': (...),
+                                      '@R180@': (...),
+                                      '@R183@': (...),
+                                      '@R184@': (...),
+                                      '@R185@': (...),
+                                      '@R186@': (...),
+                                      '@R187@': (...),
+                                      '@R188@': (...),
+                                      '@R189@': (...),
+                                      '@R18@': (...),
+                                      '@R190@': (...),
+                                      '@R191@': (...),
+                                      '@R192@': (...),
+                                      '@R194@': (...),
+                                      '@R195@': (...),
+                                      '@R196@': (...),
+                                      '@R197@': (...),
+                                      '@R198@': (...),
+                                      '@R199@': (...),
+                                      '@R19@': (...),
+                                      '@R1@': (...),
+                                      '@R200@': (...),
+                                      '@R201@': (...),
+                                      '@R202@': (...),
+                                      '@R204@': (...),
+                                      '@R205@': (...),
+                                      '@R206@': (...),
+                                      '@R207@': (...),
+                                      '@R208@': (...),
+                                      '@R209@': (...),
+                                      '@R20@': (...),
+                                      '@R210@': (...),
+                                      '@R211@': (...),
+                                      '@R212@': (...),
+                                      '@R214@': (...),
+                                      '@R216@': (...),
+                                      '@R218@': (...),
+                                      '@R219@': (...),
+                                      '@R21@': (...),
+                                      '@R220@': (...),
+                                      '@R22@': (...),
+                                      '@R23@': (...),
+                                      '@R24@': (...),
+                                      '@R25@': (...),
+                                      '@R26@': (...),
+                                      '@R28@': (...),
+                                      '@R29@': (...),
+                                      '@R2@': (...),
+                                      '@R30@': (...),
+                                      '@R31@': (...),
+                                      '@R32@': (...),
+                                      '@R33@': (...),
+                                      '@R34@': (...),
+                                      '@R35@': (...),
+                                      '@R36@': (...),
+                                      '@R37@': (...),
+                                      '@R39@': (...),
+                                      '@R3@': (...),
+                                      '@R40@': (...),
+                                      '@R41@': (...),
+                                      '@R42@': (...),
+                                      '@R43@': (...),
+                                      '@R44@': (...),
+                                      '@R45@': (...),
+                                      '@R46@': (...),
+                                      '@R47@': (...),
+                                      '@R48@': (...),
+                                      '@R49@': (...),
+                                      '@R4@': (...),
+                                      '@R50@': (...),
+                                      '@R51@': (...),
+                                      '@R52@': (...),
+                                      '@R53@': (...),
+                                      '@R54@': (...),
+                                      '@R55@': (...),
+                                      '@R56@': (...),
+                                      '@R57@': (...),
+                                      '@R58@': (...),
+                                      '@R59@': (...),
+                                      '@R60@': (...),
+                                      '@R61@': (...),
+                                      '@R62@': (...),
+                                      '@R63@': (...),
+                                      '@R64@': (...),
+                                      '@R65@': (...),
+                                      '@R66@': (...),
+                                      '@R67@': (...),
+                                      '@R68@': (...),
+                                      '@R69@': (...),
+                                      '@R6@': (...),
+                                      '@R70@': (...),
+                                      '@R71@': (...),
+                                      '@R72@': (...),
+                                      '@R73@': (...),
+                                      '@R74@': (...),
+                                      '@R75@': (...),
+                                      '@R76@': (...),
+                                      '@R77@': (...),
+                                      '@R78@': (...),
+                                      '@R79@': (...),
+                                      '@R7@': (...),
+                                      '@R80@': (...),
+                                      '@R81@': (...),
+                                      '@R82@': (...),
+                                      '@R83@': (...),
+                                      '@R84@': (...),
+                                      '@R85@': (...),
+                                      '@R86@': (...),
+                                      '@R87@': (...),
+                                      '@R88@': (...),
+                                      '@R89@': (...),
+                                      '@R8@': (...),
+                                      '@R90@': (...),
+                                      '@R91@': (...),
+                                      '@R92@': (...),
+                                      '@R93@': (...),
+                                      '@R94@': (...),
+                                      '@R95@': (...),
+                                      '@R96@': (...),
+                                      '@R97@': (...),
+                                      '@R98@': (...),
+                                      '@R99@': (...),
+                                      '@R9@': (...)},
+             'individuals': {'@R100@': Individual(ptr='@R100@', name=('Frederick', 'Caulfield'), birth='20 JUN 1886', death=UncertainDate(?. ?. ?.), child_of_family=['@F25@'], spouse_of_family=[]),
+                             '@R101@': Individual(ptr='@R101@', name=('Edith M.', 'Caulfield'), birth='8 APR 1888', death='6 APR 1943', child_of_family=['@F25@'], spouse_of_family=['@F27@']),
+                             '@R102@': Individual(ptr='@R102@', name=('Henry R.', 'Caulfield'), birth='MAY 1889', death='27 APR 1925', child_of_family=['@F25@'], spouse_of_family=[]),
+                             '@R103@': Individual(ptr='@R103@', name=('Florence J.', 'Caulfield'), birth='19 NOV 1891', death='10 AUG 1892', child_of_family=['@F25@'], spouse_of_family=[]),
+                             '@R104@': Individual(ptr='@R104@', name=('Elsie G.', 'Caulfield'), birth='OCT 1894', death='8 FEB 1914', child_of_family=['@F25@'], spouse_of_family=[]),
+                             '@R105@': Individual(ptr='@R105@', name=('Jeanette Dorothea', 'Caulfield'), birth='FEB 1896', death='1 JUN 1953', child_of_family=['@F25@'], spouse_of_family=['@F28@']),
+                             '@R106@': Individual(ptr='@R106@', name=('John Theodore', 'Caulfield'), birth='3 JUN 1899', death='18 AUG 1966', child_of_family=['@F25@'], spouse_of_family=['@F29@']),
+                             '@R107@': Individual(ptr='@R107@', name=('Alexander G.', 'Crawford'), birth='ABT 1882', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F26@']),
+                             '@R108@': Individual(ptr='@R108@', name=('Julius', 'Baker'), birth='FEB 1891', death='2 DEC 1928', child_of_family=[], spouse_of_family=['@F27@']),
+                             '@R109@': Individual(ptr='@R109@', name=('Frank William', 'Finkfelt'), birth='16 NOV 1894', death='3 FEB 1960', child_of_family=[], spouse_of_family=['@F28@']),
+                             '@R10@': Individual(ptr='@R10@', name=('Patricia', 'Kennedy'), birth='6 MAY 1924', death=UncertainDate(?. ?. ?.), child_of_family=['@F0@'], spouse_of_family=['@F2@']),
+                             '@R110@': Individual(ptr='@R110@', name=('Hazel Elizabeth', 'Baker'), birth='29 NOV 1902', death='15 JUL 1968', child_of_family=[], spouse_of_family=['@F29@']),
+                             '@R111@': Individual(ptr='@R111@', name=('Patrick', 'Field'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F30@']),
+                             '@R112@': Individual(ptr='@R112@', name=('Mary', 'Sheehy'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F30@']),
+                             '@R113@': Individual(ptr='@R113@', name=('Margaret M.', 'Field'), birth='ABT 1836', death='5 JUN 1911', child_of_family=['@F30@'], spouse_of_family=['@F32@']),
+                             '@R114@': Individual(ptr='@R114@', name=('Michael', 'Hickey'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F31@']),
+                             '@R115@': Individual(ptr='@R115@', name=('Catherine', 'Hassett'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F31@']),
+                             '@R116@': Individual(ptr='@R116@', name=('James', 'Hickey'), birth='1836', death='22 NOV 1900', child_of_family=['@F31@'], spouse_of_family=['@F32@']),
+                             '@R117@': Individual(ptr='@R117@', name=('Mary Augusta', 'Hickey'), birth='6 DEC 1857', death='20 MAY 1923', child_of_family=['@F32@'], spouse_of_family=['@F33@']),
+                             '@R118@': Individual(ptr='@R118@', name=('Francis Benedict', 'Kennedy'), birth='11 MAR 1891', death='14 JUN 1892', child_of_family=['@F33@'], spouse_of_family=[]),
+                             '@R119@': Individual(ptr='@R119@', name=('Mary Loretta', 'Kennedy'), birth='6 AUG 1892', death='18 NOV 1972', child_of_family=['@F33@'], spouse_of_family=['@F35@']),
+                             '@R11@': Individual(ptr='@R11@', name=('Peter', 'Lawford'), birth='7 SEP 1923', death='24 DEC 1984', child_of_family=[], spouse_of_family=['@F2@']),
+                             '@R120@': Individual(ptr='@R120@', name=('Margaret Louise', 'Kennedy'), birth='22 OCT 1898', death='14 NOV 1974', child_of_family=['@F33@'], spouse_of_family=['@F38@']),
+                             '@R121@': Individual(ptr='@R121@', name=('Michael John', 'Connelly'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F34@']),
+                             '@R122@': Individual(ptr='@R122@', name=('Margaret Elizabeth', 'Driscoll'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F34@']),
+                             '@R123@': Individual(ptr='@R123@', name=('George William', 'Connelly'), birth='10 JUN 1898', death='29 AUG 1971', child_of_family=['@F34@'], spouse_of_family=['@F35@']),
+                             '@R124@': Individual(ptr='@R124@', name=('Mary Louise', 'Connelly'), birth='21 OCT 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F35@'], spouse_of_family=['@F36@']),
+                             '@R125@': Individual(ptr='@R125@', name=('Matthew James', 'McCarthy'), birth='8 FEB 1926', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F36@']),
+                             '@R126@': Individual(ptr='@R126@', name=('Thomas Francis', 'Burke'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F37@']),
+                             '@R127@': Individual(ptr='@R127@', name=('Alicia Augusta', 'Mann'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F37@']),
+                             '@R128@': Individual(ptr='@R128@', name=('Charles Joseph', 'Burke'), birth='23 AUG 1899', death='5 APR 1967', child_of_family=['@F37@'], spouse_of_family=['@F38@']),
+                             '@R129@': Individual(ptr='@R129@', name=('Margaret Louise', 'Burke'), birth='2 APR 1926', death=UncertainDate(?. ?. ?.), child_of_family=['@F38@'], spouse_of_family=['@F39@']),
+                             '@R12@': Individual(ptr='@R12@', name=('Robert Francis', 'Kennedy'), birth='20 NOV 1925', death='6 JUN 1968', child_of_family=['@F0@'], spouse_of_family=['@F9@']),
+                             '@R130@': Individual(ptr='@R130@', name=('Charles Joseph', 'Burke'), birth='5 MAY 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F38@'], spouse_of_family=['@F40@']),
+                             '@R131@': Individual(ptr='@R131@', name=('Thomas Francis', 'Burke'), birth='25 MAY 1933', death=UncertainDate(?. ?. ?.), child_of_family=['@F38@'], spouse_of_family=['@F41@']),
+                             '@R132@': Individual(ptr='@R132@', name=('John Bernard', 'DeVine'), birth='5 FEB 1920', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F39@']),
+                             '@R133@': Individual(ptr='@R133@', name=('Claire', 'Colton'), birth='11 NOV 1935', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F40@']),
+                             '@R134@': Individual(ptr='@R134@', name=('Gertrude Ann', 'Miller'), birth='10 OCT 1936', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F41@']),
+                             '@R135@': Individual(ptr='@R135@', name=('Michael', 'Fitzgerald'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=['@F72@'], spouse_of_family=['@F43@']),
+                             '@R136@': Individual(ptr='@R136@', name=('Thomas', 'Wilmouth'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F42@']),
+                             '@R137@': Individual(ptr='@R137@', name=('Bridget', '(-----)'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F42@']),
+                             '@R138@': Individual(ptr='@R138@', name=('Ellen', 'Wilmouth'), birth='1797', death='16 NOV 1875', child_of_family=['@F42@'], spouse_of_family=['@F43@']),
+                             '@R139@': Individual(ptr='@R139@', name=('Thomas', 'Fitzgerald'), birth=UncertainDate(?. ?. ?.), death='19 MAY 1885', child_of_family=['@F43@'], spouse_of_family=['@F45@']),
+                             '@R13@': Individual(ptr='@R13@', name=('Jean Ann', 'Kennedy'), birth='20 FEB 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F0@'], spouse_of_family=['@F6@']),
+                             '@R140@': Individual(ptr='@R140@', name=('Philip', 'Cox'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F44@']),
+                             '@R141@': Individual(ptr='@R141@', name=('Mary', '(-----)'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F44@']),
+                             '@R142@': Individual(ptr='@R142@', name=('Rosanna', 'Cox'), birth='ABT 1836', death='12 MAR 1879', child_of_family=['@F44@'], spouse_of_family=['@F45@']),
+                             '@R143@': Individual(ptr='@R143@', name=('John Francis "Honey Fitz"', 'Fitzgerald'), birth='11 FEB 1863', death='3 OCT 1950', child_of_family=['@F45@'], spouse_of_family=['@F48@']),
+                             '@R144@': Individual(ptr='@R144@', name=('John', 'Hannon'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F46@']),
+                             '@R145@': Individual(ptr='@R145@', name=('Ellen', 'Noonan'), birth='1793', death='28 NOV 1877', child_of_family=[], spouse_of_family=['@F46@']),
+                             '@R146@': Individual(ptr='@R146@', name=('Michael', 'Hannon'), birth='30 SEP 1832', death='1 FEB 1900', child_of_family=['@F46@'], spouse_of_family=['@F47@']),
+                             '@R147@': Individual(ptr='@R147@', name=('Mary Ann', 'Fitzgerald'), birth='ABT 1832', death=UncertainDate(?. ?. ?.), child_of_family=['@F71@'], spouse_of_family=['@F47@']),
+                             '@R148@': Individual(ptr='@R148@', name=('Mary Josephine', 'Hannon'), birth='31 OCT 1865', death='8 AUG 1964', child_of_family=['@F47@'], spouse_of_family=['@F48@']),
+                             '@R149@': Individual(ptr='@R149@', name=('George', 'Bouvier'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F73@']),
+                             '@R14@': Individual(ptr='@R14@', name=('Edward Moore', 'Kennedy'), birth='22 FEB 1932', death=UncertainDate(?. ?. ?.), child_of_family=['@F0@'], spouse_of_family=['@F7@']),
+                             '@R150@': Individual(ptr='@R150@', name=('Francois', 'Bouvier'), birth='BET 30 JAN 1727 AND 30 JAN 1728', death=UncertainDate(?. ?. ?.), child_of_family=['@F73@'], spouse_of_family=['@F49@']),
+                             '@R151@': Individual(ptr='@R151@', name=('Benoite', 'Repelin'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F49@']),
+                             '@R152@': Individual(ptr='@R152@', name=('Eustache', 'Bouvier'), birth='29 MAY 1758', death='1835', child_of_family=['@F49@'], spouse_of_family=['@F52@']),
+                             '@R153@': Individual(ptr='@R153@', name=('Melkior', 'Mercier'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F74@']),
+                             '@R154@': Individual(ptr='@R154@', name=('Joseph', 'Mercier'), birth='ABT 1740', death=UncertainDate(?. ?. ?.), child_of_family=['@F74@'], spouse_of_family=['@F51@']),
+                             '@R155@': Individual(ptr='@R155@', name=('Jean', 'Trintignant'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F50@']),
+                             '@R156@': Individual(ptr='@R156@', name=('Therese', 'Paulin'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F50@']),
+                             '@R157@': Individual(ptr='@R157@', name=('Anne', 'Trintignant'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=['@F50@'], spouse_of_family=['@F51@']),
+                             '@R158@': Individual(ptr='@R158@', name=('Therese', 'Mercier'), birth='12 AUG 1766', death='EST 1815', child_of_family=['@F51@'], spouse_of_family=['@F52@']),
+                             '@R159@': Individual(ptr='@R159@', name=('Michel', 'Bouvier'), birth='2 FEB 1792', death='1874', child_of_family=['@F52@'], spouse_of_family=['@F55@']),
+                             '@R15@': Individual(ptr='@R15@', name=('Virginia Joan', 'Bennett'), birth='9 SEP 1936', death=UncertainDate(?. ?. ?.), child_of_family=['@F67@'], spouse_of_family=['@F7@']),
+                             '@R160@': Individual(ptr='@R160@', name=('William Alexander', 'Lindsay'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F53@']),
+                             '@R161@': Individual(ptr='@R161@', name=('Elizabeth', 'Clifford'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F53@']),
+                             '@R162@': Individual(ptr='@R162@', name=('Elizabeth Clifford', 'Lindsay'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=['@F53@'], spouse_of_family=['@F54@']),
+                             '@R163@': Individual(ptr='@R163@', name=('John', 'Vernou'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F54@']),
+                             '@R164@': Individual(ptr='@R164@', name=('Louise C.', 'Vernou'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=['@F54@'], spouse_of_family=['@F55@']),
+                             '@R165@': Individual(ptr='@R165@', name=('John Vernou', 'Bouvier'), birth='1843', death='1926', child_of_family=['@F55@'], spouse_of_family=['@F56@']),
+                             '@R166@': Individual(ptr='@R166@', name=('Caroline Maslin', 'Ewing'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F56@']),
+                             '@R167@': Individual(ptr='@R167@', name=('John Vernou', 'Bouvier'), birth='1865', death='14 JAN 1948', child_of_family=['@F56@'], spouse_of_family=['@F58@']),
+                             '@R168@': Individual(ptr='@R168@', name=('William R.', 'Sergeant'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F57@']),
+                             '@R169@': Individual(ptr='@R169@', name=('Edith', 'Leaman'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F57@']),
+                             '@R16@': Individual(ptr='@R16@', name=('Christopher Kennedy', 'Lawford'), birth='29 MAR 1955', death=UncertainDate(?. ?. ?.), child_of_family=['@F2@'], spouse_of_family=['@F3@']),
+                             '@R170@': Individual(ptr='@R170@', name=('Maud Frances', 'Sergeant'), birth=UncertainDate(?. ?. ?.), death='3 APR 1940', child_of_family=['@F57@'], spouse_of_family=['@F58@']),
+                             '@R171@': Individual(ptr='@R171@', name=('John Vernou', 'Bouvier'), birth='19 MAY 1891', death='2 AUG 1957', child_of_family=['@F58@'], spouse_of_family=['@F62@']),
+                             '@R172@': Individual(ptr='@R172@', name=('William Sergeant (Bud)', 'Bouvier'), birth='1893', death='8 OCT 1929', child_of_family=['@F58@'], spouse_of_family=['@F59@']),
+                             '@R173@': Individual(ptr='@R173@', name=('Emma Louise', 'Stone'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F59@']),
+                             '@R174@': Individual(ptr='@R174@', name=('Michel', 'Bouvier'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=['@F59@'], spouse_of_family=[]),
+                             '@R175@': Individual(ptr='@R175@', name=('Dr. James', 'Lee'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F60@']),
+                             '@R176@': Individual(ptr='@R176@', name=('Mary', 'Norton'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F60@']),
+                             '@R177@': Individual(ptr='@R177@', name=('James Thomas', 'Lee'), birth='1877', death=UncertainDate(?. ?. ?.), child_of_family=['@F60@'], spouse_of_family=['@F61@']),
+                             '@R178@': Individual(ptr='@R178@', name=('Margaret A.', 'Merritt'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F61@']),
+                             '@R179@': Individual(ptr='@R179@', name=('Janet Norton', 'Lee'), birth='3 DEC 1907', death='22 JUL 1989', child_of_family=['@F61@'], spouse_of_family=['@F62@', '@F65@']),
+                             '@R17@': Individual(ptr='@R17@', name=('Sydney Maleia', 'Lawford'), birth='25 AUG 1956', death=UncertainDate(?. ?. ?.), child_of_family=['@F2@'], spouse_of_family=['@F4@']),
+                             '@R180@': Individual(ptr='@R180@', name=('Caroline Lee', 'Bouvier'), birth='1933', death=UncertainDate(?. ?. ?.), child_of_family=['@F62@'], spouse_of_family=['@F63@', '@F64@']),
+                             '@R183@': Individual(ptr='@R183@', name=('Stephen', 'Birmingham'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R184@': Individual(ptr='@R184@', name=('R. Jackson A. Polson S._Jackson', ''), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R185@': Individual(ptr='@R185@', name=('Santa_Clara Public_Library Santa_Clara _CA', ''), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R186@': Individual(ptr='@R186@', name=('Michael', 'Canfield'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F63@']),
+                             '@R187@': Individual(ptr='@R187@', name=('Prince Stanislaus', 'Radziwill'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F64@']),
+                             '@R188@': Individual(ptr='@R188@', name=('Anna Christina', 'Radziwill'), birth='MAR 1959', death=UncertainDate(?. ?. ?.), child_of_family=['@F64@'], spouse_of_family=[]),
+                             '@R189@': Individual(ptr='@R189@', name=('Hugh D.', 'Auchincloss'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F65@']),
+                             '@R18@': Individual(ptr='@R18@', name=('Victoria Francis', 'Lawford'), birth='4 NOV 1958', death=UncertainDate(?. ?. ?.), child_of_family=['@F2@'], spouse_of_family=[]),
+                             '@R190@': Individual(ptr='@R190@', name=('Janet Jennings', 'Auchincloss'), birth='1945', death=UncertainDate(?. ?. ?.), child_of_family=['@F65@'], spouse_of_family=[]),
+                             '@R191@': Individual(ptr='@R191@', name=('James Lee', 'Auchincloss'), birth='1947', death=UncertainDate(?. ?. ?.), child_of_family=['@F65@'], spouse_of_family=[]),
+                             '@R192@': Individual(ptr='@R192@', name=('Lester', 'David'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R194@': Individual(ptr='@R194@', name=('George', 'Skakel'), birth='1892', death='1955', child_of_family=[], spouse_of_family=['@F66@']),
+                             '@R195@': Individual(ptr='@R195@', name=('Ann', 'Brannack'), birth='ABT 1892', death='1955', child_of_family=[], spouse_of_family=['@F66@']),
+                             '@R196@': Individual(ptr='@R196@', name=('Georgeanne', 'Skakel'), birth='BEF 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F66@'], spouse_of_family=[]),
+                             '@R197@': Individual(ptr='@R197@', name=('James', 'Skakel'), birth='BEF 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F66@'], spouse_of_family=[]),
+                             '@R198@': Individual(ptr='@R198@', name=('George', 'Skakel'), birth='BEF 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F66@'], spouse_of_family=[]),
+                             '@R199@': Individual(ptr='@R199@', name=('Rushton', 'Skakel'), birth='BEF 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F66@'], spouse_of_family=[]),
+                             '@R19@': Individual(ptr='@R19@', name=('Robin Elizabeth', 'Lawford'), birth='2 JUL 1961', death=UncertainDate(?. ?. ?.), child_of_family=['@F2@'], spouse_of_family=[]),
+                             '@R1@': Individual(ptr='@R1@', name=('Joseph Patrick', 'Kennedy'), birth='6 SEP 1888', death='18 NOV 1969', child_of_family=['@F33@'], spouse_of_family=['@F0@']),
+                             '@R200@': Individual(ptr='@R200@', name=('Patricia', 'Skakel'), birth='BEF 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F66@'], spouse_of_family=[]),
+                             '@R201@': Individual(ptr='@R201@', name=('Ann', 'Skakel'), birth='AFT 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F66@'], spouse_of_family=[]),
+                             '@R202@': Individual(ptr='@R202@', name=('Marcia', 'Chellis'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R204@': Individual(ptr='@R204@', name=('Harry Wiggin', 'Bennett'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F67@']),
+                             '@R205@': Individual(ptr='@R205@', name=('Virginia Joan', 'Stead'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F67@']),
+                             '@R206@': Individual(ptr='@R206@', name=('Candace', 'Bennett'), birth='1939', death=UncertainDate(?. ?. ?.), child_of_family=['@F67@'], spouse_of_family=[]),
+                             '@R207@': Individual(ptr='@R207@', name=('Edwin', 'Schlossberg'), birth='ABT 1945', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F68@']),
+                             '@R208@': Individual(ptr='@R208@', name=('William John Robert', 'Cavendish'), birth='10 DEC 1917', death='10 SEP 1944', child_of_family=[], spouse_of_family=['@F69@']),
+                             '@R209@': Individual(ptr='@R209@', name=('Aristotle Socrates', 'Onassis'), birth=UncertainDate(?. ?. ?.), death='15 MAR 1975', child_of_family=[], spouse_of_family=['@F70@']),
+                             '@R20@': Individual(ptr='@R20@', name=('Jean Edith', 'Olsson'), birth='24 JAN 1955', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F3@']),
+                             '@R210@': Individual(ptr='@R210@', name=('Edward L.', 'Galvin'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R211@': Individual(ptr='@R211@', name=('Linda', 'HOLMES'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R212@': Individual(ptr='@R212@', name=('COMMSOFT Library Mountain View CA', ''), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R214@': Individual(ptr='@R214@', name=('Doris Kearns', 'Goodwin'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R216@': Individual(ptr='@R216@', name=('Gary Boyd', 'Roberts'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=[]),
+                             '@R218@': Individual(ptr='@R218@', name=('James', 'Fitzgerald'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F72@']),
+                             '@R219@': Individual(ptr='@R219@', name=('Edmond (Edward)', 'Fitzgerald'), birth='1798', death='1883', child_of_family=['@F72@'], spouse_of_family=['@F71@']),
+                             '@R21@': Individual(ptr='@R21@', name=('James Peter', 'McKelvey'), birth='4 APR 1955', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F4@']),
+                             '@R220@': Individual(ptr='@R220@', name=('Mary', 'Linnehan'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F71@']),
+                             '@R22@': Individual(ptr='@R22@', name=('Robert Sargent', 'Shriver'), birth='28 APR 1954', death=UncertainDate(?. ?. ?.), child_of_family=['@F1@'], spouse_of_family=[]),
+                             '@R23@': Individual(ptr='@R23@', name=('Maria Owings', 'Shriver'), birth='6 NOV 1955', death=UncertainDate(?. ?. ?.), child_of_family=['@F1@'], spouse_of_family=['@F5@']),
+                             '@R24@': Individual(ptr='@R24@', name=('Timothy Perry', 'Shriver'), birth='29 AUG 1959', death=UncertainDate(?. ?. ?.), child_of_family=['@F1@'], spouse_of_family=[]),
+                             '@R25@': Individual(ptr='@R25@', name=('Mark Kennedy', 'Shriver'), birth='17 FEB 1964', death=UncertainDate(?. ?. ?.), child_of_family=['@F1@'], spouse_of_family=[]),
+                             '@R26@': Individual(ptr='@R26@', name=('Anthony Paul', 'Shriver'), birth='20 JUL 1965', death=UncertainDate(?. ?. ?.), child_of_family=['@F1@'], spouse_of_family=[]),
+                             '@R28@': Individual(ptr='@R28@', name=('Arnold', 'Shwarzenegger'), birth='ABT 1955', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F5@']),
+                             '@R29@': Individual(ptr='@R29@', name=('Stephen Edward', 'Smith'), birth='24 SEP 1927', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F6@']),
+                             '@R2@': Individual(ptr='@R2@', name=('Rose Elizabeth', 'Fitzgerald'), birth='22 JUL 1890', death='22 JAN 1995', child_of_family=['@F48@'], spouse_of_family=['@F0@']),
+                             '@R30@': Individual(ptr='@R30@', name=('Stephen Edward', 'Smith'), birth='28 JUN 1957', death=UncertainDate(?. ?. ?.), child_of_family=['@F6@'], spouse_of_family=[]),
+                             '@R31@': Individual(ptr='@R31@', name=('William Kennedy', 'Smith'), birth='4 SEP 1960', death=UncertainDate(?. ?. ?.), child_of_family=['@F6@'], spouse_of_family=[]),
+                             '@R32@': Individual(ptr='@R32@', name=('Amanda Mary', 'Smith'), birth='30 APR 1967', death=UncertainDate(?. ?. ?.), child_of_family=['@F6@'], spouse_of_family=[]),
+                             '@R33@': Individual(ptr='@R33@', name=('Kym Marie', 'Smith'), birth='29 NOV 1972', death=UncertainDate(?. ?. ?.), child_of_family=['@F6@'], spouse_of_family=[]),
+                             '@R34@': Individual(ptr='@R34@', name=('Kara Ann', 'Kennedy'), birth='27 FEB 1960', death=UncertainDate(?. ?. ?.), child_of_family=['@F7@'], spouse_of_family=[]),
+                             '@R35@': Individual(ptr='@R35@', name=('Edward Moore', 'Kennedy'), birth='26 SEP 1961', death=UncertainDate(?. ?. ?.), child_of_family=['@F7@'], spouse_of_family=[]),
+                             '@R36@': Individual(ptr='@R36@', name=('Patrick Joseph', 'Kennedy'), birth='14 JUL 1967', death=UncertainDate(?. ?. ?.), child_of_family=['@F7@'], spouse_of_family=[]),
+                             '@R37@': Individual(ptr='@R37@', name=('Jacqueline Lee', 'Bouvier'), birth='28 JUL 1929', death=UncertainDate(?. ?. ?.), child_of_family=['@F62@'], spouse_of_family=['@F8@', '@F70@']),
+                             '@R39@': Individual(ptr='@R39@', name=('Caroline Bouvier', 'Kennedy'), birth='27 NOV 1957', death=UncertainDate(?. ?. ?.), child_of_family=['@F8@'], spouse_of_family=['@F68@']),
+                             '@R3@': Individual(ptr='@R3@', name=('Joseph Patrick', 'Kennedy'), birth='25 JUL 1915', death='12 AUG 1944', child_of_family=['@F0@'], spouse_of_family=[]),
+                             '@R40@': Individual(ptr='@R40@', name=('John Fitzgerald', 'Kennedy'), birth='25 NOV 1960', death='16 JUL 1999', child_of_family=['@F8@'], spouse_of_family=[]),
+                             '@R41@': Individual(ptr='@R41@', name=('Patrick Bouvier', 'Kennedy'), birth='7 AUG 1963', death='9 AUG 1963', child_of_family=['@F8@'], spouse_of_family=[]),
+                             '@R42@': Individual(ptr='@R42@', name=('Ethel', 'Skakel'), birth='11 APR 1928', death=UncertainDate(?. ?. ?.), child_of_family=['@F66@'], spouse_of_family=['@F9@']),
+                             '@R43@': Individual(ptr='@R43@', name=('Kathleen Hartington', 'Kennedy'), birth='4 JUL 1951', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=['@F10@']),
+                             '@R44@': Individual(ptr='@R44@', name=('Joseph Patrick', 'Kennedy'), birth='24 SEP 1952', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=['@F11@']),
+                             '@R45@': Individual(ptr='@R45@', name=('Robert Francis', 'Kennedy'), birth='17 JAN 1954', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=['@F12@']),
+                             '@R46@': Individual(ptr='@R46@', name=('David Anthony', 'Kennedy'), birth='15 JUN 1955', death='25 APR 1984', child_of_family=['@F9@'], spouse_of_family=[]),
+                             '@R47@': Individual(ptr='@R47@', name=('Mary Courtney', 'Kennedy'), birth='9 SEP 1956', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=['@F13@']),
+                             '@R48@': Individual(ptr='@R48@', name=('Michael LeMoyne', 'Kennedy'), birth='27 FEB 1958', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=['@F14@']),
+                             '@R49@': Individual(ptr='@R49@', name=('Mary Kerry', 'Kennedy'), birth='8 SEP 1959', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=[]),
+                             '@R4@': Individual(ptr='@R4@', name=('John Fitzgerald', 'Kennedy'), birth='29 MAY 1917', death='22 NOV 1963', child_of_family=['@F0@'], spouse_of_family=['@F8@']),
+                             '@R50@': Individual(ptr='@R50@', name=('Christopher George', 'Kennedy'), birth='4 JUL 1963', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=[]),
+                             '@R51@': Individual(ptr='@R51@', name=('Matthew Maxwell Taylor', 'Kennedy'), birth='9 JAN 1965', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=[]),
+                             '@R52@': Individual(ptr='@R52@', name=('Douglas Harriman', 'Kennedy'), birth='24 MAR 1967', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=[]),
+                             '@R53@': Individual(ptr='@R53@', name=('Rory Elizabeth Katherine', 'Kennedy'), birth='12 DEC 1968', death=UncertainDate(?. ?. ?.), child_of_family=['@F9@'], spouse_of_family=[]),
+                             '@R54@': Individual(ptr='@R54@', name=('David Lee', 'Townsend'), birth='17 NOV 1947', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F10@']),
+                             '@R55@': Individual(ptr='@R55@', name=('Meaghan Anne Kennedy', 'Townsend'), birth='7 NOV 1977', death=UncertainDate(?. ?. ?.), child_of_family=['@F10@'], spouse_of_family=[]),
+                             '@R56@': Individual(ptr='@R56@', name=('Maeve Fahey Kennedy', 'Townsend'), birth='1 NOV 1979', death=UncertainDate(?. ?. ?.), child_of_family=['@F10@'], spouse_of_family=[]),
+                             '@R57@': Individual(ptr='@R57@', name=('Rose Katherine Kennedy', 'Townsend'), birth='17 DEC 1983', death=UncertainDate(?. ?. ?.), child_of_family=['@F10@'], spouse_of_family=[]),
+                             '@R58@': Individual(ptr='@R58@', name=('Sheila Brewster', 'Rauch'), birth='22 MAR 1949', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F11@']),
+                             '@R59@': Individual(ptr='@R59@', name=('Matthew Rauch', 'Kennedy'), birth='4 OCT 1980', death=UncertainDate(?. ?. ?.), child_of_family=['@F11@'], spouse_of_family=[]),
+                             '@R60@': Individual(ptr='@R60@', name=('Joseph Patrick', 'Kennedy'), birth='4 FEB 1980', death=UncertainDate(?. ?. ?.), child_of_family=['@F11@'], spouse_of_family=[]),
+                             '@R61@': Individual(ptr='@R61@', name=('Emily Ruth', 'Black'), birth='15 OCT 1957', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F12@']),
+                             '@R62@': Individual(ptr='@R62@', name=('Robert Francis', 'Kennedy'), birth='2 SEP 1984', death=UncertainDate(?. ?. ?.), child_of_family=['@F12@'], spouse_of_family=[]),
+                             '@R63@': Individual(ptr='@R63@', name=('Jeffrey Robert', 'Ruhe'), birth='21 FEB 1952', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F13@']),
+                             '@R64@': Individual(ptr='@R64@', name=('Victoria Denise', 'Gifford'), birth='20 FEB 1957', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F14@']),
+                             '@R65@': Individual(ptr='@R65@', name=('Michael LeMoyne', 'KENNEDY'), birth='9 JAN 1983', death=UncertainDate(?. ?. ?.), child_of_family=['@F14@'], spouse_of_family=[]),
+                             '@R66@': Individual(ptr='@R66@', name=('Kyle Frances', 'Kennedy'), birth='6 JUL 1984', death=UncertainDate(?. ?. ?.), child_of_family=['@F14@'], spouse_of_family=[]),
+                             '@R67@': Individual(ptr='@R67@', name=('Patrick', 'Kennedy'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F15@']),
+                             '@R68@': Individual(ptr='@R68@', name=('Mary Johanna', '(-----)'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F15@']),
+                             '@R69@': Individual(ptr='@R69@', name=('Patrick', 'Kennedy'), birth='ABT 1823', death='22 NOV 1858', child_of_family=['@F15@'], spouse_of_family=['@F17@']),
+                             '@R6@': Individual(ptr='@R6@', name=('Rosemary (Rose Marie)', 'Kennedy'), birth='20 FEB 1920', death=UncertainDate(?. ?. ?.), child_of_family=['@F0@'], spouse_of_family=[]),
+                             '@R70@': Individual(ptr='@R70@', name=('Richard', 'Murphy'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F16@']),
+                             '@R71@': Individual(ptr='@R71@', name=('Mary', '(-----)'), birth=UncertainDate(?. ?. ?.), death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F16@']),
+                             '@R72@': Individual(ptr='@R72@', name=('Bridget', 'Murphy'), birth='1821', death='20 DEC 1888', child_of_family=['@F16@'], spouse_of_family=['@F17@']),
+                             '@R73@': Individual(ptr='@R73@', name=('Mary L.', 'Kennedy'), birth='9 AUG 1851', death='7 MAR 1926', child_of_family=['@F17@'], spouse_of_family=['@F19@']),
+                             '@R74@': Individual(ptr='@R74@', name=('Joanna L.', 'Kennedy'), birth='27 NOV 1852', death='23 FEB 1926', child_of_family=['@F17@'], spouse_of_family=['@F21@']),
+                             '@R75@': Individual(ptr='@R75@', name=('John', 'Kennedy'), birth='4 JAN 1854', death='24 SEP 1855', child_of_family=['@F17@'], spouse_of_family=[]),
+                             '@R76@': Individual(ptr='@R76@', name=('Margaret M.', 'Kennedy'), birth='JUL 1855', death='2 APR 1929', child_of_family=['@F17@'], spouse_of_family=['@F25@']),
+                             '@R77@': Individual(ptr='@R77@', name=('Patrick Joseph', 'Kennedy'), birth='14 JAN 1858', death='18 MAY 1929', child_of_family=['@F17@'], spouse_of_family=['@F33@']),
+                             '@R78@': Individual(ptr='@R78@', name=('Philip', 'Kane'), birth='BEF 1858', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F18@']),
+                             '@R79@': Individual(ptr='@R79@', name=('Margaret', 'Murphy'), birth='BEF 1858', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F18@']),
+                             '@R7@': Individual(ptr='@R7@', name=('Kathleen "Kick"', 'Kennedy'), birth='20 FEB 1920', death='13 MAY 1948', child_of_family=['@F0@'], spouse_of_family=['@F69@']),
+                             '@R80@': Individual(ptr='@R80@', name=('Lawrence M.', 'Kane'), birth='29 NOV 1858', death='19 JUL 1905', child_of_family=['@F18@'], spouse_of_family=['@F19@']),
+                             '@R81@': Individual(ptr='@R81@', name=('Joseph Lawrence', 'Kane'), birth='29 NOV 1883', death='19 MAR 1967', child_of_family=['@F19@'], spouse_of_family=[]),
+                             '@R82@': Individual(ptr='@R82@', name=('Mary Margaret', 'Kane'), birth='25 AUG 1885', death='14 SEP 1885', child_of_family=['@F19@'], spouse_of_family=[]),
+                             '@R83@': Individual(ptr='@R83@', name=('George Philip', 'Kane'), birth='8 SEP 1888', death='6 JUL 1954', child_of_family=['@F19@'], spouse_of_family=[]),
+                             '@R84@': Individual(ptr='@R84@', name=('Gertrude Margaret', 'Kane'), birth='26 MAY 1890', death='14 JAN 1969', child_of_family=['@F19@'], spouse_of_family=['@F20@']),
+                             '@R85@': Individual(ptr='@R85@', name=('Charles Everett', 'Metcalf'), birth='1 NOV 1891', death='2 JUL 1955', child_of_family=[], spouse_of_family=['@F20@']),
+                             '@R86@': Individual(ptr='@R86@', name=('Frederick', 'Kane'), birth='1892', death='15 OCT 1897', child_of_family=['@F19@'], spouse_of_family=[]),
+                             '@R87@': Individual(ptr='@R87@', name=('Humphrey Charles', 'Mahoney'), birth='12 DEC 1847', death='25 AUG 1928', child_of_family=[], spouse_of_family=['@F21@']),
+                             '@R88@': Individual(ptr='@R88@', name=('Daniel', 'Mahoney'), birth='14 OCT 1873', death='20 NOV 1875', child_of_family=['@F21@'], spouse_of_family=[]),
+                             '@R89@': Individual(ptr='@R89@', name=('Mary E.', 'Mahoney'), birth='18 OCT 1875', death='7 DEC 1875', child_of_family=['@F21@'], spouse_of_family=[]),
+                             '@R8@': Individual(ptr='@R8@', name=('Eunice Mary', 'Kennedy'), birth='10 JUL 1921', death=UncertainDate(?. ?. ?.), child_of_family=['@F0@'], spouse_of_family=['@F1@']),
+                             '@R90@': Individual(ptr='@R90@', name=('William Henry', 'Mahoney'), birth='17 MAY 1878', death='10 MAY 1879', child_of_family=['@F21@'], spouse_of_family=[]),
+                             '@R91@': Individual(ptr='@R91@', name=('Frances Josephine', 'Mahoney'), birth='2 MAR 1880', death='13 APR 1963', child_of_family=['@F21@'], spouse_of_family=['@F22@']),
+                             '@R92@': Individual(ptr='@R92@', name=('Louis Leo', 'Twomey'), birth='12 DEC 1879', death='14 JAN 1965', child_of_family=[], spouse_of_family=['@F22@']),
+                             '@R93@': Individual(ptr='@R93@', name=('Annie', 'Mahoney'), birth='13 FEB 1883', death='7 MAY 1889', child_of_family=['@F21@'], spouse_of_family=[]),
+                             '@R94@': Individual(ptr='@R94@', name=('Henry Joseph', 'Mahoney'), birth='15 OCT 1884', death='3 FEB 1961', child_of_family=['@F21@'], spouse_of_family=['@F23@']),
+                             '@R95@': Individual(ptr='@R95@', name=('Gertrude', 'Mahoney'), birth='7 OCT 1886', death='27 JUL 1887', child_of_family=['@F21@'], spouse_of_family=[]),
+                             '@R96@': Individual(ptr='@R96@', name=('Frederick Louis', 'Mahoney'), birth='21 AUG 1890', death='26 OCT 1965', child_of_family=['@F21@'], spouse_of_family=[]),
+                             '@R97@': Individual(ptr='@R97@', name=('Mary Elizabeth', 'Farley'), birth='15 OCT 1884', death='23 APR 1949', child_of_family=[], spouse_of_family=['@F23@']),
+                             '@R98@': Individual(ptr='@R98@', name=('John Thomas', 'Caulfield'), birth='JAN 1861', death='12 JUL 1937', child_of_family=[], spouse_of_family=['@F24@', '@F25@']),
+                             '@R99@': Individual(ptr='@R99@', name=('Mary Frances', 'Caulfield'), birth='8 FEB 1884', death='14 JUN 1938', child_of_family=['@F25@'], spouse_of_family=['@F26@']),
+                             '@R9@': Individual(ptr='@R9@', name=('Robert Sargent', 'Shriver'), birth='9 NOV 1915', death=UncertainDate(?. ?. ?.), child_of_family=[], spouse_of_family=['@F1@'])},
+             'joiner': <class 'jinja2.utils.Joiner'>,
+             'lipsum': <function generate_lorem_ipsum at 0x10ccbbd30>,
+             'namespace': <class 'jinja2.utils.Namespace'>,
+             'range': <class 'range'>},
+ 'filters': ['abs', 'attr', 'batch', 'capitalize', 'center', 'count', 'd',
+             'default', 'dictsort', 'e', 'escape', 'filesizeformat', 'first',
+             'float', 'forceescape', 'format', 'groupby', 'indent', 'int',
+             'join', 'last', 'length', 'list', 'lower', 'map', 'max', 'min',
+             'pprint', 'random', 'reject', 'rejectattr', 'replace', 'reverse',
+             'round', 'safe', 'select', 'selectattr', 'slice', 'sort', 'string',
+             'striptags', 'sum', 'title', 'tojson', 'trim', 'truncate',
+             'unique', 'upper', 'urlencode', 'urlize', 'wordcount', 'wordwrap',
+             'xmlattr'],
+ 'tests': ['!=', '<', '<=', '==', '>', '>=', 'boolean', 'callable', 'defined',
+           'divisibleby', 'eq', 'equalto', 'escaped', 'even', 'false', 'float',
+           'ge', 'greaterthan', 'gt', 'in', 'integer', 'iterable', 'le',
+           'lessthan', 'lower', 'lt', 'mapping', 'ne', 'none', 'number', 'odd',
+           'sameas', 'sequence', 'string', 'true', 'undefined', 'upper']}    </pre>
+
+</body>
+
+</html>
