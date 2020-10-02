@@ -10,22 +10,8 @@
 
         #familytree {
             position: relative;
-
-            min-width: {
-                    {
-                    graphic_size[0]
-                }
-            }
-
-            px;
-
-            min-height: {
-                    {
-                    graphic_size[1]
-                }
-            }
-
-            px;
+            min-width: {{ graphic_size[0] }}px;
+            min-height: {{ graphic_size[1] }}px;
             border: 1px solid black;
             margin: -1px -1px 0 0;
         }
@@ -34,22 +20,8 @@
             position: absolute;
             left: 0px;
             top: 0px;
-
-            width: {
-                    {
-                    graphic_size[0]
-                }
-            }
-
-            px;
-
-            height: {
-                    {
-                    graphic_size[1]
-                }
-            }
-
-            px;
+            width: {{ graphic_size[0] }}px;
+            height: {{ graphic_size[1] }}px;
             border: 1px solid gray;
             margin: -1px -1px 0 0;
         }
