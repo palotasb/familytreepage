@@ -116,17 +116,17 @@ class FamilyTree:
         spouses = flatten(map(self.spouses_of_family, self.own_families_of(at)))
         new_spouses = list(filter(lambda id: id not in level_dict, spouses))
 
-        parents = flatten(map(self.spouses_of_family, self.parent_families_of(at)))
-        new_parents = list(filter(lambda id: id not in level_dict, parents))
-
-        children = flatten(map(self.children_of_family, self.own_families_of(at)))
-        new_children = list(filter(lambda id: id not in level_dict, children))
-
         for spouse in new_spouses:
             level_dict[spouse] = this_level
 
+        parents = flatten(map(self.spouses_of_family, self.parent_families_of(at)))
+        new_parents = list(filter(lambda id: id not in level_dict, parents))
+
         for parent in new_parents:
             level_dict[parent] = this_level - 1
+
+        children = flatten(map(self.children_of_family, self.own_families_of(at)))
+        new_children = list(filter(lambda id: id not in level_dict, children))
 
         for child in new_children:
             level_dict[child] = this_level + 1
