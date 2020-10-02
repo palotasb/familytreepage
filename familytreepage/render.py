@@ -1,4 +1,3 @@
-import random
 from typing import Dict, Tuple
 
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -17,10 +16,7 @@ env = Environment(
 def random_positions_for(
     individuals: Dict[str, Individual], width: int, height: int
 ) -> Dict[str, Tuple[int, int]]:
-    return {
-        id: (random.randint(0, width - 100), random.randint(0, height - 15))
-        for id in individuals.keys()
-    }
+    return {id: (0, 0) for id in individuals.keys()}
 
 
 def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
@@ -37,8 +33,7 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
             for id in family_tree.individuals.keys()
         },
         individuals_own_families={
-            id: family_tree.own_families_of(id)
-            for id in family_tree.individuals.keys()
+            id: family_tree.own_families_of(id) for id in family_tree.individuals.keys()
         },
         families=family_tree.families,
         graphic_size=(width, height),
