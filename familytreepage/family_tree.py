@@ -113,11 +113,17 @@ class FamilyTree:
         flatten = lambda lists: [item for sublist in lists for item in sublist]
         this_level = level_dict[at]
 
+        spouses = flatten(map(self.spouses_of_family, self.own_families_of(at)))
+        new_spouses = list(filter(lambda id: id not in level_dict, spouses))
+
         parents = flatten(map(self.spouses_of_family, self.parent_families_of(at)))
         new_parents = list(filter(lambda id: id not in level_dict, parents))
 
         children = flatten(map(self.children_of_family, self.own_families_of(at)))
         new_children = list(filter(lambda id: id not in level_dict, children))
+
+        for spouse in new_spouses:
+            level_dict[spouse] = this_level
 
         for parent in new_parents:
             level_dict[parent] = this_level - 1
@@ -125,7 +131,10 @@ class FamilyTree:
         for child in new_children:
             level_dict[child] = this_level + 1
 
-        for id in new_parents + new_children:
+        # It is important that this loop is after the other loops and we visit
+        # individuals breadth-first and not depth-first as it will result it more
+        # consistent levels
+        for id in new_spouses + new_parents + new_children:
             self._levels(id, level_dict)
 
     def levels(self, starting_at: IndividualID) -> Dict[IndividualID, int]:
