@@ -1,5 +1,4 @@
 import random
-from types import SimpleNamespace
 from typing import Dict, Tuple
 
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -27,7 +26,7 @@ def random_positions_for(
 def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
 
     width, height = 600, 400
-    params = SimpleNamespace(
+    params = dict(
         family_tree=family_tree,
         individuals=family_tree.individuals,
         individual_positions=random_positions_for(
@@ -37,4 +36,4 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
     )
 
     renderer = env.get_template(template)
-    renderer.stream(params.__dict__).dump(file)
+    renderer.stream(params).dump(file)
