@@ -113,6 +113,14 @@ class FamilyTree:
         )
         return map(lambda edge: edge[1], spouses)
 
+    def children_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
+        all_individuals = self.graph.edges(family_id, data=True)
+        spouses = filter(
+            lambda edge: edge[2]["rel"] == Rel.FamilyChildren.value,
+            all_individuals,
+        )
+        return map(lambda edge: edge[1], spouses)
+
     @staticmethod
     def _is_child_of_family(child_element: Element) -> bool:
         return child_element.get_tag() == Rel.IsChildOfFamily.value

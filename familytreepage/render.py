@@ -38,6 +38,9 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         family_spouses={
             id: family_tree.spouses_of_family(id) for id in family_tree.families.keys()
         },
+        family_children={
+            id: family_tree.children_of_family(id) for id in family_tree.families.keys()
+        },
         families=family_tree.families,
         graphic_size=(width, height),
     )

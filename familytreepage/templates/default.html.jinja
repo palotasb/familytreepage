@@ -85,6 +85,13 @@
                 <li><code>{{ individual_id }}</code></li>
                 {% endfor %}
             </ul>
+            Children of family:
+            <br />
+            <ul>
+                {% for individual_id in family_children[id] %}
+                <li><code>{{ individual_id }}</code></li>
+                {% endfor %}
+            </ul>
         </li>
         {% endfor %}
     </ul>
