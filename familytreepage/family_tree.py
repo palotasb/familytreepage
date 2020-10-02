@@ -90,24 +90,28 @@ class FamilyTree:
                 self._parse_family(element)
 
     def parent_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
-        all_families = self.graph.edges(
-            individual_id, keys=Rel.IsChildOfFamily, data=True
-        )
+        all_families = self.graph.edges(individual_id, data=True)
         parent_families = filter(
-            lambda family_edge: family_edge[2]["rel"] == Rel.IsChildOfFamily.value,
+            lambda edge: edge[2]["rel"] == Rel.IsChildOfFamily.value,
             all_families,
         )
-        return map(lambda family_edge: family_edge[1], parent_families)
+        return map(lambda edge: edge[1], parent_families)
 
     def own_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
-        all_families = self.graph.edges(
-            individual_id, keys=Rel.IsChildOfFamily, data=True
-        )
+        all_families = self.graph.edges(individual_id, data=True)
         parent_families = filter(
-            lambda family_edge: family_edge[2]["rel"] == Rel.IsSpouseOfFamily.value,
+            lambda edge: edge[2]["rel"] == Rel.IsSpouseOfFamily.value,
             all_families,
         )
-        return map(lambda family_edge: family_edge[1], parent_families)
+        return map(lambda edge: edge[1], parent_families)
+
+    def spouses_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
+        all_individuals = self.graph.edges(family_id, data=True)
+        spouses = filter(
+            lambda edge: edge[2]["rel"] == Rel.FamilySpouses.value,
+            all_individuals,
+        )
+        return map(lambda edge: edge[1], spouses)
 
     @staticmethod
     def _is_child_of_family(child_element: Element) -> bool:

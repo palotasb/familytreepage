@@ -4,15 +4,28 @@
 <head>
     <title>Test page for displaying family tree</title>
     <style>
-
         body {
             padding: 1em
         }
 
         #familytree {
             position: relative;
-            min-width: {{ graphic_size[0] }}px;
-            min-height: {{ graphic_size[1] }}px;
+
+            min-width: {
+                    {
+                    graphic_size[0]
+                }
+            }
+
+            px;
+
+            min-height: {
+                    {
+                    graphic_size[1]
+                }
+            }
+
+            px;
             border: 1px solid black;
             margin: -1px -1px 0 0;
         }
@@ -21,8 +34,22 @@
             position: absolute;
             left: 0px;
             top: 0px;
-            width: {{ graphic_size[0] }}px;
-            height: {{ graphic_size[1] }}px;
+
+            width: {
+                    {
+                    graphic_size[0]
+                }
+            }
+
+            px;
+
+            height: {
+                    {
+                    graphic_size[1]
+                }
+            }
+
+            px;
             border: 1px solid gray;
             margin: -1px -1px 0 0;
         }
@@ -40,50 +67,61 @@
     <h1>Family tree test page</h1>
 
     <div id="familytree">
-        <svg id="graph" viewBox="0 0 {{ graphic_size[0] }} {{ graphic_size[1] }}" xmlns="http://www.w3.org/2000/svg" stroke="black" fill="#ffeedd">
+        <svg id="graph" viewBox="0 0 {{ graphic_size[0] }} {{ graphic_size[1] }}" xmlns="http://www.w3.org/2000/svg"
+            stroke="black" fill="#ffeedd">
 
         </svg>
         <div id="boxes">
-        {#
+            {#
             <div class="box" style="top: 75px; left: 75px;">John F Kennedy</div>
             <div class="box" style="top: 75px; left: 325px;">Lady Macbeth</div>
             <div class="box" style="top: 225px; left: 75px;">Genghis Khan</div>
             <div class="box" style="top: 225px; left: 325px;">John Travolta</div>
         #}
-        {% for id, individual in individuals.items() %}
-            <div class="box" style="left: {{ individual_positions[id][0] }}px; top: {{ individual_positions[id][1] }}px;">{{
+            {% for id, individual in individuals.items() %}
+            <div class="box"
+                style="left: {{ individual_positions[id][0] }}px; top: {{ individual_positions[id][1] }}px;">{{
                 individual.name
             }}</div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 
     <ul>
-    {% for id, individual in individuals.items() %}
+        {% for id, individual in individuals.items() %}
         <li><code>{{ id }}</code> {{ individual.name }}
             <br />
             Parent families:
             <br />
             <ul>
-            {% for family_id in individuals_parent_families[id] %}
+                {% for family_id in individuals_parent_families[id] %}
                 <li><code>{{ family_id }}</code></li>
-            {% endfor %}
+                {% endfor %}
             </ul>
             Own families:
             <br />
             <ul>
-            {% for family_id in individuals_own_families[id] %}
+                {% for family_id in individuals_own_families[id] %}
                 <li><code>{{ family_id }}</code></li>
-            {% endfor %}
+                {% endfor %}
             </ul>
         </li>
-    {% endfor %}
+        {% endfor %}
     </ul>
 
     <ul>
-    {% for id, family in families.items() %}
-        <li><code>{{ id }}</code> {{ family.ptr }}</li>
-    {% endfor %}
+        {% for id, family in families.items() %}
+        <li><code>{{ id }}</code>
+            <br />
+            Spouses of family:
+            <br />
+            <ul>
+                {% for individual_id in family_spouses[id] %}
+                <li><code>{{ individual_id }}</code></li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
     </ul>
 
 </body>
