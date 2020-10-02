@@ -78,17 +78,13 @@
             </ul>
         </li>
     {% endfor %}
-    <ul>
+    </ul>
 
     <ul>
     {% for id, family in families.items() %}
         <li><code>{{ id }}</code> {{ family.ptr }}</li>
     {% endfor %}
-    <ul>
-
-    <pre>
-    {% debug %}
-    </pre>
+    </ul>
 
 </body>
 
