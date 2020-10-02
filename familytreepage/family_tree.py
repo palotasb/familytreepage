@@ -11,26 +11,7 @@ from gedcom.element.family import FamilyElement
 from gedcom.element.individual import IndividualElement
 from gedcom.parser import Parser
 
-
-class UncertainDate(NamedTuple):
-    date: datetime.date
-    known: Union[Literal["YMD"], Literal["YM"], Literal["Y"], Literal[""]]
-
-    def __str__(self) -> str:
-        return (
-            f"{self.date.year if 'Y' in self.known else '?'}. "
-            f"{self.date.month if 'M' in self.known else '?'}. "
-            f"{self.date.day if 'D' in self.known else '?'}."
-        )
-
-    def __repr__(self) -> str:
-        return (
-            f"UncertainDate("
-            f"{self.date.year if 'Y' in self.known else '?'}. "
-            f"{self.date.month if 'M' in self.known else '?'}. "
-            f"{self.date.day if 'D' in self.known else '?'}."
-            f")"
-        )
+UncertainDate = Optional[str]
 
 
 class Rel(Enum):
@@ -53,8 +34,6 @@ class Individual(NamedTuple):
     name: str
     birth: UncertainDate
     death: UncertainDate
-    child_of_family: List[str]
-    spouse_of_family: List[str]
 
 
 class Family(NamedTuple):
@@ -158,41 +137,35 @@ class FamilyTree:
         for grandchild_element in child_element.get_child_elements():
             if grandchild_element.get_tag() == Rel.Date.value:
                 return grandchild_element.get_value()
-        return UncertainDate(datetime.date.min, "")
+        return None
 
     def _parse_individual(self, element: IndividualElement):
-        individual = Individual(
-            ptr=element.get_pointer(),
-            name=element.get_name(),
-            birth=UncertainDate(datetime.date.min, known=""),
-            death=UncertainDate(datetime.date.min, known=""),
-            child_of_family=[],
-            spouse_of_family=[],
-        )
-        assert individual.ptr not in self.individuals, individual
+        ptr = element.get_pointer()
+        name = element.get_name()
+        birth = None
+        death = None
+        child_of_family = []
+        spouse_of_family = []
+        assert ptr not in self.individuals, (ptr, name)
 
         for child_element in element.get_child_elements():
             if self._is_child_of_family(child_element):
-                individual.child_of_family.append(child_element.get_value())
+                child_of_family.append(child_element.get_value())
             elif self._is_spouse_of_family(child_element):
-                individual.spouse_of_family.append(child_element.get_value())
+                spouse_of_family.append(child_element.get_value())
             elif self._is_birth_data(child_element):
-                individual = individual._replace(
-                    birth=self._get_date_value(child_element)
-                )
+                birth = self._get_date_value(child_element)
             elif self._is_death_data(child_element):
-                individual = individual._replace(
-                    death=self._get_date_value(child_element)
-                )
+                death = self._get_date_value(child_element)
 
-        self.individuals[individual.ptr] = individual
-        self.graph.add_node(individual.ptr, individual=individual)
-        for family in individual.child_of_family:
-            self.graph.add_edge(individual.ptr, family, rel=Rel.IsChildOfFamily.value)
-            self.graph.add_edge(family, individual.ptr, rel=Rel.FamilyChildren.value)
-        for family in individual.spouse_of_family:
-            self.graph.add_edge(individual.ptr, family, rel=Rel.IsSpouseOfFamily.value)
-            self.graph.add_edge(family, individual.ptr, rel=Rel.FamilySpouses.value)
+        self.individuals[ptr] = Individual(ptr, name, birth, death)
+        self.graph.add_node(ptr)
+        for family in child_of_family:
+            self.graph.add_edge(ptr, family, rel=Rel.IsChildOfFamily.value)
+            self.graph.add_edge(family, ptr, rel=Rel.FamilyChildren.value)
+        for family in spouse_of_family:
+            self.graph.add_edge(ptr, family, rel=Rel.IsSpouseOfFamily.value)
+            self.graph.add_edge(family, ptr, rel=Rel.FamilySpouses.value)
 
     def _parse_family(self, element: FamilyElement):
         family = Family(ptr=element.get_pointer())
