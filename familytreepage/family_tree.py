@@ -94,8 +94,17 @@ class FamilyTree:
             individual_id, keys=Rel.IsChildOfFamily, data=True
         )
         parent_families = filter(
-            # lambda _: True,
             lambda family_edge: family_edge[2]["rel"] == Rel.IsChildOfFamily.value,
+            all_families,
+        )
+        return map(lambda family_edge: family_edge[1], parent_families)
+
+    def own_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
+        all_families = self.graph.edges(
+            individual_id, keys=Rel.IsChildOfFamily, data=True
+        )
+        parent_families = filter(
+            lambda family_edge: family_edge[2]["rel"] == Rel.IsSpouseOfFamily.value,
             all_families,
         )
         return map(lambda family_edge: family_edge[1], parent_families)

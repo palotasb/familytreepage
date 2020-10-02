@@ -69,6 +69,13 @@
                 <li><code>{{ family_id }}</code></li>
             {% endfor %}
             </ul>
+            Own families:
+            <br />
+            <ul>
+            {% for family_id in individuals_own_families[id] %}
+                <li><code>{{ family_id }}</code></li>
+            {% endfor %}
+            </ul>
         </li>
     {% endfor %}
     <ul>

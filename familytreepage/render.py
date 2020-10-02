@@ -36,6 +36,10 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
             id: family_tree.parent_families_of(id)
             for id in family_tree.individuals.keys()
         },
+        individuals_own_families={
+            id: family_tree.own_families_of(id)
+            for id in family_tree.individuals.keys()
+        },
         families=family_tree.families,
         graphic_size=(width, height),
     )
