@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 from enum import Enum
-from typing import Dict, List, Literal, NamedTuple, Optional, Union
+from typing import Dict, Iterable, List, Literal, NamedTuple, Optional, Union
 
 import networkx as nx
 from gedcom.element.element import Element
@@ -64,10 +64,15 @@ class Family(NamedTuple):
     ptr: str
 
 
+IndividualID = str
+
+FamilyID = str
+
+
 class FamilyTree:
     def __init__(self, gedcom_file_path: str):
-        self.individuals: Dict[str, Individual] = {}
-        self.families: Dict[str, Family] = {}
+        self.individuals: Dict[IndividualID, Individual] = {}
+        self.families: Dict[FamilyID, Family] = {}
 
         self.graph = nx.MultiDiGraph()
 
@@ -83,6 +88,17 @@ class FamilyTree:
                 self._parse_individual(element)
             elif isinstance(element, FamilyElement):
                 self._parse_family(element)
+
+    def parent_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
+        all_families = self.graph.edges(
+            individual_id, keys=Rel.IsChildOfFamily, data=True
+        )
+        parent_families = filter(
+            # lambda _: True,
+            lambda family_edge: family_edge[2]["rel"] == Rel.IsChildOfFamily.value,
+            all_families,
+        )
+        return map(lambda family_edge: family_edge[1], parent_families)
 
     @staticmethod
     def _is_child_of_family(child_element: Element) -> bool:
@@ -135,11 +151,11 @@ class FamilyTree:
         self.individuals[individual.ptr] = individual
         self.graph.add_node(individual.ptr, individual=individual)
         for family in individual.child_of_family:
-            self.graph.add_edge(individual.ptr, family, key=Rel.IsChildOfFamily)
-            self.graph.add_edge(family, individual.ptr, key=Rel.FamilyChildren)
+            self.graph.add_edge(individual.ptr, family, rel=Rel.IsChildOfFamily.value)
+            self.graph.add_edge(family, individual.ptr, rel=Rel.FamilyChildren.value)
         for family in individual.spouse_of_family:
-            self.graph.add_edge(individual.ptr, family, key=Rel.IsSpouseOfFamily)
-            self.graph.add_edge(family, individual.ptr, key=Rel.FamilySpouses)
+            self.graph.add_edge(individual.ptr, family, rel=Rel.IsSpouseOfFamily.value)
+            self.graph.add_edge(family, individual.ptr, rel=Rel.FamilySpouses.value)
 
     def _parse_family(self, element: FamilyElement):
         family = Family(ptr=element.get_pointer())

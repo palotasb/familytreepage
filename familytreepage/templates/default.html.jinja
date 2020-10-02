@@ -60,7 +60,22 @@
 
     <ul>
     {% for id, individual in individuals.items() %}
-        <li><code>{{ id }}</code> {{ individual.name }}</li>
+        <li><code>{{ id }}</code> {{ individual.name }}
+            <br />
+            Parent families:
+            <br />
+            <ul>
+            {% for family_id in individuals_parent_families[id] %}
+                <li><code>{{ family_id }}</code></li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    <ul>
+
+    <ul>
+    {% for id, family in families.items() %}
+        <li><code>{{ id }}</code> {{ family.ptr }}</li>
     {% endfor %}
     <ul>
 

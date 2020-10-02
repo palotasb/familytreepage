@@ -32,6 +32,11 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         individual_positions=random_positions_for(
             family_tree.individuals, width, height
         ),
+        individuals_parent_families={
+            id: family_tree.parent_families_of(id)
+            for id in family_tree.individuals.keys()
+        },
+        families=family_tree.families,
         graphic_size=(width, height),
     )
 
