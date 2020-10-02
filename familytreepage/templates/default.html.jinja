@@ -72,12 +72,6 @@
 
         </svg>
         <div id="boxes">
-            {#
-            <div class="box" style="top: 75px; left: 75px;">John F Kennedy</div>
-            <div class="box" style="top: 75px; left: 325px;">Lady Macbeth</div>
-            <div class="box" style="top: 225px; left: 75px;">Genghis Khan</div>
-            <div class="box" style="top: 225px; left: 325px;">John Travolta</div>
-        #}
             {% for id, individual in individuals.items() %}
             <div class="box"
                 style="left: {{ individual_positions[id][0] }}px; top: {{ individual_positions[id][1] }}px;">{{
