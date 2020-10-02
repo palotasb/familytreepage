@@ -41,6 +41,7 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         family_children={
             id: family_tree.children_of_family(id) for id in family_tree.families.keys()
         },
+        levels=family_tree.levels("@R1@"),
         families=family_tree.families,
         graphic_size=(width, height),
     )

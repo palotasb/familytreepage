@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime
 from enum import Enum
+from functools import partial
 from typing import Dict, Iterable, List, Literal, NamedTuple, Optional, Union
 
 import networkx as nx
@@ -107,6 +108,30 @@ class FamilyTree:
 
     def children_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
         return self._traverse(family_id, rel=Rel.FamilyChildren)
+
+    def _levels(self, at: IndividualID, level_dict: Dict[IndividualID, int]) -> None:
+        flatten = lambda lists: [item for sublist in lists for item in sublist]
+        this_level = level_dict[at]
+
+        parents = flatten(map(self.spouses_of_family, self.parent_families_of(at)))
+        new_parents = list(filter(lambda id: id not in level_dict, parents))
+
+        children = flatten(map(self.children_of_family, self.own_families_of(at)))
+        new_children = list(filter(lambda id: id not in level_dict, children))
+
+        for parent in new_parents:
+            level_dict[parent] = this_level - 1
+
+        for child in new_children:
+            level_dict[child] = this_level + 1
+
+        for id in new_parents + new_children:
+            self._levels(id, level_dict)
+
+    def levels(self, starting_at: IndividualID) -> Dict[IndividualID, int]:
+        level_dict = {starting_at: 0}
+        self._levels(starting_at, level_dict)
+        return level_dict
 
     @staticmethod
     def _is_child_of_family(child_element: Element) -> bool:
