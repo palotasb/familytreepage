@@ -68,6 +68,8 @@ IndividualID = str
 
 FamilyID = str
 
+AnyID = Union[IndividualID, FamilyID]
+
 
 class FamilyTree:
     def __init__(self, gedcom_file_path: str):
@@ -89,37 +91,22 @@ class FamilyTree:
             elif isinstance(element, FamilyElement):
                 self._parse_family(element)
 
+    def _traverse(self, id: AnyID, rel: Rel) -> Iterable[AnyID]:
+        edges = self.graph.edges(id, data=True)
+        edges = filter(lambda edge: edge[2]["rel"] == rel.value, edges)
+        return map(lambda edge: edge[1], edges)
+
     def parent_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
-        all_families = self.graph.edges(individual_id, data=True)
-        parent_families = filter(
-            lambda edge: edge[2]["rel"] == Rel.IsChildOfFamily.value,
-            all_families,
-        )
-        return map(lambda edge: edge[1], parent_families)
+        return self._traverse(individual_id, rel=Rel.IsChildOfFamily)
 
     def own_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
-        all_families = self.graph.edges(individual_id, data=True)
-        parent_families = filter(
-            lambda edge: edge[2]["rel"] == Rel.IsSpouseOfFamily.value,
-            all_families,
-        )
-        return map(lambda edge: edge[1], parent_families)
+        return self._traverse(individual_id, rel=Rel.IsSpouseOfFamily)
 
     def spouses_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
-        all_individuals = self.graph.edges(family_id, data=True)
-        spouses = filter(
-            lambda edge: edge[2]["rel"] == Rel.FamilySpouses.value,
-            all_individuals,
-        )
-        return map(lambda edge: edge[1], spouses)
+        return self._traverse(family_id, rel=Rel.FamilySpouses)
 
     def children_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
-        all_individuals = self.graph.edges(family_id, data=True)
-        spouses = filter(
-            lambda edge: edge[2]["rel"] == Rel.FamilyChildren.value,
-            all_individuals,
-        )
-        return map(lambda edge: edge[1], spouses)
+        return self._traverse(family_id, rel=Rel.FamilyChildren)
 
     @staticmethod
     def _is_child_of_family(child_element: Element) -> bool:
