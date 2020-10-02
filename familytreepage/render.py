@@ -22,6 +22,8 @@ def random_positions_for(
 def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
 
     width, height = 600, 400
+    levels = family_tree.levels("@R1@")
+    levelrange = set(levels.values())
     params = dict(
         family_tree=family_tree,
         individuals=family_tree.individuals,
@@ -41,7 +43,9 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         family_children={
             id: family_tree.children_of_family(id) for id in family_tree.families.keys()
         },
-        levels=family_tree.levels("@R1@"),
+        levels=levels,
+        minlevel=min(levelrange),
+        maxlevel=max(levelrange),
         families=family_tree.families,
         graphic_size=(width, height),
     )
