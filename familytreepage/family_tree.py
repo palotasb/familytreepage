@@ -15,10 +15,11 @@ UncertainDate = Optional[str]
 
 
 class Rel(Enum):
-    IsChildOfFamily = "FAMC"
-    FamilyChildren = "-FAMC"
-    IsSpouseOfFamily = "FAMS"
-    FamilySpouses = "-FAMS"
+    Children = "FAMC"
+    Spouses = "FAMS"
+
+
+class Tag(Enum):
     BirthDate = "BIRT"
     DeathDate = "DEAT"
     Date = "DATE"
@@ -56,7 +57,7 @@ class FamilyTree:
         self.individuals: Dict[IndividualID, Individual] = {}
         self.families: Dict[FamilyID, Family] = {}
 
-        self.graph = nx.MultiDiGraph()
+        self.graph = nx.Graph()
 
         self.parse(gedcom_file_path)
 
@@ -77,16 +78,16 @@ class FamilyTree:
         return map(lambda edge: edge[1], edges)
 
     def parent_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
-        return self._traverse(individual_id, rel=Rel.IsChildOfFamily)
+        return self._traverse(individual_id, rel=Rel.Children)
 
     def own_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
-        return self._traverse(individual_id, rel=Rel.IsSpouseOfFamily)
+        return self._traverse(individual_id, rel=Rel.Spouses)
 
     def spouses_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
-        return self._traverse(family_id, rel=Rel.FamilySpouses)
+        return self._traverse(family_id, rel=Rel.Spouses)
 
     def children_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
-        return self._traverse(family_id, rel=Rel.FamilyChildren)
+        return self._traverse(family_id, rel=Rel.Children)
 
     def _levels(self, at: IndividualID, level_dict: Dict[IndividualID, int]) -> None:
         flatten = lambda lists: [item for sublist in lists for item in sublist]
@@ -118,24 +119,24 @@ class FamilyTree:
 
     @staticmethod
     def _is_child_of_family(child_element: Element) -> bool:
-        return child_element.get_tag() == Rel.IsChildOfFamily.value
+        return child_element.get_tag() == Rel.Children.value
 
     @staticmethod
     def _is_spouse_of_family(child_element: Element) -> bool:
-        return child_element.get_tag() == Rel.IsSpouseOfFamily.value
+        return child_element.get_tag() == Rel.Spouses.value
 
     @staticmethod
     def _is_birth_data(child_element: Element) -> bool:
-        return child_element.get_tag() == Rel.BirthDate.value
+        return child_element.get_tag() == Tag.BirthDate.value
 
     @staticmethod
     def _is_death_data(child_element: Element) -> bool:
-        return child_element.get_tag() == Rel.DeathDate.value
+        return child_element.get_tag() == Tag.DeathDate.value
 
     @staticmethod
     def _get_date_value(child_element: Element) -> UncertainDate:
         for grandchild_element in child_element.get_child_elements():
-            if grandchild_element.get_tag() == Rel.Date.value:
+            if grandchild_element.get_tag() == Tag.Date.value:
                 return grandchild_element.get_value()
         return None
 
@@ -161,11 +162,9 @@ class FamilyTree:
         self.individuals[ptr] = Individual(ptr, name, birth, death)
         self.graph.add_node(ptr)
         for family in child_of_family:
-            self.graph.add_edge(ptr, family, rel=Rel.IsChildOfFamily.value)
-            self.graph.add_edge(family, ptr, rel=Rel.FamilyChildren.value)
+            self.graph.add_edge(ptr, family, rel=Rel.Children.value)
         for family in spouse_of_family:
-            self.graph.add_edge(ptr, family, rel=Rel.IsSpouseOfFamily.value)
-            self.graph.add_edge(family, ptr, rel=Rel.FamilySpouses.value)
+            self.graph.add_edge(ptr, family, rel=Rel.Spouses.value)
 
     def _parse_family(self, element: FamilyElement):
         family = Family(ptr=element.get_pointer())
