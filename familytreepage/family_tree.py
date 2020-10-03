@@ -36,6 +36,14 @@ class Sex(Enum):
     NotRecorded = "N"
 
 
+class Name(NamedTuple):
+    given: str
+    surname: str
+
+    def __str__(self):
+        return f"{self.given} {self.surname}"
+
+
 class Individual(NamedTuple):
     """
     :ptr: Pointer to this individual
@@ -43,7 +51,7 @@ class Individual(NamedTuple):
     """
 
     ptr: str
-    name: str
+    name: Name
     birth: UncertainDate
     death: UncertainDate
     sex: Sex
@@ -114,7 +122,7 @@ class FamilyTree:
 
     def _parse_individual(self, element: IndividualElement):
         ptr = element.get_pointer()
-        name = element.get_name()
+        name = Name(*element.get_name())
         birth = None
         death = None
         sex = Sex.Unknown
