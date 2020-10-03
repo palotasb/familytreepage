@@ -4,7 +4,7 @@
 <head>
     <title>Test page for displaying family tree</title>
     {% set delta_person = 30 %}
-    {% set height = (maxlevel - minlevel + 1) * delta_person %}
+    {% set height = (layout.max_level - layout.min_level + 1) * delta_person %}
     <style>
         body {
             padding: 1em
@@ -47,7 +47,7 @@
         <div id="boxes">
             {% for id, individual in individuals.items() if id in layout %}
             <div class="box" style="left: {{ individual_positions[id][0] }}px; top: {{
-                (layout[id].level - minlevel) * delta_person
+                (layout[id].level - layout.min_level) * delta_person
                 }}px;">{{
                 individual.name
             }}</div>

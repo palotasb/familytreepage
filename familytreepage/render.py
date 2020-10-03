@@ -24,7 +24,6 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
 
     width, height = 600, 400
     layout = Layout(family_tree, "@R1@")
-    levelrange = set(layout.levels.values())
     params = dict(
         family_tree=family_tree,
         individuals=family_tree.individuals,
@@ -45,8 +44,6 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
             id: family_tree.children_of_family(id) for id in family_tree.families.keys()
         },
         layout=layout,
-        minlevel=min(levelrange),
-        maxlevel=max(levelrange),
         families=family_tree.families,
         graphic_size=(width, height),
     )

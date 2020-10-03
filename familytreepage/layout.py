@@ -1,6 +1,18 @@
-from typing import Dict, NamedTuple, Optional
+from typing import Dict, NamedTuple, Optional, Tuple
 
 from .family_tree import FamilyTree, IndividualID
+
+Point = Tuple[int, int]
+
+Size = Point
+
+
+def _x(p: Point) -> int:
+    return p[0]
+
+
+def _y(p: Point) -> int:
+    return p[1]
 
 
 class LayoutInfo(NamedTuple):
@@ -8,9 +20,15 @@ class LayoutInfo(NamedTuple):
 
 
 class Layout:
-    def __init__(self, family_tree: FamilyTree, starting_at: IndividualID):
+    def __init__(
+        self, family_tree: FamilyTree, starting_at: IndividualID, box_size: Size = 0
+    ):
         self.family_tree = family_tree
+        self.box_size = box_size
+
         self.levels = {starting_at: 0}
+        self.min_level = 0
+        self.max_level = 0
         self._init_levels(starting_at)
 
     def __getitem__(self, id: IndividualID) -> Optional[LayoutInfo]:
@@ -40,6 +58,10 @@ class Layout:
 
             for relation in new_relations:
                 self.levels[relation] = this_level + delta_level
+
+            if new_relations:
+                self.min_level = min(self.min_level, this_level + delta_level)
+                self.max_level = max(self.max_level, this_level + delta_level)
 
             return new_relations
 
