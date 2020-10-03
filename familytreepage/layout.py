@@ -39,12 +39,10 @@ class Layout:
             self.level_count * (self.box_size.y + self.padding.y) + self.padding.y
         )
 
-    def __getitem__(self, id: IndividualID) -> Optional[LayoutInfo]:
+    def __getitem__(self, id: IndividualID) -> LayoutInfo:
         level_from_start = self.levels[id] - self.min_level
         pos_x = self.padding.x
-        pos_y = (
-            self.padding.y + self.box_size.y
-        ) * level_from_start + self.padding.y
+        pos_y = (self.padding.y + self.box_size.y) * level_from_start + self.padding.y
 
         return LayoutInfo(
             level=self.levels[id],
