@@ -1,101 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+    <head>
+        <title>Test page for displaying family tree</title>
+        <style>
+            body {
+                padding: 1em
+            }
 
-<head>
-    <title>Test page for displaying family tree</title>
-    <style>
-        body {
-            padding: 1em
-        }
+            #familytree {
+                position: relative;
+                min-width: {{ layout.width }}px;
+                min-height: {{ layout.height }}px;
+                border: 1px solid black;
+                margin: -1px -1px 0 0;
+            }
 
-        #familytree {
-            position: relative;
-            min-width: {{ layout.width }}px;
-            min-height: {{ layout.height }}px;
-            border: 1px solid black;
-            margin: -1px -1px 0 0;
-        }
+            svg#graph {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width: {{ layout.width }}px;
+                height: {{ layout.height }}px;
+                border: 1px solid gray;
+                margin: -1px -1px 0 0;
+            }
 
-        svg#graph {
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            width: {{ layout.width }}px;
-            height: {{ layout.height }}px;
-            border: 1px solid gray;
-            margin: -1px -1px 0 0;
-        }
+            #boxes .box {
+                position: absolute;
+                border: 1px solid violet;
+                margin: -1px -1px 0 0;
+            }
+        </style>
+    </head>
 
-        #boxes .box {
-            position: absolute;
-            border: 1px solid violet;
-            margin: -1px -1px 0 0;
-        }
-    </style>
-</head>
+    <body>
+        <h1>Family tree test page</h1>
 
-<body>
-
-    <h1>Family tree test page</h1>
-
-    <div id="familytree">
-        <svg id="graph" viewBox="0 0 {{ layout.width }} {{ layout.height }}" xmlns="http://www.w3.org/2000/svg"
-            stroke="black" fill="#ffeedd">
-        </svg>
-        <div id="boxes">
-            {% for id, individual in individuals.items() if id in layout %}
-            <div class="box" style="left: {{ layout[id].pos.x }}px; top: {{ layout[id].pos.y }}px;">{{
-                individual.name
-            }}</div>
-            {% endfor %}
+        <div id="familytree">
+            <svg
+                id="graph"
+                viewBox="0 0 {{ layout.width }} {{ layout.height }}"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="black"
+                fill="#ffeedd"
+            ></svg>
+            <div id="boxes">
+                {% for id, individual in individuals.items() if id in layout %}
+                <div
+                    class="box"
+                    style="left: {{ layout[id].pos.x }}px; top: {{
+                        layout[id].pos.y
+                    }}px;"
+                >
+                    {{ individual.name }}
+                </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
 
-    <ul>
-        {% for id, individual in individuals.items() %}
-        <li><code>{{ id }}</code> {{ individual.name }} -- level {{ layout[id].level if id in layout }}
-            -- sex {{ individual.sex.name }}
-            <br />
-            Parent families:
-            <br />
-            <ul>
-                {% for family_id in individuals_parent_families[id] %}
-                <li><code>{{ family_id }}</code></li>
-                {% endfor %}
-            </ul>
-            Own families:
-            <br />
-            <ul>
-                {% for family_id in individuals_own_families[id] %}
-                <li><code>{{ family_id }}</code></li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% endfor %}
-    </ul>
+        <ul>
+            {% for id, individual in individuals.items() %}
+            <li>
+                <code>{{ id }}</code> {{ individual.name }} -- level
+                {{ layout[id].level if id in layout }} -- sex
+                {{ individual.sex.name }}
+                <br />
+                Parent families:
+                <br />
+                <ul>
+                    {% for family_id in individuals_parent_families[id] %}
+                    <li>
+                        <code>{{ family_id }}</code>
+                    </li>
+                    {% endfor %}
+                </ul>
+                Own families:
+                <br />
+                <ul>
+                    {% for family_id in individuals_own_families[id] %}
+                    <li>
+                        <code>{{ family_id }}</code>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
 
-    <ul>
-        {% for id, family in families.items() %}
-        <li><code>{{ id }}</code>
-            <br />
-            Spouses of family:
-            <br />
-            <ul>
-                {% for individual_id in family_spouses[id] %}
-                <li><code>{{ individual_id }}</code></li>
-                {% endfor %}
-            </ul>
-            Children of family:
-            <br />
-            <ul>
-                {% for individual_id in family_children[id] %}
-                <li><code>{{ individual_id }}</code></li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% endfor %}
-    </ul>
-
-</body>
-
+        <ul>
+            {% for id, family in families.items() %}
+            <li>
+                <code>{{ id }}</code>
+                <br />
+                Spouses of family:
+                <br />
+                <ul>
+                    {% for individual_id in family_spouses[id] %}
+                    <li>
+                        <code>{{ individual_id }}</code>
+                    </li>
+                    {% endfor %}
+                </ul>
+                Children of family:
+                <br />
+                <ul>
+                    {% for individual_id in family_children[id] %}
+                    <li>
+                        <code>{{ individual_id }}</code>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </body>
 </html>
