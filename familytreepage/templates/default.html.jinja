@@ -30,6 +30,10 @@
                 border: 1px solid violet;
                 margin: -1px -1px 0 0;
             }
+
+            tr:target {
+                background-color: blanchedalmond;
+            }
         </style>
     </head>
 
@@ -58,60 +62,94 @@
             </div>
         </div>
 
-        <ul>
-            {% for id, individual in individuals.items() %}
-            <li>
-                <code>{{ id }}</code> {{ individual.name }} -- level
-                {{ layout[id].level if id in layout }} -- sex
-                {{ individual.sex.name }}
-                <br />
-                Parent families:
-                <br />
-                <ul>
-                    {% for family_id in individuals_parent_families[id] %}
-                    <li>
-                        <code>{{ family_id }}</code>
-                    </li>
-                    {% endfor %}
-                </ul>
-                Own families:
-                <br />
-                <ul>
-                    {% for family_id in individuals_own_families[id] %}
-                    <li>
-                        <code>{{ family_id }}</code>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
+        <hr />
 
-        <ul>
-            {% for id, family in families.items() %}
-            <li>
-                <code>{{ id }}</code>
-                <br />
-                Spouses of family:
-                <br />
-                <ul>
-                    {% for individual_id in family_spouses[id] %}
-                    <li>
-                        <code>{{ individual_id }}</code>
-                    </li>
-                    {% endfor %}
-                </ul>
-                Children of family:
-                <br />
-                <ul>
-                    {% for individual_id in family_children[id] %}
-                    <li>
-                        <code>{{ individual_id }}</code>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
+        <table>
+            <caption>
+                Individuals
+            </caption>
+            <thead>
+                <tr>
+                    <th>Individual ID</th>
+                    <th>Level</th>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Parent's family IDs</th>
+                    <th>Own/Spouse family IDs</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id, individual in individuals.items() %}
+                <tr id="{{ id }}">
+                    <td>
+                        <code
+                            ><a href="#{{ id }}">{{ id }}</a></code
+                        >
+                    </td>
+                    <td>
+                        <code>{{ layout[id].level if id in layout }}</code>
+                    </td>
+                    <td>{{ individual.name }}</td>
+                    <td>{{ individual.sex.name }}</td>
+                    <td>
+                        {% for family_id in individuals_parent_families[id] %}
+                        <a href="#{{ family_id }}"
+                            ><code>{{ family_id }}</code></a
+                        >{{ "," if not loop.last }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for family_id in individuals_own_families[id] %}
+                        <a href="#{{ family_id }}"
+                            ><code>{{ family_id }}</code></a
+                        >{{ "," if not loop.last }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table>
+            <caption>
+                Families
+            </caption>
+            <thead>
+                <tr>
+                    <td>Family ID</td>
+                    <td>Spouses</td>
+                    <td>Children</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id, family in families.items() %}
+                <tr id="{{ id }}">
+                    <td>
+                        <a href="#{{ id }}"
+                            ><code>{{ id }}</code></a
+                        >
+                    </td>
+                    <td>
+                        {% for individual_id in family_spouses[id] if
+                        individual_id in individuals %}
+                        <a href="#{{ individual_id }}">{{
+                            individuals[individual_id].name
+                        }}</a
+                        >{{ "," if not loop.last }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for individual_id in family_children[id] if
+                        individual_id in individuals %}
+                        <a href="#{{ individual_id }}">{{
+                            individuals[individual_id].name
+                        }}</a
+                        >{{ "," if not loop.last }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </body>
 </html>
