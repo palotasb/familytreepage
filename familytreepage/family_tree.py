@@ -20,9 +20,20 @@ class Rel(Enum):
 
 
 class Tag(Enum):
+    Children = "FAMC"
+    Spouses = "FAMS"
     BirthDate = "BIRT"
     DeathDate = "DEAT"
     Date = "DATE"
+    Sex = "SEX"
+
+
+class Sex(Enum):
+    Male = "M"
+    Female = "F"
+    Intersex = "X"
+    Unknown = "U"
+    NotRecorded = "N"
 
 
 class Individual(NamedTuple):
@@ -35,6 +46,7 @@ class Individual(NamedTuple):
     name: str
     birth: UncertainDate
     death: UncertainDate
+    sex: Sex
 
 
 class Family(NamedTuple):
@@ -90,26 +102,14 @@ class FamilyTree:
         return self._traverse(family_id, rel=Rel.Children)
 
     @staticmethod
-    def _is_child_of_family(child_element: Element) -> bool:
-        return child_element.get_tag() == Rel.Children.value
+    def _has_tag(element: Element, tag: Tag) -> bool:
+        return element.get_tag() == tag.value
 
     @staticmethod
-    def _is_spouse_of_family(child_element: Element) -> bool:
-        return child_element.get_tag() == Rel.Spouses.value
-
-    @staticmethod
-    def _is_birth_data(child_element: Element) -> bool:
-        return child_element.get_tag() == Tag.BirthDate.value
-
-    @staticmethod
-    def _is_death_data(child_element: Element) -> bool:
-        return child_element.get_tag() == Tag.DeathDate.value
-
-    @staticmethod
-    def _get_date_value(child_element: Element) -> UncertainDate:
-        for grandchild_element in child_element.get_child_elements():
-            if grandchild_element.get_tag() == Tag.Date.value:
-                return grandchild_element.get_value()
+    def _get_date_value(element: Element) -> UncertainDate:
+        for sub_element in element.get_child_elements():
+            if FamilyTree._has_tag(sub_element, Tag.Date):
+                return sub_element.get_value()
         return None
 
     def _parse_individual(self, element: IndividualElement):
@@ -117,21 +117,24 @@ class FamilyTree:
         name = element.get_name()
         birth = None
         death = None
+        sex = Sex.Unknown
         child_of_family = []
         spouse_of_family = []
         assert ptr not in self.individuals, (ptr, name)
 
-        for child_element in element.get_child_elements():
-            if self._is_child_of_family(child_element):
-                child_of_family.append(child_element.get_value())
-            elif self._is_spouse_of_family(child_element):
-                spouse_of_family.append(child_element.get_value())
-            elif self._is_birth_data(child_element):
-                birth = self._get_date_value(child_element)
-            elif self._is_death_data(child_element):
-                death = self._get_date_value(child_element)
+        for sub_element in element.get_child_elements():
+            if self._has_tag(sub_element, Tag.Children):
+                child_of_family.append(sub_element.get_value())
+            elif self._has_tag(sub_element, Tag.Spouses):
+                spouse_of_family.append(sub_element.get_value())
+            elif self._has_tag(sub_element, Tag.BirthDate):
+                birth = self._get_date_value(sub_element)
+            elif self._has_tag(sub_element, Tag.DeathDate):
+                death = self._get_date_value(sub_element)
+            elif self._has_tag(sub_element, Tag.Sex):
+                sex = Sex(sub_element.get_value())
 
-        self.individuals[ptr] = Individual(ptr, name, birth, death)
+        self.individuals[ptr] = Individual(ptr, name, birth, death, sex)
         self.graph.add_node(ptr)
         for family in child_of_family:
             self.graph.add_edge(ptr, family, rel=Rel.Children.value)
