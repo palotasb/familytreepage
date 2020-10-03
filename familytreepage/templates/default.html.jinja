@@ -3,8 +3,6 @@
 
 <head>
     <title>Test page for displaying family tree</title>
-    {% set delta_person = 30 %}
-    {% set height = (layout.max_level - layout.min_level + 1) * delta_person %}
     <style>
         body {
             padding: 1em
@@ -12,8 +10,8 @@
 
         #familytree {
             position: relative;
-            min-width: {{ graphic_size[0] }}px;
-            min-height: {{ height }}px;
+            min-width: {{ layout.width }}px;
+            min-height: {{ layout.height }}px;
             border: 1px solid black;
             margin: -1px -1px 0 0;
         }
@@ -22,8 +20,8 @@
             position: absolute;
             left: 0px;
             top: 0px;
-            width: {{ graphic_size[0] }}px;
-            height: {{ height }}px;
+            width: {{ layout.width }}px;
+            height: {{ layout.height }}px;
             border: 1px solid gray;
             margin: -1px -1px 0 0;
         }
@@ -41,14 +39,12 @@
     <h1>Family tree test page</h1>
 
     <div id="familytree">
-        <svg id="graph" viewBox="0 0 {{ graphic_size[0] }} {{ graphic_size[1] }}" xmlns="http://www.w3.org/2000/svg"
+        <svg id="graph" viewBox="0 0 {{ layout.width }} {{ layout.height }}" xmlns="http://www.w3.org/2000/svg"
             stroke="black" fill="#ffeedd">
         </svg>
         <div id="boxes">
             {% for id, individual in individuals.items() if id in layout %}
-            <div class="box" style="left: {{ individual_positions[id][0] }}px; top: {{
-                (layout[id].level - layout.min_level) * delta_person
-                }}px;">{{
+            <div class="box" style="left: {{ layout[id].pos.x }}px; top: {{ layout[id].pos.y }}px;">{{
                 individual.name
             }}</div>
             {% endfor %}
@@ -57,7 +53,7 @@
 
     <ul>
         {% for id, individual in individuals.items() %}
-        <li><code>{{ id }}</code> {{ individual.name }} -- level {{ layout[id].level }}
+        <li><code>{{ id }}</code> {{ individual.name }} -- level {{ layout[id].level if id in layout }}
             <br />
             Parent families:
             <br />

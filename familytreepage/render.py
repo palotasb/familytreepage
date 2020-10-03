@@ -22,14 +22,10 @@ def random_positions_for(
 
 def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
 
-    width, height = 600, 400
     layout = Layout(family_tree, "@R1@")
     params = dict(
         family_tree=family_tree,
         individuals=family_tree.individuals,
-        individual_positions=random_positions_for(
-            family_tree.individuals, width, height
-        ),
         individuals_parent_families={
             id: family_tree.parent_families_of(id)
             for id in family_tree.individuals.keys()
@@ -43,9 +39,8 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         family_children={
             id: family_tree.children_of_family(id) for id in family_tree.families.keys()
         },
-        layout=layout,
         families=family_tree.families,
-        graphic_size=(width, height),
+        layout=layout,
     )
 
     renderer = env.get_template(template)

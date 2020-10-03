@@ -2,42 +2,54 @@ from typing import Dict, NamedTuple, Optional, Tuple
 
 from .family_tree import FamilyTree, IndividualID
 
-Point = Tuple[int, int]
+
+class Point(NamedTuple):
+    x: int
+    y: int
+
 
 Size = Point
 
 
-def _x(p: Point) -> int:
-    return p[0]
-
-
-def _y(p: Point) -> int:
-    return p[1]
-
-
 class LayoutInfo(NamedTuple):
     level: int
+    pos: Point
 
 
 class Layout:
     def __init__(
-        self, family_tree: FamilyTree, starting_at: IndividualID, box_size: Size = 0
+        self,
+        family_tree: FamilyTree,
+        starting_at: IndividualID,
+        box_size: Size = Size(150, 30),
+        padding: Size = Size(20, 20),
     ):
         self.family_tree = family_tree
         self.box_size = box_size
+        self.padding = padding
 
         self.levels = {starting_at: 0}
         self.min_level = 0
         self.max_level = 0
-        self._init_levels(starting_at)
+        self._init_levels(starting_at)  # Updates previous three attributes!
+        self.level_count = self.max_level - self.min_level + 1
+
+        self.width = 600
+        self.height = (
+            self.level_count * (self.box_size.y + self.padding.y) + self.padding.y
+        )
 
     def __getitem__(self, id: IndividualID) -> Optional[LayoutInfo]:
-        if id in self:
-            return LayoutInfo(
-                level=self.levels[id],
-            )
-        else:
-            return None
+        level_from_start = self.levels[id] - self.min_level
+        pos_x = self.padding.x
+        pos_y = (
+            self.padding.y + self.box_size.y
+        ) * level_from_start + self.padding.y
+
+        return LayoutInfo(
+            level=self.levels[id],
+            pos=Point(x=pos_x, y=pos_y),
+        )
 
     def __contains__(self, id: IndividualID) -> bool:
         return id in self.levels
