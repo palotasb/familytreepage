@@ -45,9 +45,9 @@
             stroke="black" fill="#ffeedd">
         </svg>
         <div id="boxes">
-            {% for id, individual in individuals.items() if id in levels %}
+            {% for id, individual in individuals.items() if id in layout %}
             <div class="box" style="left: {{ individual_positions[id][0] }}px; top: {{
-                (levels[id] - minlevel) * delta_person
+                (layout[id].level - minlevel) * delta_person
                 }}px;">{{
                 individual.name
             }}</div>
@@ -57,7 +57,7 @@
 
     <ul>
         {% for id, individual in individuals.items() %}
-        <li><code>{{ id }}</code> {{ individual.name }} -- level {{ levels[id] }}
+        <li><code>{{ id }}</code> {{ individual.name }} -- level {{ layout[id].level }}
             <br />
             Parent families:
             <br />

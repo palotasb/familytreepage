@@ -3,7 +3,7 @@ from typing import Dict, Tuple
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 from .family_tree import FamilyTree, Individual
-from .layout import family_tree_levels
+from .layout import Layout
 
 env = Environment(
     autoescape=select_autoescape(["html", "xml"]),
@@ -23,8 +23,8 @@ def random_positions_for(
 def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
 
     width, height = 600, 400
-    levels = family_tree_levels(family_tree, "@R1@")
-    levelrange = set(levels.values())
+    layout = Layout(family_tree, "@R1@")
+    levelrange = set(layout.levels.values())
     params = dict(
         family_tree=family_tree,
         individuals=family_tree.individuals,
@@ -44,7 +44,7 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         family_children={
             id: family_tree.children_of_family(id) for id in family_tree.families.keys()
         },
-        levels=levels,
+        layout=layout,
         minlevel=min(levelrange),
         maxlevel=max(levelrange),
         families=family_tree.families,
