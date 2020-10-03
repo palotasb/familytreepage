@@ -39,12 +39,6 @@ class Layout:
         else:
             return None
 
-    def __hasattr__(self, id: IndividualID) -> bool:
-        return id in self
-
-    def __getattr__(self, id: IndividualID) -> Optional[LayoutInfo]:
-        return self[id]
-
     def __contains__(self, id: IndividualID) -> bool:
         return id in self.levels
 
