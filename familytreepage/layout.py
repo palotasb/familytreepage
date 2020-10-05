@@ -24,8 +24,8 @@ class Layout:
         self,
         family_tree: FamilyTree,
         starting_at: IndividualID,
-        box_size: Size = Size(150, 30),
-        padding: Size = Size(20, 20),
+        box_size: Size = Size(175, 50),
+        padding: Size = Size(15, 15),
     ):
         self.family_tree = family_tree
         self.box_size = box_size
@@ -39,9 +39,12 @@ class Layout:
 
         self.groups: DefaultDict[int, List[IndividualID]] = defaultdict(list)
         self.group_index: Dict[IndividualID, int] = {}
+        self.max_group_size = 0
         self._init_groups(starting_at)
 
-        self.width = 600
+        self.width = (
+            self.padding.x + self.box_size.x
+        ) * self.max_group_size + self.padding.x
         self.height = (
             self.level_count * (self.box_size.y + self.padding.y) + self.padding.y
         )
@@ -173,3 +176,5 @@ class Layout:
         for group in self.groups.values():
             for index, individual in enumerate(group):
                 self.group_index[individual] = index
+
+            self.max_group_size = max(self.max_group_size, len(group))
