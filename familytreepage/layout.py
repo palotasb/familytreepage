@@ -1,5 +1,6 @@
 from collections import defaultdict
-from typing import DefaultDict, Dict, List, NamedTuple, Optional
+from itertools import chain
+from typing import DefaultDict, Dict, Iterable, List, NamedTuple, Optional, Set
 
 from .family_tree import AnyID, FamilyTree, IndividualID
 
@@ -88,36 +89,83 @@ class Layout:
         for id in spouses + parents + children:
             self._init_levels(id)
 
-    def _init_groups(self, at: IndividualID):
+    def _init_groups(self, id: IndividualID):
         ft = self.family_tree
-
         flatten = lambda lists: [item for sublist in lists for item in sublist]
 
-        self.groups[self.levels[at]].append(at)
+        def get_spouses(id: IndividualID) -> Iterable[IndividualID]:
+            spouses = flatten(map(ft.spouses_of_family, ft.own_families_of(id)))
+            # TODO sort by something?
+            return spouses
 
-        def handle_parents(at):
-            parents = flatten(map(ft.spouses_of_family, ft.parent_families_of(at)))
+        def get_parents(id: IndividualID) -> Iterable[IndividualID]:
+            parents = flatten(map(ft.spouses_of_family, ft.parent_families_of(id)))
             # TODO sort by sex
+            return parents
+
+        def get_children(id: IndividualID) -> Iterable[IndividualID]:
+            children = flatten(map(ft.children_of_family, ft.own_families_of(id)))
+            # TODO sort by age
+            return children
+
+        grouped: Set[IndividualID] = set()
+        is_not_grouped = lambda individual: individual not in grouped
+
+        def group_self_and_spouses_very_first(id: IndividualID):
+            self_and_spouses = list(filter(is_not_grouped, get_spouses(id)))
+
+            for self_or_spouse in self_and_spouses:
+                self.groups[self.levels[self_or_spouse]].append(self_or_spouse)
+                grouped.add(self_or_spouse)
+
+        group_self_and_spouses_very_first(id)
+
+        def group_direct_ancestors_first(id: IndividualID):
+            parents = list(filter(is_not_grouped, get_parents(id)))
 
             for parent in parents:
                 self.groups[self.levels[parent]].append(parent)
+                grouped.add(parent)
 
             for parent in parents:
-                handle_parents(parent)
+                group_direct_ancestors_first(parent)
 
-        handle_parents(at)
+        group_direct_ancestors_first(id)
 
-        def handle_children(at):
-            children = flatten(map(ft.children_of_family, ft.own_families_of(at)))
-            # TODO sort by age
+        def group_direct_descendants_first(id: IndividualID):
+            children = list(filter(is_not_grouped, get_children(id)))
 
             for child in children:
                 self.groups[self.levels[child]].append(child)
+                grouped.add(child)
 
             for child in children:
-                handle_children(child)
+                group_direct_descendants_first(child)
 
-        handle_children(at)
+        group_direct_descendants_first(id)
+
+        def get_relatives(id: IndividualID) -> Iterable[IndividualID]:
+            return chain(get_spouses(id), get_parents(id), get_children(id))
+
+        handled: Set[IndividualID] = set()
+        is_not_handled = lambda individual: individual is not handled
+
+        def family_tree_breadth_first(id: IndividualID) -> List[IndividualID]:
+
+            relatives = [id]
+            handled.add(id)
+
+            for relative in relatives:
+                second_relatives = filter(is_not_handled, get_relatives(relative))
+                handled.update(second_relatives)
+                relatives.extend(second_relatives)
+
+            return relatives
+
+        other_relatives = filter(is_not_grouped, family_tree_breadth_first(id))
+
+        for relative in other_relatives:
+            self.groups[self.levels[relative]].append(relative)
 
         for group in self.groups.values():
             for index, individual in enumerate(group):
