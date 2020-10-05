@@ -71,7 +71,7 @@
             <thead>
                 <tr>
                     <th>Individual ID</th>
-                    <th>Level</th>
+                    <th>Level, Group</th>
                     <th>Name</th>
                     <th>Sex</th>
                     <th>Parent's family IDs</th>
@@ -87,7 +87,12 @@
                         >
                     </td>
                     <td>
-                        <code>{{ layout[id].level if id in layout }}</code>
+                        <code
+                            >{{ layout[id].level if id in layout else "-" }}</code
+                        >,
+                        <code
+                            >{{ layout[id].group if id in layout else "-"}}</code
+                        >
                     </td>
                     <td>{{ individual.name }}</td>
                     <td>{{ individual.sex.name }}</td>

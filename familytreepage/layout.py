@@ -15,6 +15,7 @@ Size = Point
 
 class LayoutInfo(NamedTuple):
     level: int
+    group: int
     pos: Point
 
 
@@ -54,6 +55,7 @@ class Layout:
 
         return LayoutInfo(
             level=self.levels[id],
+            group=self.group_index[id],
             pos=Point(x=pos_x, y=pos_y),
         )
 
@@ -148,7 +150,7 @@ class Layout:
             return chain(get_spouses(id), get_parents(id), get_children(id))
 
         handled: Set[IndividualID] = set()
-        is_not_handled = lambda individual: individual is not handled
+        is_not_handled = lambda individual: individual not in handled
 
         def family_tree_breadth_first(id: IndividualID) -> List[IndividualID]:
 
@@ -157,8 +159,9 @@ class Layout:
 
             for relative in relatives:
                 second_relatives = filter(is_not_handled, get_relatives(relative))
-                handled.update(second_relatives)
-                relatives.extend(second_relatives)
+                for second_relative in second_relatives:
+                    handled.add(second_relative)
+                    relatives.append(second_relative)
 
             return relatives
 
