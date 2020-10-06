@@ -211,9 +211,9 @@ class Layout:
             spouses = list(ft.spouses_of_family(fid))
             children = list(ft.children_of_family(fid))
             if spouses and spouses[0] in self:
-                level = self[spouses[0]].level
+                level = self[spouses[0]].level - self.min_level
             elif level is None and children and children[0] in self:
-                level = self[children[0]].level
+                level = self[children[0]].level - self.min_level
             else:
                 continue
 
@@ -221,11 +221,13 @@ class Layout:
 
             all_members = list(filter(lambda iid: iid in self, spouses + children))
 
-            leftmost_x = self[min(all_members, key=lambda iid: self[iid].left.x)].left.x
+            leftmost_x = self[
+                min(all_members, key=lambda iid: self[iid].left.x)
+            ].center.x
             rightmost_x = self[
                 max(all_members, key=lambda iid: self[iid].right.x)
-            ].right.x
-            y = (self.padding.y + self.box_size.y) * (level + 1) - self.padding.y // 2
+            ].center.x
+            y = (self.padding.y + self.box_size.y) * (level + 1) + self.padding.y // 2
 
             self.families[fid] = LayoutInfo(
                 level=level,
