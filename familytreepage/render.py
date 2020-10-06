@@ -26,6 +26,7 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
     params = dict(
         family_tree=family_tree,
         individuals=family_tree.individuals,
+        families=family_tree.families,
         individuals_parent_families={
             id: family_tree.parent_families_of(id)
             for id in family_tree.individuals.keys()
@@ -39,7 +40,6 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         family_children={
             id: family_tree.children_of_family(id) for id in family_tree.families.keys()
         },
-        families=family_tree.families,
         layout=layout,
     )
 

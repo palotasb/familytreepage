@@ -2,7 +2,7 @@ from collections import defaultdict
 from itertools import chain
 from typing import DefaultDict, Dict, Iterable, List, NamedTuple, Optional, Set
 
-from .family_tree import AnyID, FamilyTree, IndividualID
+from .family_tree import AnyID, FamilyID, FamilyTree, IndividualID
 
 
 class Point(NamedTuple):
@@ -17,6 +17,27 @@ class LayoutInfo(NamedTuple):
     level: int
     group: int
     pos: Point
+    size: Point
+
+    @property
+    def top(self) -> Point:
+        return Point(self.pos.x + self.size.x // 2, self.pos.y)
+
+    @property
+    def right(self) -> Point:
+        return Point(self.pos.x + self.size.x, self.pos.y + self.size.y // 2)
+
+    @property
+    def bottom(self) -> Point:
+        return Point(self.pos.x + self.size.x // 2, self.pos.y + self.size.y)
+
+    @property
+    def left(self) -> Point:
+        return Point(self.pos.x, self.pos.y + self.size.y // 2)
+
+    @property
+    def center(self) -> Point:
+        return Point(self.pos.x + self.size.x // 2, self.pos.y + self.size.y // 2)
 
 
 class Layout:
@@ -42,6 +63,9 @@ class Layout:
         self.max_group_size = 0
         self._init_groups(starting_at)
 
+        self.families: Dict[FamilyID, LayoutInfo] = {}
+        self._init_families()
+
         self.width = (
             self.padding.x + self.box_size.x
         ) * self.max_group_size + self.padding.x
@@ -60,6 +84,7 @@ class Layout:
             level=self.levels[id],
             group=self.group_index[id],
             pos=Point(x=pos_x, y=pos_y),
+            size=self.box_size,
         )
 
     def __contains__(self, id: IndividualID) -> bool:
@@ -178,3 +203,33 @@ class Layout:
                 self.group_index[individual] = index
 
             self.max_group_size = max(self.max_group_size, len(group))
+
+    def _init_families(self):
+        ft = self.family_tree
+        for fid, family in self.family_tree.families.items():
+            level = None
+            spouses = list(ft.spouses_of_family(fid))
+            children = list(ft.children_of_family(fid))
+            if spouses and spouses[0] in self:
+                level = self[spouses[0]].level
+            elif level is None and children and children[0] in self:
+                level = self[children[0]].level
+            else:
+                continue
+
+            group = 0  # TODO discard this, doesn't make sense for Family layout
+
+            all_members = list(filter(lambda iid: iid in self, spouses + children))
+
+            leftmost_x = self[min(all_members, key=lambda iid: self[iid].left.x)].left.x
+            rightmost_x = self[
+                max(all_members, key=lambda iid: self[iid].right.x)
+            ].right.x
+            y = (self.padding.y + self.box_size.y) * (level + 1) - self.padding.y // 2
+
+            self.families[fid] = LayoutInfo(
+                level=level,
+                group=group,
+                pos=Point(leftmost_x, y),
+                size=Size(rightmost_x - leftmost_x, 0),
+            )

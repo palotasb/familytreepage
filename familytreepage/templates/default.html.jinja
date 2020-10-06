@@ -49,7 +49,27 @@
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="black"
                 fill="#ffeedd"
-            ></svg>
+            >
+                {% for fid in families if fid in layout.families %}
+                <line
+                    x1="{{ layout.families[fid].left.x }}"
+                    y1="{{ layout.families[fid].left.y }}"
+                    x2="{{ layout.families[fid].right.x }}"
+                    y2="{{ layout.families[fid].right.y }}"
+                    stroke="black"
+                />
+                <g>
+                    {% for iid in family_spouses[fid] %}
+                    <line
+                        x1="{{ layout[iid].bottom.x }}"
+                        y1="{{ layout[iid].bottom.y }}"
+                        x2="{{ layout[iid].bottom.x }}"
+                        y2="{{ layout.families[fid].center.y }}"
+                    />
+                    {% endfor %}
+                </g>
+                {% endfor %}
+            </svg>
             <div id="boxes">
                 {% for id, individual in individuals.items() if id in layout %}
                 <div
