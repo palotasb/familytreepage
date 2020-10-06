@@ -77,7 +77,7 @@ class Layout:
         level_from_start = self.levels[id] - self.min_level
         pos_x = (self.padding.x + self.box_size.x) * self.group_index.get(
             id, len(self.groups[self.levels[id]])
-        )
+        ) + self.padding.x
         pos_y = (self.padding.y + self.box_size.y) * level_from_start + self.padding.y
 
         return LayoutInfo(
