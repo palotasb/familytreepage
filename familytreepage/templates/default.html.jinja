@@ -35,7 +35,7 @@
             }
 
             tr:target {
-                background-color: blanchedalmond;
+                background-color: rgb(88, 71, 45);
             }
         </style>
     </head>
@@ -52,42 +52,47 @@
                 fill="#ffeedd"
             >
                 {% for fid in families if fid in layout.families %}
-                <line
-                    x1="{{ layout.families[fid].left.x }}"
-                    y1="{{ layout.families[fid].left.y }}"
-                    x2="{{ layout.families[fid].right.x }}"
-                    y2="{{ layout.families[fid].right.y }}"
-                    stroke="black"
-                />
-                <g>
-                    {% for iid in family_spouses[fid] %}
+                <g id="g{{ fid }}" class="family">
                     <line
-                        x1="{{ layout[iid].bottom.x }}"
-                        y1="{{ layout[iid].bottom.y }}"
-                        x2="{{ layout[iid].bottom.x }}"
-                        y2="{{ layout.families[fid].center.y }}"
+                        x1="{{ layout.families[fid].left.x }}"
+                        y1="{{ layout.families[fid].left.y }}"
+                        x2="{{ layout.families[fid].right.x }}"
+                        y2="{{ layout.families[fid].right.y }}"
+                        stroke="black"
                     />
-                    {% endfor %}
-                </g>
-                <g>
-                    {% for iid in family_children[fid] %}
-                    <line
-                        x1="{{ layout[iid].top.x }}"
-                        y1="{{ layout[iid].top.y }}"
-                        x2="{{ layout[iid].top.x }}"
-                        y2="{{ layout.families[fid].center.y }}"
-                    />
-                    {% endfor %}
+                    <g>
+                        {% for iid in family_spouses[fid] %}
+                        <line
+                            x1="{{ layout[iid].bottom.x }}"
+                            y1="{{ layout[iid].bottom.y }}"
+                            x2="{{ layout[iid].bottom.x }}"
+                            y2="{{ layout.families[fid].center.y }}"
+                        />
+                        {% endfor %}
+                    </g>
+                    <g>
+                        {% for iid in family_children[fid] %}
+                        <line
+                            x1="{{ layout[iid].top.x }}"
+                            y1="{{ layout[iid].top.y }}"
+                            x2="{{ layout[iid].top.x }}"
+                            y2="{{ layout.families[fid].center.y }}"
+                        />
+                        {% endfor %}
+                    </g>
                 </g>
                 {% endfor %}
             </svg>
             <div id="boxes">
                 {% for id, individual in individuals.items() if id in layout %}
                 <div
+                    id="b{{ id }}"
                     class="box"
                     style="left: {{ layout[id].pos.x }}px; top: {{
                         layout[id].pos.y
                     }}px;"
+                    data-own-families="{{ individuals_own_families[id] | join(',') }}"
+                    data-parent-families="{{ individuals_parent_families[id] | join(',') }}"
                 >
                     {{ individual.name }}
                 </div>
