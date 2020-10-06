@@ -25,6 +25,11 @@
                 margin: -1px -1px 0 0;
             }
 
+            svg#graph g.hovered {
+                stroke-width: 8px;
+                stroke: turquoise;
+            }
+
             #boxes .box {
                 position: absolute;
                 border: 1px solid violet;
@@ -34,10 +39,64 @@
                 height: {{ layout.box_size.y }}px;
             }
 
+            #boxes .box.hovered {
+                background-color: aquamarine;
+            }
+
             tr:target {
                 background-color: rgb(88, 71, 45);
             }
         </style>
+        <script type="text/javascript">
+            // <![CDATA[
+
+            function get_own_families(element) {
+                return element
+                    .getAttribute("data-own-families")
+                    .split(",")
+                    .filter((s) => s !== "");
+            }
+
+            function get_parent_families(element) {
+                return element
+                    .getAttribute("data-parent-families")
+                    .split(",")
+                    .filter((s) => s !== "");
+            }
+
+            window.addEventListener("load", (event) => {
+                for (let box of document.querySelectorAll("#boxes .box")) {
+                    box.addEventListener("mouseover", (event) => {
+                        event.target.classList.add("hovered");
+                        for (let family of get_own_families(event.target)) {
+                            document
+                                .getElementById("g" + family)
+                                .classList.add("hovered");
+                        }
+                        for (let family of get_parent_families(event.target)) {
+                            document
+                                .getElementById("g" + family)
+                                .classList.add("hovered");
+                        }
+                    });
+                    box.addEventListener("mouseout", (event) => {
+                        event.target.classList.remove("hovered");
+                        for (let family of get_own_families(event.target)) {
+                            document
+                                .getElementById("g" + family)
+                                .classList.remove("hovered");
+                        }
+                        for (let family of get_parent_families(event.target)) {
+                            document
+                                .getElementById("g" + family)
+                                .classList.remove("hovered");
+                        }
+                    });
+                }
+            });
+
+            // ]]>
+        </script>
     </head>
 
     <body>
@@ -58,7 +117,6 @@
                         y1="{{ layout.families[fid].left.y }}"
                         x2="{{ layout.families[fid].right.x }}"
                         y2="{{ layout.families[fid].right.y }}"
-                        stroke="black"
                     />
                     <g>
                         {% for iid in family_spouses[fid] %}
