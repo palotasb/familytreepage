@@ -69,6 +69,16 @@
                     />
                     {% endfor %}
                 </g>
+                <g>
+                    {% for iid in family_children[fid] %}
+                    <line
+                        x1="{{ layout[iid].top.x }}"
+                        y1="{{ layout[iid].top.y }}"
+                        x2="{{ layout[iid].top.x }}"
+                        y2="{{ layout.families[fid].center.y }}"
+                    />
+                    {% endfor %}
+                </g>
                 {% endfor %}
             </svg>
             <div id="boxes">
