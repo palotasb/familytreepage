@@ -45,8 +45,8 @@ class Layout:
         self,
         family_tree: FamilyTree,
         starting_at: IndividualID,
-        box_size: Size = Size(140, 35),
-        padding: Size = Size(20, 20),
+        box_size: Size = Size(140, 36),
+        padding: Size = Size(20, 30),
     ):
         self.family_tree = family_tree
         self.box_size = box_size
