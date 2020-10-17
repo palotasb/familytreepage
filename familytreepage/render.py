@@ -14,12 +14,6 @@ env = Environment(
 )
 
 
-def random_positions_for(
-    individuals: Dict[str, Individual], width: int, height: int
-) -> Dict[str, Tuple[int, int]]:
-    return {id: (0, 0) for id in individuals.keys()}
-
-
 def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
 
     layout = Layout(family_tree, "@R1@")
