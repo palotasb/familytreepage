@@ -168,6 +168,8 @@
                     <th>Level, Group</th>
                     <th>Name</th>
                     <th>Sex</th>
+                    <th>Birth</th>
+                    <th>Death</th>
                     <th>Parent's family IDs</th>
                     <th>Own/Spouse family IDs</th>
                 </tr>
@@ -190,6 +192,8 @@
                     </td>
                     <td>{{ individual.name }}</td>
                     <td>{{ individual.sex.name }}</td>
+                    <td>{{ individual.birth }}</td>
+                    <td>{{ individual.death }}</td>
                     <td>
                         {% for family_id in individuals_parent_families[id] %}
                         <a href="#{{ family_id }}"
