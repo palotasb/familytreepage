@@ -11,6 +11,9 @@ from typing import Optional, Tuple
 class Date:
     text: str
 
+    def order_key(self) -> date:
+        return date.max
+
     @classmethod
     def parse(cls, text: str) -> Tuple[Optional[Date], str]:
         date_c, rest = DateCalendar.parse(text)
@@ -127,6 +130,13 @@ class DateCalendarGregorian(DateCalendarWithEscape):
     year: Optional[int]
     month: Optional[Month]
     day: Optional[int]
+
+    def order_key(self) -> date:
+        return date(
+            self.year or date.max.year,
+            int(self.month) if self.month else 1,
+            self.day or 1,
+        )
 
     def __str__(self) -> str:
         return f"{self.year or '–'}. {int(self.month) if self.month else '–'}. {self.day or '–'}."
@@ -267,6 +277,9 @@ class DateRange(Date):
 class DateRangeBefore(DateRange):
     date: DateCalendar
 
+    def order_key(self) -> date:
+        return self.date.order_key()
+
     def __str__(self) -> str:
         return f"< {self.date}"
 
@@ -285,6 +298,9 @@ class DateRangeBefore(DateRange):
 @dataclass
 class DateRangeAfter(DateRange):
     date: DateCalendar
+
+    def order_key(self) -> date:
+        return self.date.order_key()
 
     def __str__(self) -> str:
         return f"{self.date} <"
@@ -305,6 +321,11 @@ class DateRangeAfter(DateRange):
 class DateRangeBetween(DateRange):
     date_1: DateCalendar
     date_2: DateCalendar
+
+    def order_key(self) -> date:
+        a = self.date_1.order_key()
+        b = self.date_2.order_key()
+        return a + (b - a) // 2
 
     def __str__(self) -> str:
         return f"{self.date_1} < ? < {self.date_2}"
@@ -350,6 +371,9 @@ class DateApprox(Date):
 class DateApproxAbout(DateApprox):
     date: DateCalendar
 
+    def order_key(self) -> date:
+        return self.date.order_key()
+
     def __str__(self) -> str:
         return f"~ {self.date}"
 
@@ -369,6 +393,9 @@ class DateApproxAbout(DateApprox):
 class DateApproxCalculated(DateApprox):
     date: DateCalendar
 
+    def order_key(self) -> date:
+        return self.date.order_key()
+
     def __str__(self) -> str:
         return f"+/- {self.date}"
 
@@ -387,6 +414,9 @@ class DateApproxCalculated(DateApprox):
 @dataclass
 class DateApproxEstimated(DateApprox):
     date: DateCalendar
+
+    def order_key(self) -> date:
+        return self.date.order_key()
 
     def __str__(self) -> str:
         return f"est. ~ {self.date}"
