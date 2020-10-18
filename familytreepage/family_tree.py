@@ -11,7 +11,9 @@ from gedcom.element.family import FamilyElement
 from gedcom.element.individual import IndividualElement
 from gedcom.parser import Parser
 
-UncertainDate = Optional[str]
+from .date import Date
+
+UncertainDate = Optional[Date]
 
 
 class Rel(Enum):
@@ -117,7 +119,11 @@ class FamilyTree:
     def _get_date_value(element: Element) -> UncertainDate:
         for sub_element in element.get_child_elements():
             if FamilyTree._has_tag(sub_element, Tag.Date):
-                return sub_element.get_value()
+                date, unparsed = Date.parse(sub_element.get_value())
+                assert (
+                    date is not None and unparsed == ""
+                ), f"Must parse date, but got {date, unparsed}"
+                return date
         return None
 
     def _parse_individual(self, element: IndividualElement):
