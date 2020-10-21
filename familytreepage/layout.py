@@ -94,8 +94,7 @@ class Layout:
     def _init_levels(self, at: IndividualID):
         this_level = self.levels[at]
 
-        def level_relation(family_to_person, person_to_family, delta_level):
-            relations = flatten(map(family_to_person, person_to_family(at)))
+        def level_relation(relations, delta_level):
             new_relations = list(filter(lambda id: id not in self.levels, relations))
 
             relation_level = this_level + delta_level
@@ -109,9 +108,9 @@ class Layout:
             return new_relations
 
         ft = self.family_tree
-        spouses = level_relation(ft.family_spouses, ft.individual_own_families, 0)
-        parents = level_relation(ft.family_spouses, ft.individual_parent_families, -1)
-        children = level_relation(ft.family_children, ft.individual_own_families, 1)
+        spouses = level_relation(ft.spouses(at), 0)
+        parents = level_relation(ft.parents(at), -1)
+        children = level_relation(ft.children(at), 1)
 
         # It is important that this loop is after the other loops and we visit
         # individuals breadth-first and not depth-first as it will result it more
