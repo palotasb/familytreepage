@@ -122,26 +122,11 @@ class Layout:
     def _init_groups(self, id: IndividualID):
         ft = self.family_tree
 
-        def get_spouses(id: IndividualID) -> Iterable[IndividualID]:
-            spouses = flatten(map(ft.family_spouses, ft.individual_own_families(id)))
-            # TODO sort by something?
-            return spouses
-
-        def get_parents(id: IndividualID) -> Iterable[IndividualID]:
-            parents = flatten(map(ft.family_spouses, ft.individual_parent_families(id)))
-            # TODO sort by sex
-            return parents
-
-        def get_children(id: IndividualID) -> Iterable[IndividualID]:
-            children = flatten(map(ft.family_children, ft.individual_own_families(id)))
-            # TODO sort by age
-            return children
-
         grouped: Set[IndividualID] = set()
         is_not_grouped = lambda individual: individual not in grouped
 
         def group_self_and_spouses_very_first(id: IndividualID):
-            self_and_spouses = list(filter(is_not_grouped, get_spouses(id)))
+            self_and_spouses = list(filter(is_not_grouped, ft.spouses(id)))
 
             for self_or_spouse in self_and_spouses:
                 self.groups[self.levels[self_or_spouse]].append(self_or_spouse)
@@ -150,7 +135,7 @@ class Layout:
         group_self_and_spouses_very_first(id)
 
         def group_direct_ancestors_first(id: IndividualID):
-            parents = list(filter(is_not_grouped, get_parents(id)))
+            parents = list(filter(is_not_grouped, ft.parents(id)))
 
             for parent in parents:
                 self.groups[self.levels[parent]].append(parent)
@@ -162,7 +147,7 @@ class Layout:
         group_direct_ancestors_first(id)
 
         def group_direct_descendants_first(id: IndividualID):
-            children = list(filter(is_not_grouped, get_children(id)))
+            children = list(filter(is_not_grouped, ft.children(id)))
 
             for child in children:
                 self.groups[self.levels[child]].append(child)
@@ -174,7 +159,7 @@ class Layout:
         group_direct_descendants_first(id)
 
         def get_relatives(id: IndividualID) -> Iterable[IndividualID]:
-            return chain(get_spouses(id), get_parents(id), get_children(id))
+            return chain(ft.spouses(id), ft.parents(id), ft.children(id))
 
         handled: Set[IndividualID] = set()
         is_not_handled = lambda individual: individual not in handled
