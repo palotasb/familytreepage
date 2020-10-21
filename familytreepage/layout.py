@@ -3,6 +3,7 @@ from itertools import chain
 from typing import DefaultDict, Dict, Iterable, List, NamedTuple, Optional, Set
 
 from .family_tree import AnyID, FamilyID, FamilyTree, IndividualID
+from .util import flatten
 
 
 class Point(NamedTuple):
@@ -91,7 +92,6 @@ class Layout:
         return id in self.levels
 
     def _init_levels(self, at: IndividualID):
-        flatten = lambda lists: [item for sublist in lists for item in sublist]
         this_level = self.levels[at]
 
         def level_relation(family_to_person, person_to_family, delta_level):
@@ -121,7 +121,6 @@ class Layout:
 
     def _init_groups(self, id: IndividualID):
         ft = self.family_tree
-        flatten = lambda lists: [item for sublist in lists for item in sublist]
 
         def get_spouses(id: IndividualID) -> Iterable[IndividualID]:
             spouses = flatten(map(ft.family_spouses, ft.individual_own_families(id)))
