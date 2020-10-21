@@ -22,19 +22,19 @@ def render(family_tree: FamilyTree, file, template: str = "default.html.jinja"):
         individuals=family_tree.individuals,
         families=family_tree.families,
         individuals_parent_families={
-            id: list(family_tree.parent_families_of(id))
+            id: list(family_tree.individual_parent_families(id))
             for id in family_tree.individuals.keys()
         },
         individuals_own_families={
-            id: list(family_tree.own_families_of(id))
+            id: list(family_tree.individual_own_families(id))
             for id in family_tree.individuals.keys()
         },
         family_spouses={
-            id: list(family_tree.spouses_of_family(id))
+            id: list(family_tree.family_spouses(id))
             for id in family_tree.families.keys()
         },
         family_children={
-            id: list(family_tree.children_of_family(id))
+            id: list(family_tree.family_children(id))
             for id in family_tree.families.keys()
         },
         layout=layout,

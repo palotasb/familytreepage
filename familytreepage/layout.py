@@ -109,9 +109,9 @@ class Layout:
             return new_relations
 
         ft = self.family_tree
-        spouses = level_relation(ft.spouses_of_family, ft.own_families_of, 0)
-        parents = level_relation(ft.spouses_of_family, ft.parent_families_of, -1)
-        children = level_relation(ft.children_of_family, ft.own_families_of, 1)
+        spouses = level_relation(ft.family_spouses, ft.individual_own_families, 0)
+        parents = level_relation(ft.family_spouses, ft.individual_parent_families, -1)
+        children = level_relation(ft.family_children, ft.individual_own_families, 1)
 
         # It is important that this loop is after the other loops and we visit
         # individuals breadth-first and not depth-first as it will result it more
@@ -124,17 +124,17 @@ class Layout:
         flatten = lambda lists: [item for sublist in lists for item in sublist]
 
         def get_spouses(id: IndividualID) -> Iterable[IndividualID]:
-            spouses = flatten(map(ft.spouses_of_family, ft.own_families_of(id)))
+            spouses = flatten(map(ft.family_spouses, ft.individual_own_families(id)))
             # TODO sort by something?
             return spouses
 
         def get_parents(id: IndividualID) -> Iterable[IndividualID]:
-            parents = flatten(map(ft.spouses_of_family, ft.parent_families_of(id)))
+            parents = flatten(map(ft.family_spouses, ft.individual_parent_families(id)))
             # TODO sort by sex
             return parents
 
         def get_children(id: IndividualID) -> Iterable[IndividualID]:
-            children = flatten(map(ft.children_of_family, ft.own_families_of(id)))
+            children = flatten(map(ft.family_children, ft.individual_own_families(id)))
             # TODO sort by age
             return children
 
@@ -208,8 +208,8 @@ class Layout:
         ft = self.family_tree
         for fid, family in self.family_tree.families.items():
             level = None
-            spouses = list(ft.spouses_of_family(fid))
-            children = list(ft.children_of_family(fid))
+            spouses = list(ft.family_spouses(fid))
+            children = list(ft.family_children(fid))
             if spouses and spouses[0] in self:
                 level = self[spouses[0]].level - self.min_level
             elif level is None and children and children[0] in self:

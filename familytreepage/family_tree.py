@@ -94,21 +94,24 @@ class FamilyTree:
             elif isinstance(element, FamilyElement):
                 self._parse_family(element)
 
-    def _traverse(self, id: AnyID, rel: Rel) -> Iterable[AnyID]:
+    def _traverse(self, id: AnyID, rel: Rel, sort_key=None) -> Iterable[AnyID]:
         edges = self.graph.edges(id, data=True)
         edges = filter(lambda edge: edge[2]["rel"] == rel.value, edges)
-        return map(lambda edge: edge[1], edges)
+        edges = list(map(lambda edge: edge[1], edges))
+        if sort_key:
+            edges.sort(key=sort_key)
+        return edges
 
-    def parent_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
+    def individual_parent_families(self, individual_id: IndividualID) -> Iterable[FamilyID]:
         return self._traverse(individual_id, rel=Rel.Children)
 
-    def own_families_of(self, individual_id: IndividualID) -> Iterable[FamilyID]:
+    def individual_own_families(self, individual_id: IndividualID) -> Iterable[FamilyID]:
         return self._traverse(individual_id, rel=Rel.Spouses)
 
-    def spouses_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
+    def family_spouses(self, family_id: FamilyID) -> Iterable[IndividualID]:
         return self._traverse(family_id, rel=Rel.Spouses)
 
-    def children_of_family(self, family_id: FamilyID) -> Iterable[IndividualID]:
+    def family_children(self, family_id: FamilyID) -> Iterable[IndividualID]:
         return self._traverse(family_id, rel=Rel.Children)
 
     @staticmethod
