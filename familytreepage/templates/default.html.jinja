@@ -117,7 +117,7 @@
                         y2="{{ layout.families[fid].right.y }}"
                     />
                     <g>
-                        {% for iid in family_spouses[fid] %}
+                        {% for iid in family_tree.family_spouses(fid) %}
                         <line
                             x1="{{ layout[iid].bottom.x }}"
                             y1="{{ layout[iid].bottom.y }}"
@@ -127,7 +127,7 @@
                         {% endfor %}
                     </g>
                     <g>
-                        {% for iid in family_children[fid] %}
+                        {% for iid in family_tree.family_children(fid) %}
                         <line
                             x1="{{ layout[iid].top.x }}"
                             y1="{{ layout[iid].top.y }}"
@@ -147,8 +147,8 @@
                     style="left: {{ layout[id].pos.x }}px; top: {{
                         layout[id].pos.y
                     }}px;"
-                    data-own-families="{{ individuals_own_families[id] | join(',') }}"
-                    data-parent-families="{{ individuals_parent_families[id] | join(',') }}"
+                    data-own-families="{{ family_tree.individual_own_families(id) | join(',') }}"
+                    data-parent-families="{{ family_tree.individual_parent_families(id) | join(',') }}"
                 >
                     {{ individual.name }}
                 </div>
@@ -195,14 +195,16 @@
                     <td>{{ individual.birth }}</td>
                     <td>{{ individual.death }}</td>
                     <td>
-                        {% for family_id in individuals_parent_families[id] %}
+                        {% for family_id in
+                        family_tree.individual_parent_families(id) %}
                         <a href="#{{ family_id }}"
                             ><code>{{ family_id }}</code></a
                         >{{ "," if not loop.last }}
                         {% endfor %}
                     </td>
                     <td>
-                        {% for family_id in individuals_own_families[id] %}
+                        {% for family_id in
+                        family_tree.individual_own_families(id) %}
                         <a href="#{{ family_id }}"
                             ><code>{{ family_id }}</code></a
                         >{{ "," if not loop.last }}
@@ -233,8 +235,8 @@
                         >
                     </td>
                     <td>
-                        {% for individual_id in family_spouses[id] if
-                        individual_id in individuals %}
+                        {% for individual_id in family_tree.family_spouses(id)
+                        if individual_id in individuals %}
                         <a href="#{{ individual_id }}">{{
                             individuals[individual_id].name
                         }}</a
@@ -242,8 +244,8 @@
                         {% endfor %}
                     </td>
                     <td>
-                        {% for individual_id in family_children[id] if
-                        individual_id in individuals %}
+                        {% for individual_id in family_tree.family_children(id)
+                        if individual_id in individuals %}
                         <a href="#{{ individual_id }}">{{
                             individuals[individual_id].name
                         }}</a
