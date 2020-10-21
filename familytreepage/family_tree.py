@@ -102,10 +102,14 @@ class FamilyTree:
             edges.sort(key=sort_key)
         return edges
 
-    def individual_parent_families(self, individual_id: IndividualID) -> Iterable[FamilyID]:
+    def individual_parent_families(
+        self, individual_id: IndividualID
+    ) -> Iterable[FamilyID]:
         return self._traverse(individual_id, rel=Rel.Children)
 
-    def individual_own_families(self, individual_id: IndividualID) -> Iterable[FamilyID]:
+    def individual_own_families(
+        self, individual_id: IndividualID
+    ) -> Iterable[FamilyID]:
         return self._traverse(individual_id, rel=Rel.Spouses)
 
     def family_spouses(self, family_id: FamilyID) -> Iterable[IndividualID]:
