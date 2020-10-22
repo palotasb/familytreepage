@@ -1,6 +1,16 @@
 from collections import defaultdict
+from functools import partial
 from itertools import chain
-from typing import DefaultDict, Dict, Iterable, List, NamedTuple, Optional, Set
+from typing import (
+    Callable,
+    DefaultDict,
+    Dict,
+    Iterable,
+    List,
+    NamedTuple,
+    Optional,
+    Set,
+)
 
 from .family_tree import AnyID, FamilyID, FamilyTree, IndividualID
 from .util import flatten
@@ -53,16 +63,16 @@ class Layout:
         self.box_size = box_size
         self.padding = padding
 
-        self.levels: Dict[IndividualID, int] = {starting_at: 0}
+        self.levels: Dict[IndividualID, int] = {}
         self.min_level = 0
         self.max_level = 0
-        self._init_levels(starting_at)  # Updates previous three attributes!
-        self.level_count = self.max_level - self.min_level + 1
+        self.level_count = 1
 
         self.groups: DefaultDict[int, List[IndividualID]] = defaultdict(list)
         self.group_index: Dict[IndividualID, int] = {}
         self.max_group_size = 0
-        self._init_groups(starting_at)
+
+        self._init_levels(starting_at)  # Updates previous three attributes!
 
         self.families: Dict[FamilyID, LayoutInfo] = {}
         self._init_families()
@@ -91,101 +101,60 @@ class Layout:
     def __contains__(self, id: IndividualID) -> bool:
         return id in self.levels
 
-    def _init_levels(self, at: IndividualID):
-        this_level = self.levels[at]
-
-        def level_relation(relations, delta_level):
-            new_relations = list(filter(lambda id: id not in self.levels, relations))
-
-            relation_level = this_level + delta_level
-            for relation in new_relations:
-                self.levels[relation] = relation_level
-
-            if new_relations:
-                self.min_level = min(self.min_level, relation_level)
-                self.max_level = max(self.max_level, relation_level)
-
-            return new_relations
-
-        ft = self.family_tree
-        spouses = level_relation(ft.spouses(at), 0)
-        parents = level_relation(ft.parents(at), -1)
-        children = level_relation(ft.children(at), 1)
-
-        # It is important that this loop is after the other loops and we visit
-        # individuals breadth-first and not depth-first as it will result it more
-        # consistent levels
-        for id in spouses + parents + children:
-            self._init_levels(id)
-
-    def _init_groups(self, id: IndividualID):
+    def _init_levels(self, id: IndividualID):
         ft = self.family_tree
 
-        grouped: Set[IndividualID] = set()
-        is_not_grouped = lambda individual: individual not in grouped
+        # 1. Layout spouses
+        # 2. Layout siblings
+        # 3. Layout direct ancestors (recursively -- ?)
+        # 4. Layout direct descendants (recursively -- ?)
+        # 5. Layout everyone else breadth-first
 
-        def group_self_and_spouses_very_first(id: IndividualID):
-            self_and_spouses = list(filter(is_not_grouped, ft.spouses(id)))
-
-            for self_or_spouse in self_and_spouses:
-                self.groups[self.levels[self_or_spouse]].append(self_or_spouse)
-                grouped.add(self_or_spouse)
-
-        group_self_and_spouses_very_first(id)
-
-        def group_direct_ancestors_first(id: IndividualID):
-            parents = list(filter(is_not_grouped, ft.parents(id)))
-
-            for parent in parents:
-                self.groups[self.levels[parent]].append(parent)
-                grouped.add(parent)
-
-            for parent in parents:
-                group_direct_ancestors_first(parent)
-
-        group_direct_ancestors_first(id)
-
-        def group_direct_descendants_first(id: IndividualID):
-            children = list(filter(is_not_grouped, ft.children(id)))
-
-            for child in children:
-                self.groups[self.levels[child]].append(child)
-                grouped.add(child)
-
-            for child in children:
-                group_direct_descendants_first(child)
-
-        group_direct_descendants_first(id)
-
-        def get_relatives(id: IndividualID) -> Iterable[IndividualID]:
-            return chain(ft.spouses(id), ft.parents(id), ft.children(id))
-
+        # For breadth-first iteration
+        queue: List[IndividualID] = []
+        # --
         handled: Set[IndividualID] = set()
-        is_not_handled = lambda individual: individual not in handled
+        tasks: Dict[IndividualID, Callable[[], None]] = {}
 
-        def family_tree_breadth_first(id: IndividualID) -> List[IndividualID]:
+        is_handled: Callable[[IndividualID], bool] = lambda iid: iid in handled
 
-            relatives = [id]
-            handled.add(id)
+        def task(id: IndividualID, level: int, right: bool):
+            self.levels[id] = level
+            if right:
+                self.groups[level].append(id)
+            else:
+                self.groups[level].insert(0, id)
 
-            for relative in relatives:
-                second_relatives = filter(is_not_handled, get_relatives(relative))
-                for second_relative in second_relatives:
-                    handled.add(second_relative)
-                    relatives.append(second_relative)
+            def handle_relatives(relatives: Iterable[IndividualID], level: int):
+                for relative in relatives:
+                    if not is_handled(relative):
+                        queue.append(relative)
+                        handled.add(relative)
+                        tasks[relative] = partial(task, relative, level, right)
 
-            return relatives
+            handle_relatives(ft.spouses(id), level=level)
+            handle_relatives(ft.siblings(id), level=level)
+            handle_relatives(ft.parents(id), level=level - 1)
+            handle_relatives(ft.children(id), level=level + 1)
 
-        other_relatives = filter(is_not_grouped, family_tree_breadth_first(id))
+        queue.append(id)
+        handled.add(id)
+        tasks[id] = partial(task, id, level=0, right=True)
 
-        for relative in other_relatives:
-            self.groups[self.levels[relative]].append(relative)
+        for id in queue:
+            individual_task = tasks[id]
+            del tasks[id]
+            individual_task()
+
+        all_levels: Set[int] = set(self.levels.values())
+        self.min_level = min(all_levels)
+        self.max_level = max(all_levels)
+        self.level_count = self.max_level - self.min_level + 1
 
         for group in self.groups.values():
-            for index, individual in enumerate(group):
-                self.group_index[individual] = index
-
             self.max_group_size = max(self.max_group_size, len(group))
+            for index, id in enumerate(group):
+                self.group_index[id] = index
 
     def _init_families(self):
         ft = self.family_tree
