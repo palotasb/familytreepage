@@ -13,7 +13,6 @@ from typing import (
 )
 
 from .family_tree import AnyID, FamilyID, FamilyTree, IndividualID
-from .util import flatten
 
 
 class Point(NamedTuple):

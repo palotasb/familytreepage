@@ -13,7 +13,6 @@ from gedcom.element.individual import IndividualElement
 from gedcom.parser import Parser
 
 from .date import Date
-from .util import flatten
 
 UncertainDate = Optional[Date]
 
@@ -121,22 +120,22 @@ class FamilyTree:
         return self._traverse(family_id, rel=Rel.Children)
 
     def parents(self, individual_id: IndividualID) -> Iterable[IndividualID]:
-        return flatten(
+        return chain.from_iterable(
             map(self.family_spouses, self.individual_parent_families(individual_id))
         )
 
     def siblings(self, individual_id: IndividualID) -> Iterable[IndividualID]:
-        return flatten(
+        return chain.from_iterable(
             map(self.family_children, self.individual_parent_families(individual_id))
         )
 
     def spouses(self, individual_id: IndividualID) -> Iterable[IndividualID]:
-        return flatten(
+        return chain.from_iterable(
             map(self.family_spouses, self.individual_own_families(individual_id))
         )
 
     def children(self, individual_id: IndividualID) -> Iterable[IndividualID]:
-        return flatten(
+        return chain.from_iterable(
             map(self.family_children, self.individual_own_families(individual_id))
         )
 
