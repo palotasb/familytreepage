@@ -2,19 +2,9 @@ from collections import defaultdict
 from dataclasses import dataclass
 from functools import partial
 from itertools import chain
-from typing import (
-    Callable,
-    DefaultDict,
-    Dict,
-    Iterable,
-    List,
-    NamedTuple,
-    Optional,
-    Set,
-    Union,
-)
+from typing import Callable, DefaultDict, Dict, Iterable, List, NamedTuple, Set, Union
 
-from .family_tree import AnyID, FamilyID, FamilyTree, IndividualID
+from .family_tree import FamilyID, FamilyTree, IndividualID
 
 
 class Point(NamedTuple):
