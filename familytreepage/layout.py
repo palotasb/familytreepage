@@ -18,11 +18,15 @@ from .family_tree import AnyID, FamilyID, FamilyTree, IndividualID
 
 
 class Point(NamedTuple):
-    x: int
-    y: int
+    x: Union[int, float]
+    y: Union[int, float]
 
 
 Size = Point
+
+
+def _ftoic(f: Union[int, float]) -> Union[int, float]:
+    return int(f) if isinstance(f, float) and f.is_integer() else f  # type: ignore
 
 
 @dataclass
@@ -32,23 +36,29 @@ class Box:
 
     @property
     def top(self) -> Point:
-        return Point(self.pos.x + self.size.x // 2, self.pos.y)
+        return Point(_ftoic(self.pos.x + self.size.x / 2), _ftoic(self.pos.y))
 
     @property
     def right(self) -> Point:
-        return Point(self.pos.x + self.size.x, self.pos.y + self.size.y // 2)
+        return Point(
+            _ftoic(self.pos.x + self.size.x), _ftoic(self.pos.y + self.size.y / 2)
+        )
 
     @property
     def bottom(self) -> Point:
-        return Point(self.pos.x + self.size.x // 2, self.pos.y + self.size.y)
+        return Point(
+            _ftoic(self.pos.x + self.size.x / 2), _ftoic(self.pos.y + self.size.y)
+        )
 
     @property
     def left(self) -> Point:
-        return Point(self.pos.x, self.pos.y + self.size.y // 2)
+        return Point(_ftoic(self.pos.x), _ftoic(self.pos.y + self.size.y / 2))
 
     @property
     def center(self) -> Point:
-        return Point(self.pos.x + self.size.x // 2, self.pos.y + self.size.y // 2)
+        return Point(
+            _ftoic(self.pos.x + self.size.x / 2), _ftoic(self.pos.y + self.size.y / 2)
+        )
 
 
 @dataclass
