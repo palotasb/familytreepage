@@ -106,9 +106,9 @@ class Layout:
 
         # 1. Layout spouses
         # 2. Layout siblings
-        # 3. Layout direct ancestors (recursively -- ?)
-        # 4. Layout direct descendants (recursively -- ?)
-        # 5. Layout everyone else breadth-first
+        # 3. Layout ancestors
+        # 4. Layout descendants
+        # 5. Continue breadth-first
 
         # For breadth-first iteration
         queue: List[IndividualID] = []
