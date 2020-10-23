@@ -2,7 +2,18 @@ from collections import defaultdict
 from dataclasses import dataclass
 from functools import partial
 from itertools import chain
-from typing import Callable, DefaultDict, Dict, Iterable, List, NamedTuple, Set, Union
+from typing import (
+    Callable,
+    DefaultDict,
+    Dict,
+    Iterable,
+    List,
+    NamedTuple,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+)
 
 from .family_tree import FamilyID, FamilyTree, IndividualID
 
@@ -53,13 +64,17 @@ class Box:
 
 @dataclass
 class IndividualLayout(Box):
-    level: int
+    alevel: int  # absolute level
+    rlevel: int  # relative level
     group: int
 
 
 @dataclass
 class FamilyLayout(Box):
-    level: int
+    alevel: int
+    rlevel: int
+    outermost_parents: Optional[Tuple[IndividualID, IndividualID]]
+    outermost_children: Optional[Tuple[IndividualID, IndividualID]]
 
 
 class Layout:
@@ -74,9 +89,9 @@ class Layout:
         self.box_size = box_size
         self.padding = padding
 
-        self.levels: Dict[IndividualID, int] = {}
-        self.min_level = 0
-        self.max_level = 0
+        self.alevels: Dict[IndividualID, int] = {}
+        self.min_alevel = 0
+        self.max_alevel = 0
         self.level_count = 1
 
         self.groups: DefaultDict[int, List[IndividualID]] = defaultdict(list)
@@ -116,7 +131,7 @@ class Layout:
         is_handled: Callable[[IndividualID], bool] = lambda iid: iid in handled
 
         def task(id: IndividualID, level: int, right: bool):
-            self.levels[id] = level
+            self.alevels[id] = level
             if right:
                 self.groups[level].append(id)
             else:
@@ -143,10 +158,10 @@ class Layout:
             del tasks[id]
             individual_task()
 
-        all_levels: Set[int] = set(self.levels.values())
-        self.min_level = min(all_levels)
-        self.max_level = max(all_levels)
-        self.level_count = self.max_level - self.min_level + 1
+        all_levels: Set[int] = set(self.alevels.values())
+        self.min_alevel = min(all_levels)
+        self.max_alevel = max(all_levels)
+        self.level_count = self.max_alevel - self.min_alevel + 1
 
         for group in self.groups.values():
             self.max_group_size = max(self.max_group_size, len(group))
@@ -156,19 +171,20 @@ class Layout:
     def _init_individuals(self):
         ft = self.family_tree
         for id, individual in ft.individuals.items():
-            if id not in self.levels:
+            if id not in self.alevels:
                 continue
 
-            level_from_start = self.levels[id] - self.min_level
+            level_from_start = self.alevels[id] - self.min_alevel
             pos_x = (self.padding.x + self.box_size.x) * self.group_index.get(
-                id, len(self.groups[self.levels[id]])
+                id, len(self.groups[self.alevels[id]])
             ) + self.padding.x
             pos_y = (
                 self.padding.y + self.box_size.y
             ) * level_from_start + self.padding.y
 
             self.individuals[id] = IndividualLayout(
-                level=self.levels[id],
+                alevel=self.alevels[id],
+                rlevel=self.alevels[id] - self.min_alevel,
                 group=self.group_index[id],
                 pos=Point(x=pos_x, y=pos_y),
                 size=self.box_size,
@@ -177,32 +193,59 @@ class Layout:
     def _init_families(self):
         ft = self.family_tree
         for fid, family in self.family_tree.families.items():
-            level = None
+            alevel = None
             spouses = list(ft.family_spouses(fid))
             children = list(ft.family_children(fid))
             if spouses and spouses[0] in self.individuals:
-                level = self.individuals[spouses[0]].level - self.min_level
-            elif level is None and children and children[0] in self.individuals:
-                level = self.individuals[children[0]].level - self.min_level
+                alevel = self.individuals[spouses[0]].alevel
+            elif children and children[0] in self.individuals:
+                alevel = self.individuals[children[0]].alevel + 1
             else:
                 continue
 
-            group = 0  # TODO discard this, doesn't make sense for Family layout
+            def outermost_members(
+                alevel: int, members: Iterable[IndividualID]
+            ) -> Optional[Tuple[IndividualID, IndividualID]]:
+                members = list(
+                    filter(lambda id: self.individuals[id].alevel == alevel, members)
+                )
+                if not members:
+                    return None
 
-            all_members = list(
-                filter(lambda iid: iid in self.individuals, spouses + children)
+                indices = list(map(lambda id: (self.group_index[id], id), members))
+
+                leftmost = min(indices, key=lambda tuple: tuple[0])
+                rightmost = max(indices, key=lambda tuple: tuple[0])
+                return (leftmost[1], rightmost[1])
+
+            outermost_parents = outermost_members(alevel, spouses)
+            outermost_children = outermost_members(alevel + 1, children)
+
+            assert outermost_parents or outermost_children
+
+            leftmost_ids = ([outermost_parents[0]] if outermost_parents else []) + (
+                [outermost_children[0]] if outermost_children else []
+            )
+            rightmost_ids = ([outermost_parents[1]] if outermost_parents else []) + (
+                [outermost_children[1]] if outermost_children else []
             )
 
-            leftmost_x = self.individuals[
-                min(all_members, key=lambda iid: self.individuals[iid].left.x)
-            ].center.x
-            rightmost_x = self.individuals[
-                max(all_members, key=lambda iid: self.individuals[iid].right.x)
-            ].center.x
-            y = (self.padding.y + self.box_size.y) * (level + 1) + self.padding.y // 2
+            def center_x(id: IndividualID) -> Union[int, float]:
+                return self.individuals[id].center.x
+
+            leftmost_x = min(map(center_x, leftmost_ids))
+            rightmost_x = max(map(center_x, rightmost_ids))
+
+            rlevel = alevel - self.min_alevel
+            y = _ftoic(
+                (self.padding.y + self.box_size.y) * (rlevel + 1) + self.padding.y / 2
+            )
 
             self.families[fid] = FamilyLayout(
-                level=level,
+                alevel=alevel,
+                rlevel=rlevel,
+                outermost_parents=outermost_parents,
+                outermost_children=outermost_children,
                 pos=Point(leftmost_x, y),
                 size=Size(rightmost_x - leftmost_x, 0),
             )
