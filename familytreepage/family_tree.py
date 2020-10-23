@@ -3,6 +3,7 @@ from __future__ import annotations
 import datetime
 from enum import Enum
 from functools import partial
+from itertools import chain
 from typing import Dict, Iterable, List, Literal, NamedTuple, Optional, Union
 
 import networkx as nx
