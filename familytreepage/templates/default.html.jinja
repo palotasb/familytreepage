@@ -32,9 +32,9 @@
                     <g>
                         {% for iid in family_tree.family_spouses(fid) %}
                         <line
-                            x1="{{ layout[iid].bottom.x }}"
-                            y1="{{ layout[iid].bottom.y }}"
-                            x2="{{ layout[iid].bottom.x }}"
+                            x1="{{ layout.individuals[iid].bottom.x }}"
+                            y1="{{ layout.individuals[iid].bottom.y }}"
+                            x2="{{ layout.individuals[iid].bottom.x }}"
                             y2="{{ layout.families[fid].center.y }}"
                         />
                         {% endfor %}
@@ -42,9 +42,9 @@
                     <g>
                         {% for iid in family_tree.family_children(fid) %}
                         <line
-                            x1="{{ layout[iid].top.x }}"
-                            y1="{{ layout[iid].top.y }}"
-                            x2="{{ layout[iid].top.x }}"
+                            x1="{{ layout.individuals[iid].top.x }}"
+                            y1="{{ layout.individuals[iid].top.y }}"
+                            x2="{{ layout.individuals[iid].top.x }}"
                             y2="{{ layout.families[fid].center.y }}"
                         />
                         {% endfor %}
@@ -53,12 +53,12 @@
                 {% endfor %}
             </svg>
             <div id="boxes">
-                {% for id, individual in individuals.items() if id in layout %}
+                {% for id, individual in individuals.items() if id in layout.individuals %}
                 <div
                     id="b{{ id }}"
                     class="box"
-                    style="left: {{ layout[id].pos.x }}px; top: {{
-                        layout[id].pos.y
+                    style="left: {{ layout.individuals[id].pos.x }}px; top: {{
+                        layout.individuals[id].pos.y
                     }}px;"
                     data-own-families="{{ family_tree.individual_own_families(id) | join(',') }}"
                     data-parent-families="{{ family_tree.individual_parent_families(id) | join(',') }}"
@@ -97,10 +97,10 @@
                     </td>
                     <td>
                         <code
-                            >{{ layout[id].level if id in layout else "-" }}</code
+                            >{{ layout.individuals[id].level if id in layout.individuals else "-" }}</code
                         >,
                         <code
-                            >{{ layout[id].group if id in layout else "-"}}</code
+                            >{{ layout.individuals[id].group if id in layout.individuals else "-"}}</code
                         >
                     </td>
                     <td>{{ individual.name }}</td>

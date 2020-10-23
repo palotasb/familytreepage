@@ -1,4 +1,5 @@
 from collections import defaultdict
+from dataclasses import dataclass
 from functools import partial
 from itertools import chain
 from typing import (
@@ -10,6 +11,7 @@ from typing import (
     NamedTuple,
     Optional,
     Set,
+    Union,
 )
 
 from .family_tree import AnyID, FamilyID, FamilyTree, IndividualID
@@ -23,9 +25,8 @@ class Point(NamedTuple):
 Size = Point
 
 
-class LayoutInfo(NamedTuple):
-    level: int
-    group: int
+@dataclass
+class Box:
     pos: Point
     size: Point
 
@@ -48,6 +49,17 @@ class LayoutInfo(NamedTuple):
     @property
     def center(self) -> Point:
         return Point(self.pos.x + self.size.x // 2, self.pos.y + self.size.y // 2)
+
+
+@dataclass
+class IndividualLayout(Box):
+    level: int
+    group: int
+
+
+@dataclass
+class FamilyLayout(Box):
+    level: int
 
 
 class Layout:
@@ -73,7 +85,10 @@ class Layout:
 
         self._init_levels(starting_at)  # Updates previous three attributes!
 
-        self.families: Dict[FamilyID, LayoutInfo] = {}
+        self.individuals: Dict[IndividualID, IndividualLayout] = {}
+        self._init_individuals()
+
+        self.families: Dict[FamilyID, FamilyLayout] = {}
         self._init_families()
 
         self.width = (
@@ -82,23 +97,6 @@ class Layout:
         self.height = (
             self.level_count * (self.box_size.y + self.padding.y) + self.padding.y
         )
-
-    def __getitem__(self, id: IndividualID) -> LayoutInfo:
-        level_from_start = self.levels[id] - self.min_level
-        pos_x = (self.padding.x + self.box_size.x) * self.group_index.get(
-            id, len(self.groups[self.levels[id]])
-        ) + self.padding.x
-        pos_y = (self.padding.y + self.box_size.y) * level_from_start + self.padding.y
-
-        return LayoutInfo(
-            level=self.levels[id],
-            group=self.group_index[id],
-            pos=Point(x=pos_x, y=pos_y),
-            size=self.box_size,
-        )
-
-    def __contains__(self, id: IndividualID) -> bool:
-        return id in self.levels
 
     def _init_levels(self, id: IndividualID):
         ft = self.family_tree
@@ -155,34 +153,56 @@ class Layout:
             for index, id in enumerate(group):
                 self.group_index[id] = index
 
+    def _init_individuals(self):
+        ft = self.family_tree
+        for id, individual in ft.individuals.items():
+            if id not in self.levels:
+                continue
+
+            level_from_start = self.levels[id] - self.min_level
+            pos_x = (self.padding.x + self.box_size.x) * self.group_index.get(
+                id, len(self.groups[self.levels[id]])
+            ) + self.padding.x
+            pos_y = (
+                self.padding.y + self.box_size.y
+            ) * level_from_start + self.padding.y
+
+            self.individuals[id] = IndividualLayout(
+                level=self.levels[id],
+                group=self.group_index[id],
+                pos=Point(x=pos_x, y=pos_y),
+                size=self.box_size,
+            )
+
     def _init_families(self):
         ft = self.family_tree
         for fid, family in self.family_tree.families.items():
             level = None
             spouses = list(ft.family_spouses(fid))
             children = list(ft.family_children(fid))
-            if spouses and spouses[0] in self:
-                level = self[spouses[0]].level - self.min_level
-            elif level is None and children and children[0] in self:
-                level = self[children[0]].level - self.min_level
+            if spouses and spouses[0] in self.individuals:
+                level = self.individuals[spouses[0]].level - self.min_level
+            elif level is None and children and children[0] in self.individuals:
+                level = self.individuals[children[0]].level - self.min_level
             else:
                 continue
 
             group = 0  # TODO discard this, doesn't make sense for Family layout
 
-            all_members = list(filter(lambda iid: iid in self, spouses + children))
+            all_members = list(
+                filter(lambda iid: iid in self.individuals, spouses + children)
+            )
 
-            leftmost_x = self[
-                min(all_members, key=lambda iid: self[iid].left.x)
+            leftmost_x = self.individuals[
+                min(all_members, key=lambda iid: self.individuals[iid].left.x)
             ].center.x
-            rightmost_x = self[
-                max(all_members, key=lambda iid: self[iid].right.x)
+            rightmost_x = self.individuals[
+                max(all_members, key=lambda iid: self.individuals[iid].right.x)
             ].center.x
             y = (self.padding.y + self.box_size.y) * (level + 1) + self.padding.y // 2
 
-            self.families[fid] = LayoutInfo(
+            self.families[fid] = FamilyLayout(
                 level=level,
-                group=group,
                 pos=Point(leftmost_x, y),
                 size=Size(rightmost_x - leftmost_x, 0),
             )
