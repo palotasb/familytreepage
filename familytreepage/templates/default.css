@@ -1,0 +1,48 @@
+body {
+    padding: 1em
+}
+
+#familytree {
+    position: relative;
+    min-width: {{ layout.width }}px;
+    min-height: {{ layout.height }}px;
+    border: 1px solid black;
+    margin: -1px -1px 0 0;
+}
+
+svg#graph {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: {{ layout.width }}px;
+    height: {{ layout.height }}px;
+    border: 1px solid gray;
+    margin: -1px -1px 0 0;
+}
+
+svg#graph g.hovered-own-family {
+    stroke-width: 8px;
+    stroke: turquoise;
+}
+
+svg#graph g.hovered-parent-family {
+    stroke-width: 8px;
+    stroke: violet;
+}
+
+#boxes .box {
+    position: absolute;
+    border: 1px solid violet;
+    background-color: whitesmoke;
+    margin: -1px -1px 0 0;
+    width: {{ layout.box_size.x }}px;
+    height: {{ layout.box_size.y }}px;
+}
+
+#boxes .box.hovered {
+    background-color: aquamarine;
+}
+
+tr:target {
+    background-color: blanchedalmond;
+}
