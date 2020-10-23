@@ -25,9 +25,14 @@
                 margin: -1px -1px 0 0;
             }
 
-            svg#graph g.hovered {
+            svg#graph g.hovered-own-family {
                 stroke-width: 8px;
                 stroke: turquoise;
+            }
+
+            svg#graph g.hovered-parent-family {
+                stroke-width: 8px;
+                stroke: violet;
             }
 
             #boxes .box {
@@ -71,12 +76,12 @@
                         for (let family of get_own_families(event.target)) {
                             document
                                 .getElementById("g" + family)
-                                .classList.add("hovered");
+                                .classList.add("hovered-own-family");
                         }
                         for (let family of get_parent_families(event.target)) {
                             document
                                 .getElementById("g" + family)
-                                .classList.add("hovered");
+                                .classList.add("hovered-parent-family");
                         }
                     });
                     box.addEventListener("mouseout", (event) => {
@@ -84,12 +89,12 @@
                         for (let family of get_own_families(event.target)) {
                             document
                                 .getElementById("g" + family)
-                                .classList.remove("hovered");
+                                .classList.remove("hovered-own-family");
                         }
                         for (let family of get_parent_families(event.target)) {
                             document
                                 .getElementById("g" + family)
-                                .classList.remove("hovered");
+                                .classList.remove("hovered-parent-family");
                         }
                     });
                 }
